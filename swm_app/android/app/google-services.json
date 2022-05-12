@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "507564394822",
+    "project_id": "swm-app-de721",
+    "storage_bucket": "swm-app-de721.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:507564394822:android:e24c08be4637bbe91efd47",
+        "android_client_info": {
+          "package_name": "com.example.swm_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "507564394822-7adetq0r8n4qv0m6gts6998d56ltldrs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOcLxur0GtACfVtWHyJPwpjkgvwGect-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "507564394822-7adetq0r8n4qv0m6gts6998d56ltldrs.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "507564394822-rkufd8ln09ihitet0m207rgv7dbq8vpn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.swmApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:507564394822:android:f2ed4e1129470d111efd47",
+        "android_client_info": {
+          "package_name": "com.example.swmapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "507564394822-7adetq0r8n4qv0m6gts6998d56ltldrs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOcLxur0GtACfVtWHyJPwpjkgvwGect-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "507564394822-7adetq0r8n4qv0m6gts6998d56ltldrs.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "507564394822-rkufd8ln09ihitet0m207rgv7dbq8vpn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.swmApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
