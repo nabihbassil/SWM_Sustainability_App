@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_const
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:swm_app/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
-
+  int _selectedIndex = 0;
   @override
   void initState() {
     super.initState();
@@ -33,8 +35,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Welcome"),
+        title: Image.asset(
+          "assets/SWM.png",
+          height: 100,
+          width: 100,
+        ),
         centerTitle: true,
+        backgroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Center(
         child: Padding(
@@ -43,38 +51,100 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              SizedBox(
-                height: 150,
-                child: Image.asset("assets/logo.png", fit: BoxFit.contain),
-              ),
-              const Text(
+              Text(
                 "Welcome Back",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text("${loggedInUser.firstName} ${loggedInUser.lastName}",
-                  style: const TextStyle(
-                    color: Colors.black54,
-                    fontWeight: FontWeight.w500,
-                  )),
-              Text("${loggedInUser.email}",
-                  style: const TextStyle(
-                    color: Colors.black54,
-                    fontWeight: FontWeight.w500,
-                  )),
-              const SizedBox(
-                height: 15,
-              ),
-              ActionChip(
-                  label: const Text("Logout"),
-                  onPressed: () {
-                    logout(context);
-                  }),
             ],
           ),
         ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            new SizedBox(
+              height: 90.0,
+              child: const DrawerHeader(
+                  child: const Text('Nabih Bassil'),
+                  decoration: const BoxDecoration(color: Colors.blueAccent),
+                  margin: EdgeInsets.zero,
+                  padding: EdgeInsets.zero),
+            ),
+            ListTile(
+              title: const Text('Logout'),
+              onTap: () {
+                logout(context);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              color: Colors.grey,
+            ),
+            label: 'Home',
+            activeIcon: Icon(
+              Icons.home,
+              color: Colors.lightBlue[600],
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.school,
+              color: Colors.grey,
+            ),
+            label: 'Challenges',
+            activeIcon: Icon(
+              Icons.school,
+              color: Colors.lightBlue[600],
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.newspaper,
+              color: Colors.grey,
+            ),
+            label: 'News',
+            activeIcon: Icon(
+              Icons.newspaper,
+              color: Colors.lightBlue[600],
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+              color: Colors.grey,
+            ),
+            label: 'Profile',
+            activeIcon: Icon(
+              Icons.person,
+              color: Colors.lightBlue[600],
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.paid,
+              color: Colors.grey,
+            ),
+            label: 'Rewards',
+            activeIcon: Icon(
+              Icons.paid,
+              color: Colors.lightBlue[600],
+            ),
+          ),
+        ],
+        selectedItemColor: Colors.lightBlue[600],
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        currentIndex: _selectedIndex, //New
+        onTap: _onItemTapped,
       ),
     );
   }
@@ -84,5 +154,11 @@ class _HomeScreenState extends State<HomeScreen> {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const LoginScreen()));
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 }
