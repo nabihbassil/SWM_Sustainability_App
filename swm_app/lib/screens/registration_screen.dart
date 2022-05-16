@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:swm_app/model/user_model.dart';
-import 'package:swm_app/screens/home_screen.dart';
+import 'package:swm_app/page_holder.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -239,11 +239,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   void signUp(String email, String password) async {
-    print("email is " + email);
-    print("pass is " + password);
     if (_formKey.currentState!.validate()) {
       try {
-        print("HOOOOOOOOOOOOOOOOO");
         await _auth
             .createUserWithEmailAndPassword(email: email, password: password)
             .then((value) => {postDetailsToFirestore()})
@@ -251,7 +248,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           Fluttertoast.showToast(msg: e!.message);
         });
       } on FirebaseAuthException catch (error) {
-        print("**************************nonononononononono");
         switch (error.code) {
           case "invalid-email":
             errorMessage = "Your email address appears to be malformed.";
@@ -304,7 +300,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => const PageHolder()),
         (route) => false);
   }
 }

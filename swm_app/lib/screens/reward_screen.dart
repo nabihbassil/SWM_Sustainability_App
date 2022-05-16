@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class RewardScreen extends StatefulWidget {
+  const RewardScreen({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _RewardScreenState createState() => _RewardScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _RewardScreenState extends State<RewardScreen> {
   @override
   void initState() {
     super.initState();
@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
-                "Home Screen",
+                "Reward Screen",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ],
