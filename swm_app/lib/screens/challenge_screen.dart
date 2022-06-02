@@ -32,6 +32,8 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                   return Center(
                     child: Container(
                         child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Text(
                           item['awatitle'],
@@ -47,21 +49,41 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                         ),
                         Text(
                           item["ptsReward"] + "pts",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15,
                               color: Colors.greenAccent,
                               fontStyle: FontStyle.italic),
                         ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            // Foreground color
-                            onPrimary: Theme.of(context).colorScheme.onPrimary,
-                            // Background color
-                            primary: Theme.of(context).colorScheme.primary,
-                          ),
-                          onPressed: () {},
-                          child: const Text('Complete Action'),
-                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  // Foreground color
+                                  onPrimary:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                  // Background color
+                                  primary:
+                                      Theme.of(context).colorScheme.primary,
+                                ),
+                                onPressed: () {
+                                  //Navigator.of(context).pop();
+                                },
+                                child: const Text('Back'),
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  // Foreground color
+                                  onPrimary:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                  // Background color
+                                  primary:
+                                      Theme.of(context).colorScheme.primary,
+                                ),
+                                onPressed: () {},
+                                child: const Text('Complete Action'),
+                              )
+                            ])
                       ],
                     )),
                   );
