@@ -5,7 +5,6 @@ import 'package:swm_app/screens/challenge_screen.dart';
 import 'package:swm_app/screens/home_screen.dart';
 import 'package:swm_app/screens/news_screen.dart';
 import 'package:swm_app/screens/profile_screen.dart';
-import 'package:swm_app/screens/reward_screen.dart';
 
 class PageHolder extends StatefulWidget {
   const PageHolder({Key? key}) : super(key: key);
@@ -27,8 +26,7 @@ class _PageHolderState extends State<PageHolder> {
       HomeScreen(),
       ChallengeScreen(),
       NewsScreen(),
-      ProfileScreen(),
-      RewardScreen()
+      ProfileScreen()
     ];
 
     return Scaffold(
@@ -88,17 +86,6 @@ class _PageHolderState extends State<PageHolder> {
             label: 'Profile',
             activeIcon: Icon(
               Icons.person,
-              color: Colors.lightBlue[600],
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(
-              Icons.paid,
-              color: Colors.grey,
-            ),
-            label: 'Rewards',
-            activeIcon: Icon(
-              Icons.paid,
               color: Colors.lightBlue[600],
             ),
           ),
