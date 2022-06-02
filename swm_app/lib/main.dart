@@ -12,7 +12,8 @@ void main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
   } else {
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
   }
   runApp(
     const MaterialApp(

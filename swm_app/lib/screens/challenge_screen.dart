@@ -25,7 +25,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
             stream: _collectionRef.snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (!snapshot.hasData) {
-                return const Center(child: Text('Loading'));
+                return const Center(child: Text('Loading...'));
               }
               return ListView(
                 children: snapshot.data!.docs.map((item) {
@@ -41,8 +41,27 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                               fontWeight: FontWeight.bold),
                         ),
                         Text(item['awatext'].replaceAll("\\n", "\n")),
-                        Image.network(
-                            'https://googleflutter.com/sample_image.jpg'),
+                        SizedBox(
+                          height: 200,
+                          child: Image.network(item['awaimg']),
+                        ),
+                        Text(
+                          item["ptsReward"] + "pts",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.greenAccent,
+                              fontStyle: FontStyle.italic),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            // Foreground color
+                            onPrimary: Theme.of(context).colorScheme.onPrimary,
+                            // Background color
+                            primary: Theme.of(context).colorScheme.primary,
+                          ),
+                          onPressed: () {},
+                          child: const Text('Complete Action'),
+                        ),
                       ],
                     )),
                   );
@@ -50,6 +69,21 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
               );
             }),
       ),
+    );
+  }
+
+  Widget alreadyDone(done) {
+    if (done) {}
+
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        // Foreground color
+        onPrimary: Theme.of(context).colorScheme.onPrimary,
+        // Background color
+        primary: Theme.of(context).colorScheme.primary,
+      ),
+      onPressed: () {},
+      child: const Text('Enabled'),
     );
   }
 }
