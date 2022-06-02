@@ -30,21 +30,21 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
               return ListView(
                 children: snapshot.data!.docs.map((item) {
                   return Center(
-                    child: ListTile(
-                      title: Text(
-                        item['awatitle'],
-                        style: const TextStyle(
-                            fontSize: 20,
-                            color: Colors.greenAccent,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(item['awatext'].replaceAll("\\n", "\n")),
-                      leading: Image.network(
-                          'https://googleflutter.com/sample_image.jpg'),
-                      onLongPress: () {
-                        item.reference.delete();
-                      },
-                    ),
+                    child: Container(
+                        child: Column(
+                      children: <Widget>[
+                        Text(
+                          item['awatitle'],
+                          style: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.greenAccent,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(item['awatext'].replaceAll("\\n", "\n")),
+                        Image.network(
+                            'https://googleflutter.com/sample_image.jpg'),
+                      ],
+                    )),
                   );
                 }).toList(),
               );
