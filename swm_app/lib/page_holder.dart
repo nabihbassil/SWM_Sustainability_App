@@ -5,6 +5,7 @@ import 'package:swm_app/screens/challenge_screen.dart';
 import 'package:swm_app/screens/home_screen.dart';
 import 'package:swm_app/screens/news_screen.dart';
 import 'package:swm_app/screens/profile_screen.dart';
+import 'package:swm_app/screens/take_actions.dart';
 
 class PageHolder extends StatefulWidget {
   const PageHolder({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class _PageHolderState extends State<PageHolder> {
   Widget build(BuildContext context) {
     const List<Widget> _pages = <Widget>[
       HomeScreen(),
-      ChallengeScreen(),
+      TakeAction(),
       NewsScreen(),
       ProfileScreen()
     ];

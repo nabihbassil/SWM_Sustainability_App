@@ -2,24 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChallengeScreen extends StatefulWidget {
-  const ChallengeScreen({Key? key}) : super(key: key);
+  int id;
+  ChallengeScreen({Key? key, required this.id}) : super(key: key);
 
   @override
-  _ChallengeScreenState createState() => _ChallengeScreenState();
+  // ignore: no_logic_in_create_state
+  _ChallengeScreenState createState() => _ChallengeScreenState(id);
 }
 
 class _ChallengeScreenState extends State<ChallengeScreen> {
+  int id;
+  _ChallengeScreenState(this.id);
+
   @override
   void initState() {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
   }
 
-  final CollectionReference _collectionRef =
-      FirebaseFirestore.instance.collection('awafacts');
   @override
   Widget build(BuildContext context) {
+    print("qqqqqqqqqqqqqqqqqqqqqqqqqqq  $id ");
+    final Query _collectionRef = FirebaseFirestore.instance
+        .collection('takeactions')
+        .where("actionID", isEqualTo: id);
     return Scaffold(
+      appBar: AppBar(
+        title: Image.asset(
+          "assets/SWM.png",
+          height: 100,
+          width: 100,
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.black),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: Center(
         child: StreamBuilder(
             stream: _collectionRef.snapshots(),
@@ -30,25 +51,24 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
               return ListView(
                 children: snapshot.data!.docs.map((item) {
                   return Center(
-                    child: Container(
-                        child: Column(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          item['awatitle'],
+                          item['actiontitle'],
                           style: const TextStyle(
                               fontSize: 20,
                               color: Colors.greenAccent,
                               fontWeight: FontWeight.bold),
                         ),
-                        Text(item['awatext'].replaceAll("\\n", "\n")),
+                        Text(item['actioncontent'].replaceAll("\\n", "\n")),
                         SizedBox(
                           height: 200,
-                          child: Image.network(item['awaimg']),
+                          child: Image.network(item['actionimg']),
                         ),
                         Text(
-                          item["ptsReward"] + "pts",
+                          item["actionpts"] + "pts",
                           style: const TextStyle(
                               fontSize: 15,
                               color: Colors.greenAccent,
@@ -85,27 +105,12 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                               )
                             ])
                       ],
-                    )),
+                    ),
                   );
                 }).toList(),
               );
             }),
       ),
-    );
-  }
-
-  Widget alreadyDone(done) {
-    if (done) {}
-
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        // Foreground color
-        onPrimary: Theme.of(context).colorScheme.onPrimary,
-        // Background color
-        primary: Theme.of(context).colorScheme.primary,
-      ),
-      onPressed: () {},
-      child: const Text('Enabled'),
     );
   }
 }
