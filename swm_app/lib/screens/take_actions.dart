@@ -44,7 +44,7 @@ class _TakeActionState extends State<TakeAction> {
                       color: Colors.amber,
                       fontWeight: FontWeight.bold)),
               StreamBuilder(
-                  stream: _collectionRef.snapshots(),
+                  stream: _collectionRef1.snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) {
                       return const Center(child: Text('Loading...'));
@@ -90,7 +90,7 @@ class _TakeActionState extends State<TakeAction> {
                       color: Colors.greenAccent,
                       fontWeight: FontWeight.bold)),
               StreamBuilder(
-                  stream: _collectionRef1.snapshots(),
+                  stream: _collectionRef.snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot1) {
                     if (!snapshot1.hasData) {
                       return const Center(child: Text('Loading...'));

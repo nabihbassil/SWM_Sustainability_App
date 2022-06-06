@@ -13,19 +13,27 @@ class ChallengeScreen extends StatefulWidget {
 class _ChallengeScreenState extends State<ChallengeScreen> {
   int id;
   _ChallengeScreenState(this.id);
+  late bool _isButtonDisabled;
 
   @override
   void initState() {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
+    _isButtonDisabled = false;
+  }
+
+  void _DisableButton() {
+    setState(() {
+      _isButtonDisabled = true;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    print("qqqqqqqqqqqqqqqqqqqqqqqqqqq  $id ");
     final Query _collectionRef = FirebaseFirestore.instance
         .collection('takeactions')
         .where("actionID", isEqualTo: id);
+
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
@@ -76,33 +84,45 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                         ),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  // Foreground color
-                                  onPrimary:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                  // Background color
-                                  primary:
-                                      Theme.of(context).colorScheme.primary,
-                                ),
-                                onPressed: () {
-                                  //Navigator.of(context).pop();
-                                },
-                                child: const Text('Back'),
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  // Foreground color
-                                  onPrimary:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                  // Background color
-                                  primary:
-                                      Theme.of(context).colorScheme.primary,
-                                ),
-                                onPressed: () {},
-                                child: const Text('Complete Action'),
-                              )
+                            children: [
+                              !item['done']
+                                  ? ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        // Foreground color
+                                        onPrimary: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                        // Background color
+                                        primary: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
+                                      onPressed: () {
+                                        _isButtonDisabled
+                                            ? null
+                                            : FirebaseFirestore.instance
+                                                .collection('takeactions')
+                                                .doc(item.reference.id)
+                                                .update({'done': true});
+                                      },
+                                      child: Text(_isButtonDisabled
+                                          ? "Completed"
+                                          : "Complete Action"),
+                                    )
+                                  : ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        // Foreground color
+                                        onPrimary: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                        // Background color
+                                        primary: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
+                                      onPressed: null,
+                                      child: const Text('Completed'),
+                                    )
                             ])
                       ],
                     ),

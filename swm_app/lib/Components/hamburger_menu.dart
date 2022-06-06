@@ -21,7 +21,7 @@ class _HamburgerMenu extends State<HamburgerMenu> {
     super.initState();
     FirebaseFirestore.instance
         .collection("users")
-        .doc(user!.uid)
+        .doc(user?.uid)
         .get()
         .then((value) {
       loggedInUser = UserModel.fromMap(value.data());
@@ -34,10 +34,14 @@ class _HamburgerMenu extends State<HamburgerMenu> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const SizedBox(
+          SizedBox(
             height: 90.0,
-            child: const DrawerHeader(
-                child: const Text('Nabih Bassil'),
+            child: DrawerHeader(
+                child: ListTile(
+                  title: Text(
+                      "${loggedInUser.firstName} ${loggedInUser.lastName}"),
+                  subtitle: Text("${loggedInUser.email}"),
+                ),
                 decoration: const BoxDecoration(color: Colors.blueAccent),
                 margin: EdgeInsets.zero,
                 padding: EdgeInsets.zero),
