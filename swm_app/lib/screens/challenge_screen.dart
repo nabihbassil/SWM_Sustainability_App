@@ -67,7 +67,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                           item['actiontitle'],
                           style: const TextStyle(
                               fontSize: 20,
-                              color: Colors.green,
+                              color: Color.fromARGB(255, 86, 198, 90),
                               fontWeight: FontWeight.bold),
                         ),
                         Text(item['actioncontent'].replaceAll("\\n", "\n")),
