@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:swm_app/screens/challenge_screen.dart';
 
 class TakeAction extends StatefulWidget {
-  const TakeAction({Key? key}) : super(key: key);
+  const TakeAction({Key? key, required int id}) : super(key: key);
 
   @override
   _TakeActionState createState() => _TakeActionState();
@@ -27,6 +27,20 @@ class _TakeActionState extends State<TakeAction> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Image.asset(
+          "assets/SWM.png",
+          height: 100,
+          width: 100,
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.black),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: Center(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
