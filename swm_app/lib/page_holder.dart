@@ -2,11 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:swm_app/Components/hamburger_menu.dart';
 import 'package:swm_app/screens/challenge_main.dart';
-import 'package:swm_app/screens/challenge_screen.dart';
 import 'package:swm_app/screens/home_screen.dart';
 import 'package:swm_app/screens/news_screen.dart';
 import 'package:swm_app/screens/profile_screen.dart';
-import 'package:swm_app/screens/take_actions.dart';
 
 class PageHolder extends StatefulWidget {
   const PageHolder({Key? key}) : super(key: key);
