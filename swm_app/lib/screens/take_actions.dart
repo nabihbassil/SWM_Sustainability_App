@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:swm_app/screens/challenge_screen.dart';
+import 'package:swm_app/screens/single_action.dart';
 
 class TakeAction extends StatefulWidget {
   const TakeAction({Key? key, required int id}) : super(key: key);
@@ -80,7 +80,7 @@ class _TakeActionState extends State<TakeAction> {
                                     primary: Colors.amber),
                                 onPressed: () {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => ChallengeScreen(
+                                      builder: (context) => SingleActionScreen(
                                           id: item['actionID'])));
                                 },
                                 child: Text(
@@ -126,7 +126,7 @@ class _TakeActionState extends State<TakeAction> {
                                     primary: Colors.lightGreen),
                                 onPressed: () {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => ChallengeScreen(
+                                      builder: (context) => SingleActionScreen(
                                           id: item1['actionID'])));
                                 },
                                 child: Text(
