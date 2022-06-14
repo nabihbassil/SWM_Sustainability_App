@@ -70,6 +70,14 @@ flutter:
   assets:
     - assets/SWM_logo.jpg
     - assets/SWM.png
+    - assets/awarenessicon.png
+    - assets/learnfactsicon.png
+    - assets/progressbardummy.png
+    - assets/takeactionicon.png
+    - assets/takequizicon.png
+    - assets/tasktimer.png
+    - assets/taskcheck.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
