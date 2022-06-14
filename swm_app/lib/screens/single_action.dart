@@ -106,13 +106,12 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                                   ? ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                         // Foreground color
-                                        onPrimary: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimary,
+                                        onPrimary:
+                                            Color.fromARGB(255, 228, 170, 18),
                                         // Background color
-                                        primary: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
+                                        primary:
+                                            Color.fromARGB(255, 255, 239, 199),
+                                        minimumSize: Size(200, 50),
                                       ),
                                       onPressed: () {
                                         _isButtonDisabled
@@ -122,25 +121,36 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                                                 .doc(item.reference.id)
                                                 .update({'done': true});
                                       },
-                                      child: Text(_isButtonDisabled
-                                          ? "Good Job on Completing the task"
-                                          : "I did this!"),
-                                    )
+                                      child: Text(
+                                        _isButtonDisabled
+                                            ? "Good Job on Completing the task"
+                                            : "I did this!",
+                                        style: const TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
+                                      ))
                                   : ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                         // Foreground color
-                                        onPrimary: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimary,
+                                        onPrimary:
+                                            Color.fromARGB(255, 85, 148, 75),
                                         // Background color
-                                        primary: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
+                                        primary:
+                                            Color.fromARGB(255, 255, 255, 255),
+                                        minimumSize: Size(200, 50),
                                       ),
                                       onPressed: null,
-                                      child: const Text('Completed'),
+                                      child: const Text(
+                                          'Good Job on Completing the task!',
+                                          style: const TextStyle(
+                                              fontSize: 15,
+                                              color: Color.fromARGB(
+                                                  255, 85, 148, 75),
+                                              fontStyle: FontStyle.italic,
+                                              fontWeight: FontWeight.bold)),
                                     )
                             ]),
+                        Container(height: 10),
                         Text(
                           item["actionpts"] + "pts",
                           style: const TextStyle(
