@@ -63,25 +63,42 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Text(
-                          item['actiontitle'],
-                          style: const TextStyle(
-                              fontSize: 20,
-                              color: Color.fromARGB(255, 86, 198, 90),
-                              fontWeight: FontWeight.bold),
+                        Container(
+                          height: 30,
                         ),
-                        Text(item['actioncontent'].replaceAll("\\n", "\n")),
-                        SizedBox(
-                          height: 200,
-                          child: Image.network(item['actionimg']),
+                        Container(
+                            width: 300,
+                            child: Text(
+                              item['actiontitle'],
+                              style: const TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 18, 68, 10),
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.left,
+                            )),
+                        Container(height: 20),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.network(
+                            item['actionimg'],
+                            height: 170.0,
+                          ),
                         ),
-                        Text(
-                          item["actionpts"] + "pts",
-                          style: const TextStyle(
-                              fontSize: 15,
-                              color: Colors.greenAccent,
-                              fontStyle: FontStyle.italic),
-                        ),
+                        Container(height: 20),
+                        FittedBox(
+                            fit: BoxFit.fitHeight,
+                            child: Container(
+                              width: 290,
+                              child: Text(
+                                item['actioncontent'].replaceAll("\\n", "\n"),
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    fontWeight: FontWeight.normal),
+                                textAlign: TextAlign.left,
+                              ),
+                            )),
+                        Container(height: 20),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -106,8 +123,8 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                                                 .update({'done': true});
                                       },
                                       child: Text(_isButtonDisabled
-                                          ? "Completed"
-                                          : "Complete Action"),
+                                          ? "Good Job on Completing the task"
+                                          : "I did this!"),
                                     )
                                   : ElevatedButton(
                                       style: ElevatedButton.styleFrom(
@@ -123,7 +140,15 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                                       onPressed: null,
                                       child: const Text('Completed'),
                                     )
-                            ])
+                            ]),
+                        Text(
+                          item["actionpts"] + "pts",
+                          style: const TextStyle(
+                              fontSize: 15,
+                              color: Color.fromARGB(255, 228, 170, 18),
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
                   );
