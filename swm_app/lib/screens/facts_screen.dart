@@ -1,50 +1,41 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:swm_app/model/facts_model.dart';
 
-class FactsScreen extends StatefulWidget {
-  const FactsScreen({Key? key}) : super(key: key);
+class FactsScreen extends StatelessWidget {
+  Future<List<Facts>> fetchData() async {
+    List<Facts> result = [];
+    FirebaseFirestore.instance
+        .collection("awafacts")
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        // print(doc.data());
+        Facts cat = Facts.fromJson(doc.data());
+        result.add(cat);
+      });
+    });
 
-  @override
-  _FactsScreenState createState() => _FactsScreenState();
-}
-
-class _FactsScreenState extends State<FactsScreen> {
-  @override
-  void initState() {
-    super.initState();
+    return result;
   }
 
   @override
   Widget build(BuildContext context) {
+    fetchData();
     return Scaffold(
-      appBar: AppBar(
-        title: Image.asset(
-          "assets/SWM.png",
-          height: 100,
-          width: 100,
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Colors.black),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        appBar: AppBar(
+      title: Image.asset(
+        "assets/SWM.png",
+        height: 100,
+        width: 100,
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                "Facts Screen",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ),
+      centerTitle: true,
+      backgroundColor: Colors.white,
+      iconTheme: const IconThemeData(color: Colors.black),
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back, color: Colors.black),
+        onPressed: () => Navigator.of(context).pop(),
       ),
-    );
+    ));
   }
 }

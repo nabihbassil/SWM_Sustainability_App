@@ -17,7 +17,7 @@ class CategoryService {
     DocumentSnapshot snapshot = await categories.doc().get();
     if (snapshot.exists) {
       Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-      var categoriesData = data['categories'] as List<dynamic>;
+      var categoriesData = data['awafacts'] as List<dynamic>;
       categoriesData.forEach((catData) {
         Facts cat = Facts.fromJson(catData);
         _categories.add(cat);

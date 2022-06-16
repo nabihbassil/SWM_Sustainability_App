@@ -12,8 +12,8 @@ class Facts {
 
   factory Facts.fromJson(Map<String, dynamic> json) {
     return Facts(
-        awatext: json['awatext'],
         awatitle: json['awatitle'],
+        awatext: json['awatext'],
         awaimg: json['awaimg'],
         parentmoduleid: json['parentmoduleid']);
   }
