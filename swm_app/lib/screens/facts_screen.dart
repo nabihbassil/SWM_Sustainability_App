@@ -27,9 +27,10 @@ class _FactsScreenState extends State<FactsScreen> {
   @override
   Widget build(BuildContext context) {
     int i = 0;
-    Future<int> factsize = fetchDataSize();
-    factsize.then((index) => i = index);
-    print("ssssiiiiiiiiiiiiizzzzzzeeeeeeee  $i");
+    Future<int> factsize = fetchDataSize().then((value) {
+      print("123456  $value");
+      return i = value;
+    });
 
     final Query _collectionRef = FirebaseFirestore.instance
         .collection('awafacts')
