@@ -43,8 +43,8 @@ class AwarenessMain extends StatelessWidget {
               const SizedBox(height: 20),
               GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => FactsScreen()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => FactsScreen(index: 1)));
                   },
                   // change to navigation to awareness screen
                   child: SizedBox(
