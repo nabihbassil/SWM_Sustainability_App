@@ -28,6 +28,20 @@ class _TakeActionState extends State<TakeAction> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Image.asset(
+          "assets/SWM.png",
+          height: 100,
+          width: 100,
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.black),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(1),
@@ -42,19 +56,6 @@ class _TakeActionState extends State<TakeAction> {
                     child: Image.asset(
                       'assets/progressbardummy.png',
                       fit: BoxFit.contain,
-                    )),
-                Padding(
-                    padding: EdgeInsets.only(right: 320),
-                    child: TextButton(
-                      child: const Text("< Back",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Color.fromARGB(255, 150, 150, 150),
-                              fontWeight: FontWeight.bold)),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
                     )),
                 const SizedBox(height: 2),
                 Padding(
