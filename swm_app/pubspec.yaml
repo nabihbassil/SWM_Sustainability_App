@@ -42,6 +42,7 @@ dependencies:
   flutter_svg: ^1.0.3
   flutter_bloc: ^8.0.1
   firebase_storage: ^10.2.15
+  firebase_database: ^9.0.15
   
 
 dev_dependencies:

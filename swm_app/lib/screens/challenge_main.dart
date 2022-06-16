@@ -2,9 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:swm_app/screens/awareness_main.dart';
 import 'package:swm_app/screens/take_actions.dart';
 
-class ChallengeMain extends StatelessWidget {
-  const ChallengeMain({Key? key}) : super(key: key);
+// ignore: must_be_immutable
+class ChallengeMain extends StatefulWidget {
+  int id;
+  String name;
+  ChallengeMain({Key? key, required this.id, required this.name})
+      : super(key: key);
 
+  @override
+  // ignore: no_logic_in_create_state
+  State<ChallengeMain> createState() => _ChallengeMain(id, name);
+}
+
+class _ChallengeMain extends State<ChallengeMain> {
+  int id;
+  String name;
+  _ChallengeMain(this.id, this.name);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,13 +38,13 @@ class ChallengeMain extends StatelessWidget {
                               color: Color.fromARGB(255, 150, 150, 150),
                               fontWeight: FontWeight.bold)),
                       onPressed: () {
-                        print('navigate back to challenges selection menu');
+                        Navigator.of(context).pop();
                         // place holder for navigation
                       })),
               Padding(
                   padding: EdgeInsets.only(right: 90),
                   child: Text(
-                    "Food Waste Challenge",
+                    "$name Challenge",
                     style: TextStyle(
                         fontSize: 24,
                         color: Color.fromARGB(255, 70, 70, 70),
@@ -58,7 +71,7 @@ class ChallengeMain extends StatelessWidget {
               Padding(
                   padding: EdgeInsets.only(left: 60, right: 60),
                   child: Text(
-                    "Learn about the impact of Food Waste and test your knowledge",
+                    "Learn about the impact of $name and test your knowledge",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 16,

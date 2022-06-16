@@ -27,10 +27,7 @@ class AwarenessMain extends StatelessWidget {
                               color: Color.fromARGB(255, 150, 150, 150),
                               fontWeight: FontWeight.bold)),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const ChallengeMain()));
+                        Navigator.of(context).pop();
                       })),
               Padding(
                   padding: EdgeInsets.only(right: 220),
