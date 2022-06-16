@@ -23,11 +23,18 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
+        const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              "Challenges",
+              style: TextStyle(fontSize: 26, color: Colors.black),
+              textAlign: TextAlign.center,
+            )),
         ExpansionTile(
           title: const Text('In Progress'),
           children: [
             // I'll name the data fr
-            Container(
+            SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: 250,
                 child: StreamBuilder(
