@@ -49,7 +49,7 @@ class _TakeActionState extends State<TakeAction> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const SizedBox(height: 60),
+                const SizedBox(height: 20),
                 SizedBox(
                     height: 17,
                     width: 500,
@@ -57,7 +57,7 @@ class _TakeActionState extends State<TakeAction> {
                       'assets/progressbardummy.png',
                       fit: BoxFit.contain,
                     )),
-                const SizedBox(height: 2),
+                const SizedBox(height: 25),
                 Padding(
                     padding: EdgeInsets.only(right: 250),
                     child: const Text("Tasks",
@@ -95,7 +95,7 @@ class _TakeActionState extends State<TakeAction> {
                   ),
                 ),
                 // spacing btw to do title and tasks
-                const SizedBox(height: 15),
+                const SizedBox(height: 10),
                 StreamBuilder(
                     stream: _collectionRef1.snapshots(),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -170,7 +170,7 @@ class _TakeActionState extends State<TakeAction> {
                   ),
                 ),
                 // space btw completed title and tasks
-                const SizedBox(height: 15),
+                const SizedBox(height: 10),
                 StreamBuilder(
                     stream: _collectionRef.snapshots(),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot1) {
