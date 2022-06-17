@@ -12,6 +12,9 @@ class ChallengeScreen extends StatefulWidget {
 
 class _ChallengeScreenState extends State<ChallengeScreen> {
   final Query _collectionRef = FirebaseFirestore.instance.collection('modules');
+  Color _text1Color = Color.fromARGB(255, 50, 50, 50);
+  Color _text2Color = Color.fromARGB(255, 50, 50, 50);
+  Color _text3Color = Color.fromARGB(255, 50, 50, 50);
 
   @override
   void initState() {
@@ -27,11 +30,32 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
             padding: EdgeInsets.all(16.0),
             child: Text(
               "Challenges",
-              style: TextStyle(fontSize: 26, color: Colors.black),
+              style: TextStyle(
+                  fontSize: 26,
+                  color: Color.fromARGB(255, 60, 60, 60),
+                  fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             )),
         ExpansionTile(
-          title: const Text('In Progress'),
+          initiallyExpanded: true,
+          onExpansionChanged: (expanded) {
+            setState(() {
+              if (expanded) {
+                _text1Color = Color.fromARGB(255, 123, 89, 2);
+              } else {
+                _text1Color = Color.fromARGB(255, 50, 50, 50);
+              }
+            });
+          },
+          title: Text(
+            'In Progress',
+            style: TextStyle(
+              fontSize: 20,
+              color: _text1Color,
+            ),
+          ),
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          collapsedBackgroundColor: Color.fromARGB(255, 238, 247, 255),
           children: [
             // I'll name the data fr
             SizedBox(
@@ -56,7 +80,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                     item['modName'],
                                     style: TextStyle(
                                         fontSize: 18,
-                                        color: Colors.black,
+                                        color: Color.fromARGB(255, 80, 80, 80),
                                         fontWeight: FontWeight.w500),
                                   ),
                                   SizedBox(
@@ -99,7 +123,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                     Text(
                                                       item['category'],
                                                       style: TextStyle(
-                                                          fontSize: 13,
+                                                          fontSize: 15,
                                                           color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.w500),
@@ -122,14 +146,40 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                     })),
           ],
         ),
-        const ExpansionTile(
-          title: Text('Discover New'),
+        ExpansionTile(
+          onExpansionChanged: (expanded) {
+            setState(() {
+              if (expanded) {
+                _text2Color = Color.fromARGB(255, 45, 88, 1);
+              } else {
+                _text2Color = Color.fromARGB(255, 50, 50, 50);
+              }
+            });
+          },
+          title: Text('Discover New',
+              style: TextStyle(
+                fontSize: 20,
+                color: _text2Color,
+              )),
           children: <Widget>[
             ListTile(title: Text('This is tile number 2')),
           ],
         ),
-        const ExpansionTile(
-          title: Text('Completed'),
+        ExpansionTile(
+          onExpansionChanged: (expanded) {
+            setState(() {
+              if (expanded) {
+                _text3Color = Color.fromARGB(255, 5, 98, 132);
+              } else {
+                _text3Color = Color.fromARGB(255, 50, 50, 50);
+              }
+            });
+          },
+          title: Text('Completed',
+              style: TextStyle(
+                fontSize: 20,
+                color: _text3Color,
+              )),
           children: <Widget>[
             ListTile(title: Text('This is tile number 3')),
           ],
