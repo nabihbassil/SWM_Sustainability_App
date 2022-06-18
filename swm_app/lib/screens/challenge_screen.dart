@@ -31,12 +31,18 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
             child: Text(
               "Challenges",
               style: TextStyle(
+<<<<<<< Updated upstream
                   fontSize: 26,
                   color: Color.fromARGB(255, 60, 60, 60),
+=======
+                  fontSize: 30,
+                  color: Color.fromARGB(255, 80, 80, 80),
+>>>>>>> Stashed changes
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             )),
         ExpansionTile(
+<<<<<<< Updated upstream
           initiallyExpanded: true,
           onExpansionChanged: (expanded) {
             setState(() {
@@ -56,6 +62,14 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
           ),
           backgroundColor: Color.fromARGB(255, 255, 255, 255),
           collapsedBackgroundColor: Color.fromARGB(255, 238, 247, 255),
+=======
+          title: const Text('In Progress',
+              style: TextStyle(
+                  fontSize: 24,
+                  color: Color.fromARGB(255, 80, 80, 80),
+                  fontWeight: FontWeight.bold)),
+          color: Colors.lightBlue
+>>>>>>> Stashed changes
           children: [
             // I'll name the data fr
             SizedBox(
@@ -79,8 +93,14 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                   Text(
                                     item['modName'],
                                     style: TextStyle(
+<<<<<<< Updated upstream
                                         fontSize: 18,
                                         color: Color.fromARGB(255, 80, 80, 80),
+=======
+                                        fontSize: 20,
+                                        color:
+                                            Color.fromARGB(255, 131, 131, 131),
+>>>>>>> Stashed changes
                                         fontWeight: FontWeight.w500),
                                   ),
                                   SizedBox(
@@ -123,7 +143,11 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                     Text(
                                                       item['category'],
                                                       style: TextStyle(
+<<<<<<< Updated upstream
                                                           fontSize: 15,
+=======
+                                                          fontSize: 16,
+>>>>>>> Stashed changes
                                                           color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.w500),
@@ -146,6 +170,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                     })),
           ],
         ),
+<<<<<<< Updated upstream
         ExpansionTile(
           onExpansionChanged: (expanded) {
             setState(() {
@@ -161,10 +186,19 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                 fontSize: 20,
                 color: _text2Color,
               )),
+=======
+        const ExpansionTile(
+          title: Text('Discover New',
+              style: TextStyle(
+                  fontSize: 24,
+                  color: Color.fromARGB(255, 80, 80, 80),
+                  fontWeight: FontWeight.bold)),
+>>>>>>> Stashed changes
           children: <Widget>[
             ListTile(title: Text('This is tile number 2')),
           ],
         ),
+<<<<<<< Updated upstream
         ExpansionTile(
           onExpansionChanged: (expanded) {
             setState(() {
@@ -180,6 +214,14 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                 fontSize: 20,
                 color: _text3Color,
               )),
+=======
+        const ExpansionTile(
+          title: Text('Completed',
+              style: TextStyle(
+                  fontSize: 24,
+                  color: Color.fromARGB(255, 80, 80, 80),
+                  fontWeight: FontWeight.bold)),
+>>>>>>> Stashed changes
           children: <Widget>[
             ListTile(title: Text('This is tile number 3')),
           ],
