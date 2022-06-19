@@ -99,7 +99,7 @@ class _ChallengeMain extends State<ChallengeMain> {
               Padding(
                   padding: EdgeInsets.only(left: 60, right: 60),
                   child: Text(
-                    "Explore ways you can reduce food waste in your daily life",
+                    "Explore ways you can reduce $name in your daily life",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 16,
