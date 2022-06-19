@@ -24,22 +24,21 @@ class ActionIntro extends StatelessWidget {
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
-        body: new Stack(
+        body: Stack(
           children: <Widget>[
-            new Container(
-                child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => TakeAction(id: id)));
-                    },
-                    child: Container(
-                      decoration: new BoxDecoration(
-                        image: new DecorationImage(
-                          image: new AssetImage("assets/takeaction$id.png"),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ))),
+            GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => TakeAction(id: id)));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/takeaction$id.png"),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                )),
           ],
         ));
   }
