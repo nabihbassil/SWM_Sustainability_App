@@ -123,8 +123,8 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                                       },
                                       child: Text(
                                         _isButtonDisabled
-                                            ? "Good Job on Completing the task"
-                                            : "I did this!",
+                                            ? "Good Job on Completing the Task"
+                                            : "I Did This!",
                                         style: const TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold),
@@ -141,7 +141,7 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                                       ),
                                       onPressed: null,
                                       child: const Text(
-                                          'Good Job on Completing the task!',
+                                          'Good Job on Completing the Task!',
                                           style: const TextStyle(
                                               fontSize: 15,
                                               color: Color.fromARGB(
