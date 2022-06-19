@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:swm_app/screens/awareness_intro.dart';
 import 'package:swm_app/screens/awareness_main.dart';
+import 'package:swm_app/screens/take_action_intro.dart';
 import 'package:swm_app/screens/take_actions.dart';
 
 // ignore: must_be_immutable
@@ -57,9 +59,7 @@ class _ChallengeMain extends State<ChallengeMain> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const AwarenessMain(
-                                  id: 1,
-                                )));
+                            builder: (context) => const AwarenessIntro()));
                   },
                   // change to navigation to awareness screen
                   child: SizedBox(
@@ -86,9 +86,7 @@ class _ChallengeMain extends State<ChallengeMain> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const TakeAction(
-                                  id: 1,
-                                )));
+                            builder: (context) => const ActionIntro()));
                   },
                   // change to navigation to tasks screen
                   child: SizedBox(
