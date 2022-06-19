@@ -59,7 +59,8 @@ class _ChallengeMain extends State<ChallengeMain> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const AwarenessIntro()));
+                            builder: (context) =>
+                                AwarenessIntro(id: id, name: name)));
                   },
                   // change to navigation to awareness screen
                   child: SizedBox(
@@ -86,7 +87,8 @@ class _ChallengeMain extends State<ChallengeMain> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const ActionIntro()));
+                            builder: (context) =>
+                                ActionIntro(id: id, name: name)));
                   },
                   // change to navigation to tasks screen
                   child: SizedBox(
