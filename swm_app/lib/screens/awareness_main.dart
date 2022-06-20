@@ -82,7 +82,7 @@ class AwarenessMain extends StatelessWidget {
               Padding(
                   padding: EdgeInsets.only(left: 65, right: 65),
                   child: Text(
-                    "Test your knowledge in Food Waste! (You can only take the quiz after reading the facts once!)",
+                    "Test your knowledge in Food Waste!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 15,

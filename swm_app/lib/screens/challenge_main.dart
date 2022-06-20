@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:swm_app/screens/awareness_intro.dart';
 import 'package:swm_app/screens/awareness_main.dart';
+import 'package:swm_app/screens/take_action_intro.dart';
 import 'package:swm_app/screens/take_actions.dart';
 
 // ignore: must_be_immutable
@@ -57,9 +59,8 @@ class _ChallengeMain extends State<ChallengeMain> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const AwarenessMain(
-                                  id: 1,
-                                )));
+                            builder: (context) =>
+                                AwarenessIntro(id: id, name: name)));
                   },
                   // change to navigation to awareness screen
                   child: SizedBox(
@@ -86,9 +87,8 @@ class _ChallengeMain extends State<ChallengeMain> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const TakeAction(
-                                  id: 1,
-                                )));
+                            builder: (context) =>
+                                ActionIntro(id: id, name: name)));
                   },
                   // change to navigation to tasks screen
                   child: SizedBox(
@@ -101,7 +101,7 @@ class _ChallengeMain extends State<ChallengeMain> {
               Padding(
                   padding: EdgeInsets.only(left: 60, right: 60),
                   child: Text(
-                    "Explore ways you can reduce food waste in your daily life",
+                    "Explore ways you can reduce $name in your daily life",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 16,

@@ -75,10 +75,13 @@ flutter:
     - assets/awarenessicon.png
     - assets/learnfactsicon.png
     - assets/progressbardummy.png
+    - assets/progressbarfact.png
     - assets/takeactionicon.png
     - assets/takequizicon.png
     - assets/tasktimer.png
     - assets/taskcheck.png
+    - assets/awareness1.png
+    - assets/takeaction1.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

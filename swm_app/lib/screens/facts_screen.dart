@@ -66,17 +66,41 @@ class _FactsScreenState extends State<FactsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Container(
+                          height: 20,
+                        ),
+                        SizedBox(
+                            height: 17,
+                            width: 500,
+                            child: Image.asset(
+                              'assets/progressbarfact.png',
+                              fit: BoxFit.contain,
+                            )),
+                        Container(
                           height: 30,
                         ),
                         Container(
                             width: 300,
                             child: Text(
-                              item['awatitle'],
+                              "Did you know...",
                               style: const TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   color: Color.fromARGB(255, 18, 68, 10),
                                   fontWeight: FontWeight.bold),
                               textAlign: TextAlign.left,
+                            )),
+                        Container(height: 30),
+                        FittedBox(
+                            fit: BoxFit.fitHeight,
+                            child: Container(
+                              width: 260,
+                              child: Text(
+                                item['awatext'].replaceAll("\\n", "\n"),
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    fontWeight: FontWeight.normal),
+                                textAlign: TextAlign.left,
+                              ),
                             )),
                         Container(height: 20),
                         ClipRRect(
@@ -86,18 +110,18 @@ class _FactsScreenState extends State<FactsScreen> {
                             height: 170.0,
                           ),
                         ),
-                        Container(height: 20),
+                        Container(height: 40),
                         FittedBox(
                             fit: BoxFit.fitHeight,
                             child: Container(
                               width: 290,
                               child: Text(
-                                item['awatext'].replaceAll("\\n", "\n"),
+                                "Swipe for more ➜",
                                 style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    fontSize: 14,
+                                    color: Color.fromARGB(255, 131, 131, 131),
                                     fontWeight: FontWeight.normal),
-                                textAlign: TextAlign.left,
+                                textAlign: TextAlign.right,
                               ),
                             )),
                       ],
