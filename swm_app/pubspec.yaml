@@ -43,6 +43,7 @@ dependencies:
   flutter_bloc: ^8.0.1
   firebase_storage: ^10.2.15
   firebase_database: ^9.0.15
+  percent_indicator: ^4.0.1
   
 
 dev_dependencies:

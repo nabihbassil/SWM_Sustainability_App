@@ -1,7 +1,6 @@
 import 'dart:ffi';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:swm_app/model/answer.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -13,24 +12,36 @@ class QuizScreen extends StatefulWidget {
 
 class _QuizScreenState extends State<QuizScreen> {
   // definition of variables to track progess
+  List<Icon> _scoreTracker = [];
   int _questionIndex = 0;
   int _totalScore = 0;
   bool answerWasSelected = false;
   bool correctAnswerSelected = false;
   bool endOfQuiz = false;
-  String chosenAnswer = "";
 
   // function that checks wether answer was correct and ads to progress bar
-  void _questionAnswered(String answerText, bool answerScore) {
+  void _questionAnswered(bool answerScore) {
     setState(() {
       //answer was selected
       answerWasSelected = true;
-      chosenAnswer = answerText;
       // check if answer was correct
       if (answerScore) {
         _totalScore++;
         correctAnswerSelected = true;
       }
+
+      // adding the score tracker on top
+      _scoreTracker.add(
+        answerScore
+            ? Icon(
+                Icons.check_circle,
+                color: Colors.green,
+              )
+            : Icon(
+                Icons.clear,
+                color: Colors.red,
+              ),
+      );
 
       // when the quiz ends
       if (_questionIndex + 1 == _questions.length) {
@@ -90,16 +101,16 @@ class _QuizScreenState extends State<QuizScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              LinearPercentIndicator(
-                animateFromLastPercent: true,
-                animationDuration: 5000,
-                barRadius: const Radius.circular(16),
-                lineHeight: 20,
-                percent: (_questionIndex + 1) / _questions.length,
-                backgroundColor: Color.fromARGB(255, 224, 223, 223),
-                progressColor: Color.fromARGB(255, 11, 88, 151),
+              // scoreTracker - future progress bar on top
+              Row(
+                children: [
+                  if (_scoreTracker.length == 0)
+                    SizedBox(
+                      height: 25.0,
+                    ),
+                  if (_scoreTracker.length > 0) ..._scoreTracker
+                ],
               ),
-              SizedBox(height: 20.0),
               // Displays the questions
               Container(
                 width: double.infinity,
@@ -107,7 +118,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 margin: EdgeInsets.only(bottom: 10.0, left: 30.0, right: 30.0),
                 padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 11, 88, 151),
+                  color: Color.fromARGB(255, 255, 255, 255),
                   borderRadius: BorderRadius.circular(10.0),
                   boxShadow: [
                     BoxShadow(
@@ -124,7 +135,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20.0,
-                      color: Color.fromARGB(255, 255, 255, 255),
+                      color: Color.fromARGB(255, 0, 0, 0),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -136,7 +147,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   .map(
                 (answer) => Answer(
                   answerText: answer['answerText'],
-                  borderColor: answerWasSelected
+                  answerColor: answerWasSelected
                       ? answer['score']
                           ? Colors.green
                           : Colors.red
@@ -147,96 +158,67 @@ class _QuizScreenState extends State<QuizScreen> {
                       return;
                     }
                     //answer is being selected
-                    _questionAnswered(answer['answerText'], answer['score']);
+                    _questionAnswered(answer['score']);
                   },
                 ),
               ),
               SizedBox(height: 20.0),
-
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(),
+                onPressed: () {
+                  if (!answerWasSelected) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                          'Please select an answer before going to the next question'),
+                    ));
+                    return;
+                  }
+                  _nextQuestions();
+                },
+                child: Text(endOfQuiz ? 'Restart Quiz' : 'Next Question'),
+              ),
+              Container(
+                padding: EdgeInsets.all(20.0),
+                child: Text(
+                  '${_totalScore.toString()}/${_questions.length}',
+                  style: TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
+                ),
+              ),
               if (answerWasSelected && !endOfQuiz)
                 Container(
-                  height: 200,
+                  height: 100,
                   width: double.infinity,
+                  color: correctAnswerSelected ? Colors.green : Colors.red,
                   child: Center(
-                    child: Column(
-                      children: [
-                        correctAnswerSelected
-                            ? Icon(Icons.check_circle, color: Colors.green)
-                            : Icon(Icons.clear, color: Colors.red),
-                        SizedBox(height: 10.0),
-                        Text(
-                          correctAnswerSelected
-                              ? 'Well done, "${chosenAnswer}" is the right answer.'
-                              : 'You are wrong, "${chosenAnswer}" is not the right answer.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                        ),
-                        SizedBox(height: 5.0),
-                        Text(
-                          _questions[_questionIndex]['explanation'] as String,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.normal,
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                        ),
-                        SizedBox(height: 10.0),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.grey,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0)),
-                          ),
-                          onPressed: () {
-                            if (!answerWasSelected) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text(
-                                    'Please select an answer before going to the next question'),
-                              ));
-                              return;
-                            }
-                            _nextQuestions();
-                          },
-                          child: Text(
-                              endOfQuiz ? 'Restart Quiz' : 'Next Question'),
-                        ),
-                      ],
+                    child: Text(
+                      correctAnswerSelected
+                          ? 'Well done, you got it right!'
+                          : 'Wrong :/',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
-
               if (endOfQuiz)
                 Container(
-                  height: 200,
+                  height: 100,
                   width: double.infinity,
+                  color: Colors.black,
                   child: Center(
-                      child: Column(
-                    children: [
-                      (_totalScore / _questions.length) > 0.5
-                          ? Text(
-                              'Congratulations! Your final score is: ${_totalScore}/${_questions.length}. We will add 100 points to your personal wallet.',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.green,
-                              ),
-                            )
-                          : Text(
-                              'Sorry! Your final score is: ${_totalScore}/${_questions.length}. Please try again.',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red,
-                              ),
-                            )
-                    ],
-                  )),
+                    child: Text(
+                      _totalScore > 4
+                          ? 'Congratulations! Your final score is: $_totalScore'
+                          : 'Your final score is: $_totalScore. Better luck next time!',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                        color: _totalScore > 4 ? Colors.green : Colors.red,
+                      ),
+                    ),
+                  ),
                 ),
             ],
           ),
@@ -246,7 +228,7 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 }
 
-// data set of questions
+// data set of questions as POC
 final _questions = const [
   {
     'question': 'How long is New Zealand’s Ninety Mile Beach?',
@@ -255,8 +237,6 @@ final _questions = const [
       {'answerText': '55km, so 34 miles long.', 'score': false},
       {'answerText': '90km, so 56 miles long.', 'score': false},
     ],
-    'explanation':
-        'The ninety mile beach is only 88km, so 55 miles long. It is classified as an official highway in New Zealand.',
   },
   {
     'question':
@@ -266,7 +246,6 @@ final _questions = const [
       {'answerText': 'October', 'score': false},
       {'answerText': 'September', 'score': true},
     ],
-    'explanation': 'TBD',
   },
   {
     'question': 'Who composed the music for Sonic the Hedgehog 3?',
@@ -275,7 +254,6 @@ final _questions = const [
       {'answerText': 'Timbaland', 'score': false},
       {'answerText': 'Michael Jackson', 'score': true},
     ],
-    'explanation': 'TBD',
   },
   {
     'question': 'In Georgia (the state), it’s illegal to eat what with a fork?',
@@ -284,7 +262,6 @@ final _questions = const [
       {'answerText': 'Fried chicken', 'score': true},
       {'answerText': 'Pizza', 'score': false},
     ],
-    'explanation': 'TBD',
   },
   {
     'question':
@@ -294,7 +271,6 @@ final _questions = const [
       {'answerText': 'His leg', 'score': false},
       {'answerText': 'His butt', 'score': false},
     ],
-    'explanation': 'TBD',
   },
   {
     'question': 'In which country are Panama hats made?',
@@ -303,7 +279,6 @@ final _questions = const [
       {'answerText': 'Panama (duh)', 'score': false},
       {'answerText': 'Portugal', 'score': false},
     ],
-    'explanation': 'TBD',
   },
   {
     'question': 'From which country do French fries originate?',
@@ -312,7 +287,6 @@ final _questions = const [
       {'answerText': 'France (duh)', 'score': false},
       {'answerText': 'Switzerland', 'score': false},
     ],
-    'explanation': 'TBD',
   },
   {
     'question': 'Which sea creature has three hearts?',
@@ -321,7 +295,6 @@ final _questions = const [
       {'answerText': 'Killer Whales', 'score': false},
       {'answerText': 'The Octopus', 'score': true},
     ],
-    'explanation': 'TBD',
   },
   {
     'question': 'Which European country eats the most chocolate per capita?',
@@ -330,6 +303,5 @@ final _questions = const [
       {'answerText': 'The Netherlands', 'score': false},
       {'answerText': 'Switzerland', 'score': true},
     ],
-    'explanation': 'TBD',
   },
 ];
