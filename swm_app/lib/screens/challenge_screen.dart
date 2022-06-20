@@ -13,7 +13,17 @@ class ChallengeScreen extends StatefulWidget {
 }
 
 class _ChallengeScreenState extends State<ChallengeScreen> {
-  final Query _collectionRef = FirebaseFirestore.instance.collection('modules');
+  final Query _collectionRef = FirebaseFirestore.instance
+      .collection('modules')
+      .where("done", isEqualTo: "progress");
+
+  final Query _collectionRef1 = FirebaseFirestore.instance
+      .collection('modules')
+      .where("done", isEqualTo: "new");
+
+  final Query _collectionRef2 = FirebaseFirestore.instance
+      .collection('modules')
+      .where("done", isEqualTo: "complete");
 
   @override
   void initState() {
@@ -156,7 +166,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                     width: MediaQuery.of(context).size.width,
                     height: 250,
                     child: StreamBuilder(
-                        stream: _collectionRef.snapshots(),
+                        stream: _collectionRef1.snapshots(),
                         builder:
                             (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (!snapshot.hasData) {
@@ -261,7 +271,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                     width: MediaQuery.of(context).size.width,
                     height: 250,
                     child: StreamBuilder(
-                        stream: _collectionRef.snapshots(),
+                        stream: _collectionRef2.snapshots(),
                         builder:
                             (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (!snapshot.hasData) {
