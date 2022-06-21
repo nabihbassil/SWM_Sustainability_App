@@ -1,27 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:swm_app/model/facts_model.dart';
 
-class CategoryService {
-  FirebaseFirestore? _instance;
+class FactService {
+  final CollectionReference profileList =
+      FirebaseFirestore.instance.collection('awafacts');
 
-  List<Facts> _categories = [];
+  int counter = 0;
 
-  List<Facts> getCategories() {
-    return _categories;
-  }
-
-  Future<void> getCategoriesCollectionFromFirebase() async {
-    _instance = FirebaseFirestore.instance;
-    CollectionReference categories = _instance!.collection('awafacts');
-
-    DocumentSnapshot snapshot = await categories.doc().get();
-    if (snapshot.exists) {
-      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-      var categoriesData = data['awafacts'] as List<dynamic>;
-      categoriesData.forEach((catData) {
-        Facts cat = Facts.fromJson(catData);
-        _categories.add(cat);
+  Future getFactsList() async {
+    List itemsList = [];
+    try {
+      await profileList.get().then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          itemsList.add(element.data);
+        });
       });
+      return itemsList;
+    } catch (e) {
+      print("error ${e.toString()}");
+      return null;
     }
   }
 }

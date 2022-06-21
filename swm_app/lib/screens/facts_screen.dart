@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:swm_app/model/facts_model.dart';
+import 'package:swm_app/services/fact_service.dart';
 
 class FactsScreen extends StatefulWidget {
   int index;
@@ -14,24 +14,38 @@ class FactsScreen extends StatefulWidget {
 class _FactsScreenState extends State<FactsScreen> {
   int index;
   _FactsScreenState(this.index);
+  List userProfilesList = [];
+  int size = 0;
+  @override
+  void initState() {
+    super.initState();
+    fetchDatabaseList();
+  }
 
   @override
   Future<int> fetchDataSize() async {
     var respectsQuery = FirebaseFirestore.instance.collection('awafacts');
     var querySnapshot = await respectsQuery.get();
     var totalEquals = querySnapshot.docs.length;
-    print("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq  $totalEquals");
     return totalEquals;
+  }
+
+  fetchDatabaseList() async {
+    dynamic resultant = await FactService().getFactsList();
+
+    if (resultant == null) {
+      print('Unable to retrieve for some reason');
+    } else {
+      setState(() {
+        userProfilesList = resultant;
+        size = userProfilesList.length;
+      });
+      print("p2 $size");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    int i = 0;
-    Future<int> factsize = fetchDataSize().then((value) {
-      print("123456  $value");
-      return i = value;
-    });
-
     final Query _collectionRef = FirebaseFirestore.instance
         .collection('awafacts')
         .where("awaID", isEqualTo: index);
