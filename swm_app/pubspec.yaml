@@ -82,6 +82,8 @@ flutter:
     - assets/taskcheck.png
     - assets/awareness1.png
     - assets/takeaction1.png
+    - assets/earth.gif
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:swm_app/screens/login_screen.dart';
+import 'package:swm_app/screens/splash.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       debugShowCheckedModeBanner: false,
-      home: const LoginScreen(),
+      home: const Splash(),
     );
   }
 }
