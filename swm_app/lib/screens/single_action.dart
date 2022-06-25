@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:swm_app/model/user_model.dart';
+import 'package:swm_app/services/user_service.dart';
 
 class SingleActionScreen extends StatefulWidget {
   int id;
@@ -26,6 +28,10 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
     setState(() {
       _isButtonDisabled = true;
     });
+  }
+
+  UpdateUserPoints(points) {
+    UserService().UpdatePoints(points);
   }
 
   @override
@@ -114,12 +120,16 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                                         minimumSize: Size(200, 50),
                                       ),
                                       onPressed: () {
-                                        _isButtonDisabled
-                                            ? null
-                                            : FirebaseFirestore.instance
-                                                .collection('takeactions')
-                                                .doc(item.reference.id)
-                                                .update({'done': true});
+                                        if (_isButtonDisabled) {
+                                          null;
+                                        } else {
+                                          FirebaseFirestore.instance
+                                              .collection('takeactions')
+                                              .doc(item.reference.id)
+                                              .update({'done': true});
+                                          UpdateUserPoints(
+                                              int.parse(item['actionpts']));
+                                        }
                                       },
                                       child: Text(
                                         _isButtonDisabled

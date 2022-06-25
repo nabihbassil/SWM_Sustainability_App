@@ -44,6 +44,7 @@ dependencies:
   firebase_storage: ^10.2.15
   firebase_database: ^9.0.15
   percent_indicator: ^4.0.1
+  image_picker: ^0.8.5+3
   
 
 dev_dependencies:

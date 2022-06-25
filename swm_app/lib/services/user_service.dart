@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:swm_app/model/user_model.dart';
 
 class UserService {
-  User? user = FirebaseAuth.instance.currentUser;
+  final User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
   Future getUserData() async {
@@ -18,7 +18,6 @@ class UserService {
   }
 
   void UpdatePoints(points) async {
-    int newpts = 0;
     FirebaseFirestore.instance
         .collection("users")
         .doc(user?.uid)
@@ -30,7 +29,7 @@ class UserService {
       FirebaseFirestore.instance
           .collection("users")
           .doc(user?.uid)
-          .update(loggedInUser.toMap());
+          .set(loggedInUser.toMap(), SetOptions(merge: true));
     });
   }
 }
