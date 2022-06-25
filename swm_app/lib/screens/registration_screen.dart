@@ -1,8 +1,14 @@
+import 'dart:io';
+import 'dart:math';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:swm_app/model/user_model.dart';
 import 'package:swm_app/page_holder.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -26,6 +32,46 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final emailEditingController = TextEditingController();
   final passwordEditingController = TextEditingController();
   final confirmPasswordEditingController = TextEditingController();
+  File _pickedImage = File("dflt.jpg");
+  String url = '';
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _pickedImage = File("dflt.jpg");
+  }
+
+  void _pickImageCamera() async {
+    final picker = ImagePicker();
+    final pickedImage =
+        await picker.getImage(source: ImageSource.camera, imageQuality: 10);
+    final pickedImageFile = File(pickedImage!.path);
+    setState(() {
+      _pickedImage = pickedImageFile;
+    });
+  }
+
+  void _pickImageGallery() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.getImage(source: ImageSource.gallery);
+    final pickedImageFile = File(pickedImage!.path);
+    setState(() {
+      _pickedImage = pickedImageFile;
+    });
+    Navigator.pop(context);
+  }
+
+  void _remove() {
+    setState(() {
+      _pickedImage = new File("your initial file");
+    });
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -209,12 +255,135 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(
-                        height: 180,
-                        child: Image.asset(
-                          "assets/SWM_logo.jpg",
-                          fit: BoxFit.contain,
-                        )),
+                    Stack(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                              vertical: 30, horizontal: 30),
+                          child: CircleAvatar(
+                            radius: 71,
+                            backgroundColor: Colors.lightGreen,
+                            child: CircleAvatar(
+                              radius: 65,
+                              backgroundColor: Colors.lightGreen,
+                              backgroundImage: _pickedImage == null
+                                  ? null
+                                  : FileImage(_pickedImage),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                            top: 120,
+                            left: 110,
+                            child: RawMaterialButton(
+                              elevation: 10,
+                              fillColor: Colors.deepPurple,
+                              child: Icon(Icons.add_a_photo),
+                              padding: EdgeInsets.all(15.0),
+                              shape: CircleBorder(),
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text(
+                                          'Choose option',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.blueGrey),
+                                        ),
+                                        content: SingleChildScrollView(
+                                          child: ListBody(
+                                            children: [
+                                              InkWell(
+                                                onTap: _pickImageCamera,
+                                                splashColor:
+                                                    Colors.purpleAccent,
+                                                child: Row(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Icon(
+                                                        Icons.camera,
+                                                        color:
+                                                            Colors.purpleAccent,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      'Camera',
+                                                      style: TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: Colors.grey),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              InkWell(
+                                                onTap: _pickImageGallery,
+                                                splashColor:
+                                                    Colors.purpleAccent,
+                                                child: Row(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Icon(
+                                                        Icons.image,
+                                                        color:
+                                                            Colors.purpleAccent,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      'Gallery',
+                                                      style: TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: Colors.grey),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              InkWell(
+                                                onTap: _remove,
+                                                splashColor:
+                                                    Colors.purpleAccent,
+                                                child: Row(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Icon(
+                                                        Icons.remove_circle,
+                                                        color: Colors.red,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      'Remove',
+                                                      style: TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: Colors.red),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    });
+                              },
+                            ))
+                      ],
+                    ),
                     const SizedBox(height: 45),
                     firstNameField,
                     const SizedBox(height: 20),
@@ -285,13 +454,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     User? user = _auth.currentUser;
 
     UserModel userModel = UserModel();
-
     // writing all the values
     userModel.email = user!.email;
     userModel.uid = user.uid;
     userModel.firstName = firstNameEditingController.text;
     userModel.lastName = secondNameEditingController.text;
     userModel.points = 0;
+
+    print("p1");
+
+    final ref = FirebaseStorage.instance.ref().child('usersImages').child(
+        "${userModel.firstName}_${userModel.lastName}_${Random().nextInt(999)}.jpg");
+    await ref.putFile(_pickedImage);
+    url = await ref.getDownloadURL();
+
+    print(url);
+
+    userModel.imgURL = url;
 
     await firebaseFirestore
         .collection("users")
