@@ -61,14 +61,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     setState(() {
       _pickedImage = pickedImageFile;
     });
-    Navigator.pop(context);
   }
 
   void _remove() {
     setState(() {
       _pickedImage = new File("your initial file");
     });
-    Navigator.pop(context);
   }
 
   @override
@@ -257,13 +255,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       children: [
                         Container(
                           margin: EdgeInsets.symmetric(
-                              vertical: 30, horizontal: 30),
+                              vertical: 20, horizontal: 30),
                           child: CircleAvatar(
                             radius: 71,
-                            backgroundColor: Colors.lightGreen,
+                            backgroundColor: Colors.grey,
                             child: CircleAvatar(
                               radius: 65,
-                              backgroundColor: Colors.lightGreen,
+                              backgroundColor: Colors.grey,
                               backgroundImage: _pickedImage == null
                                   ? null
                                   : FileImage(_pickedImage),
@@ -275,7 +273,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             left: 110,
                             child: RawMaterialButton(
                               elevation: 10,
-                              fillColor: Colors.deepPurple,
+                              fillColor: Colors.green,
                               child: Icon(Icons.add_a_photo),
                               padding: EdgeInsets.all(15.0),
                               shape: CircleBorder(),
@@ -295,8 +293,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                             children: [
                                               InkWell(
                                                 onTap: _pickImageCamera,
-                                                splashColor:
-                                                    Colors.purpleAccent,
+                                                splashColor: Colors.green,
                                                 child: Row(
                                                   children: [
                                                     Padding(
@@ -305,8 +302,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                                               8.0),
                                                       child: Icon(
                                                         Icons.camera,
-                                                        color:
-                                                            Colors.purpleAccent,
+                                                        color: Colors.green,
                                                       ),
                                                     ),
                                                     Text(
@@ -322,8 +318,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                               ),
                                               InkWell(
                                                 onTap: _pickImageGallery,
-                                                splashColor:
-                                                    Colors.purpleAccent,
+                                                splashColor: Colors.green,
                                                 child: Row(
                                                   children: [
                                                     Padding(
@@ -332,8 +327,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                                               8.0),
                                                       child: Icon(
                                                         Icons.image,
-                                                        color:
-                                                            Colors.purpleAccent,
+                                                        color: Colors.green,
                                                       ),
                                                     ),
                                                     Text(
@@ -349,8 +343,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                               ),
                                               InkWell(
                                                 onTap: _remove,
-                                                splashColor:
-                                                    Colors.purpleAccent,
+                                                splashColor: Colors.green,
                                                 child: Row(
                                                   children: [
                                                     Padding(
@@ -382,7 +375,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             ))
                       ],
                     ),
-                    const SizedBox(height: 45),
+                    const SizedBox(height: 15),
                     firstNameField,
                     const SizedBox(height: 20),
                     secondNameField,
@@ -394,7 +387,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     confirmPasswordField,
                     const SizedBox(height: 20),
                     signUpButton,
-                    const SizedBox(height: 15),
                   ],
                 ),
               ),
