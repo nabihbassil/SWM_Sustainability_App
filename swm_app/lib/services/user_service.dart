@@ -32,4 +32,14 @@ class UserService {
           .set(loggedInUser.toMap(), SetOptions(merge: true));
     });
   }
+
+  void UpdateActionDone(ID) async {
+    FirebaseFirestore.instance.collection("users").doc(user?.uid).update({
+      "actionsDone": FieldValue.arrayUnion([ID])
+    });
+  }
+
+  bool IsActionDone(actionID) {
+    return true;
+  }
 }

@@ -34,6 +34,10 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
     UserService().UpdatePoints(points);
   }
 
+  UpdateActionDone(ID) {
+    UserService().UpdateActionDone(ID);
+  }
+
   @override
   Widget build(BuildContext context) {
     final Query _collectionRef = FirebaseFirestore.instance
@@ -127,6 +131,8 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                                               .collection('takeactions')
                                               .doc(item.reference.id)
                                               .update({'done': true});
+
+                                          UpdateActionDone(item.reference.id);
                                           UpdateUserPoints(
                                               int.parse(item['actionpts']));
                                         }
