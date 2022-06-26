@@ -39,7 +39,29 @@ class UserService {
     });
   }
 
-  bool IsActionDone(actionID) {
+  Future CheckActionDone(ID) async {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user?.uid)
+        .get()
+        .then((value) {
+      loggedInUser = UserModel.fromMap(value.data());
+      print("test1");
+      print("${loggedInUser.actionsDone!.contains(ID)}");
+      print("id is $ID");
+    });
     return true;
+  }
+
+  Future GetAllActionDone(modID) async {
+    List<String>? _list;
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user?.uid)
+        .get()
+        .then((value) {
+      loggedInUser = UserModel.fromMap(value.data());
+    });
+    return loggedInUser.actionsDone!.toList(growable: true);
   }
 }

@@ -1,32 +1,51 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:swm_app/screens/challenge_main.dart';
 import 'package:swm_app/screens/single_action.dart';
+import 'package:swm_app/services/user_service.dart';
 
 class TakeAction extends StatefulWidget {
-  const TakeAction({Key? key, required int id}) : super(key: key);
+  int id;
+  TakeAction({Key? key, required this.id}) : super(key: key);
 
   @override
-  _TakeActionState createState() => _TakeActionState();
+  _TakeActionState createState() => _TakeActionState(id);
 }
 
 class _TakeActionState extends State<TakeAction> {
+  int id;
+  _TakeActionState(this.id);
+  var ActDone;
+  List L1 = ['0'];
+  List L2 = ['0'];
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
+    GetActionDone(id);
   }
 
-  final Query _collectionRef = FirebaseFirestore.instance
-      .collection('takeactions')
-      .where("done", isEqualTo: true);
-
-  final Query _collectionRef1 = FirebaseFirestore.instance
-      .collection('takeactions')
-      .where("done", isEqualTo: false);
+  GetActionDone(id) async {
+    await UserService().GetAllActionDone(id).then((value) => L1 = value);
+    L2 = L1;
+    if (mounted) {
+      setState(() {
+        L1;
+        L2;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    GetActionDone(id);
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
@@ -96,8 +115,12 @@ class _TakeActionState extends State<TakeAction> {
                 ),
                 // spacing btw to do title and tasks
                 const SizedBox(height: 10),
-                StreamBuilder(
-                    stream: _collectionRef1.snapshots(),
+                FutureBuilder(
+                    future: FirebaseFirestore.instance
+                        .collection('takeactions')
+                        .where("parentmoduleid", isEqualTo: id)
+                        .where(FieldPath.documentId, whereNotIn: L1)
+                        .get(),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (!snapshot.hasData) {
                         return const Center(child: Text('Loading...'));
@@ -125,7 +148,7 @@ class _TakeActionState extends State<TakeAction> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 SingleActionScreen(
-                                                    id: item['actionID'])));
+                                                    id: item.reference.id)));
                                   },
                                   child: Text(
                                     item['actiontitle'],
@@ -171,10 +194,15 @@ class _TakeActionState extends State<TakeAction> {
                 ),
                 // space btw completed title and tasks
                 const SizedBox(height: 10),
-                StreamBuilder(
-                    stream: _collectionRef.snapshots(),
+                FutureBuilder(
+                    future: FirebaseFirestore.instance
+                        .collection('takeactions')
+                        .where("parentmoduleid", isEqualTo: id)
+                        .where(FieldPath.documentId, whereIn: L2)
+                        .get(),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot1) {
                       if (!snapshot1.hasData) {
+                        print("snaps");
                         return const Center(child: Text('Loading...'));
                       }
                       return Expanded(
@@ -200,7 +228,7 @@ class _TakeActionState extends State<TakeAction> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 SingleActionScreen(
-                                                    id: item1['actionID'])));
+                                                    id: item1.reference.id)));
                                   },
                                   child: Text(
                                     item1['actiontitle'],
