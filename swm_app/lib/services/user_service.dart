@@ -46,11 +46,8 @@ class UserService {
         .get()
         .then((value) {
       loggedInUser = UserModel.fromMap(value.data());
-      print("test1");
-      print("${loggedInUser.actionsDone!.contains(ID)}");
-      print("id is $ID");
     });
-    return true;
+    return loggedInUser.actionsDone!.contains(ID);
   }
 
   Future GetAllActionDone(modID) async {

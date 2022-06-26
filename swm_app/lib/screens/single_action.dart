@@ -23,6 +23,7 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
     _isButtonDisabled = false;
+    CheckActionDone(id);
   }
 
   void _DisableButton() {
@@ -36,7 +37,7 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
   }
 
   UpdateActionDone(ID) async {
-    UserService().CheckActionDone(ID);
+    UserService().UpdateActionDone(ID);
   }
 
   CheckActionDone(ID) async {
@@ -44,11 +45,11 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
         .CheckActionDone(ID)
         .then((value) => _isActionDone = value);
 
-    print("btnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn is $_isActionDone");
-
-    setState(() {
-      _isActionDone;
-    });
+    if (mounted) {
+      setState(() {
+        _isActionDone;
+      });
+    }
   }
 
   @override
@@ -126,7 +127,7 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              _isActionDone
+                              !_isActionDone
                                   ? ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                         // Foreground color
