@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:swm_app/model/facts_model.dart';
 
 class FactService {
   final CollectionReference profileList =
@@ -19,5 +20,17 @@ class FactService {
       print("error ${e.toString()}");
       return null;
     }
+  }
+
+  Future<List<Facts>> getUserTaskList() async {
+    QuerySnapshot qShot =
+        await FirebaseFirestore.instance.collection('awafacts').get();
+
+    return qShot.docs
+        .map((doc) => Facts(
+            awatext: doc.get("awatext"),
+            awatitle: doc.get("awatitle"),
+            awaimg: doc.get("awaimg")))
+        .toList();
   }
 }
