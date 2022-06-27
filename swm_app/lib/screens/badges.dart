@@ -103,6 +103,74 @@ class _BadgesState extends State<Badges> {
                         fontWeight: FontWeight.bold,
                         color: Color.fromARGB(255, 130, 130, 130)),
                   )),
+              GridView.count(
+                primary: false,
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(10),
+                crossAxisSpacing: 30,
+                mainAxisSpacing: 30,
+                crossAxisCount: 4,
+                children: <Widget>[
+                  Container(
+                      width: 10.0,
+                      height: 10.0,
+                      decoration: new BoxDecoration(
+                        color: Color.fromARGB(255, 195, 195, 195),
+                        shape: BoxShape.circle,
+                      )),
+                  Container(
+                      width: 10.0,
+                      height: 10.0,
+                      decoration: new BoxDecoration(
+                        color: Color.fromARGB(255, 195, 195, 195),
+                        shape: BoxShape.circle,
+                      )),
+                  Container(
+                      width: 10.0,
+                      height: 10.0,
+                      decoration: new BoxDecoration(
+                        color: Color.fromARGB(255, 195, 195, 195),
+                        shape: BoxShape.circle,
+                      )),
+                  Container(
+                    width: 10.0,
+                    height: 10.0,
+                    decoration: new BoxDecoration(
+                      color: Color.fromARGB(255, 195, 195, 195),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  Container(
+                      width: 10.0,
+                      height: 10.0,
+                      decoration: new BoxDecoration(
+                        color: Color.fromARGB(255, 195, 195, 195),
+                        shape: BoxShape.circle,
+                      )),
+                  Container(
+                      width: 10.0,
+                      height: 10.0,
+                      decoration: new BoxDecoration(
+                        color: Color.fromARGB(255, 195, 195, 195),
+                        shape: BoxShape.circle,
+                      )),
+                  Container(
+                      width: 10.0,
+                      height: 10.0,
+                      decoration: new BoxDecoration(
+                        color: Color.fromARGB(255, 195, 195, 195),
+                        shape: BoxShape.circle,
+                      )),
+                  Container(
+                    width: 10.0,
+                    height: 10.0,
+                    decoration: new BoxDecoration(
+                      color: Color.fromARGB(255, 195, 195, 195),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 15),
               Padding(
                   padding: EdgeInsets.only(right: 290),
@@ -114,6 +182,45 @@ class _BadgesState extends State<Badges> {
                         color: Color.fromARGB(255, 130, 130, 130)),
                   )),
               const SizedBox(height: 15),
+              GridView.count(
+                primary: false,
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(10),
+                crossAxisSpacing: 30,
+                mainAxisSpacing: 30,
+                crossAxisCount: 4,
+                children: <Widget>[
+                  Container(
+                      width: 10.0,
+                      height: 10.0,
+                      decoration: new BoxDecoration(
+                        color: Color.fromARGB(255, 195, 195, 195),
+                        shape: BoxShape.circle,
+                      )),
+                  Container(
+                      width: 10.0,
+                      height: 10.0,
+                      decoration: new BoxDecoration(
+                        color: Color.fromARGB(255, 195, 195, 195),
+                        shape: BoxShape.circle,
+                      )),
+                  Container(
+                      width: 10.0,
+                      height: 10.0,
+                      decoration: new BoxDecoration(
+                        color: Color.fromARGB(255, 195, 195, 195),
+                        shape: BoxShape.circle,
+                      )),
+                  Container(
+                    width: 10.0,
+                    height: 10.0,
+                    decoration: new BoxDecoration(
+                      color: Color.fromARGB(255, 195, 195, 195),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
