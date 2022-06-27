@@ -2,7 +2,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:swm_app/model/answer.dart';
+import 'package:swm_app/Components/answer.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({Key? key}) : super(key: key);

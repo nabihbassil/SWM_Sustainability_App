@@ -1,10 +1,22 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
   String? uid;
   String? email;
   String? firstName;
   String? lastName;
+  int? points;
+  String? imgURL;
+  List? actionsDone;
 
-  UserModel({this.uid, this.email, this.firstName, this.lastName});
+  UserModel(
+      {this.uid,
+      this.email,
+      this.firstName,
+      this.lastName,
+      this.points,
+      this.imgURL,
+      this.actionsDone});
 
   // receiving data from server
   factory UserModel.fromMap(map) {
@@ -13,6 +25,9 @@ class UserModel {
       email: map['email'],
       firstName: map['firstName'],
       lastName: map['lastName'],
+      points: map['points'],
+      imgURL: map['imgURL'],
+      actionsDone: map['actionsDone'],
     );
   }
 
@@ -23,6 +38,9 @@ class UserModel {
       'email': email,
       'firstName': firstName,
       'lastName': lastName,
+      'points': points,
+      'imgURL': imgURL,
+      'actionsDone': FieldValue.arrayUnion([]),
     };
   }
 }

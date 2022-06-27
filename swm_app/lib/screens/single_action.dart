@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:swm_app/model/user_model.dart';
+import 'package:swm_app/services/user_service.dart';
 
 class SingleActionScreen extends StatefulWidget {
-  int id;
+  String id;
   SingleActionScreen({Key? key, required this.id}) : super(key: key);
 
   @override
@@ -11,15 +13,17 @@ class SingleActionScreen extends StatefulWidget {
 }
 
 class _SingleActionScreenState extends State<SingleActionScreen> {
-  int id;
+  String id;
   _SingleActionScreenState(this.id);
   late bool _isButtonDisabled;
+  var _isActionDone;
 
   @override
   void initState() {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
     _isButtonDisabled = false;
+    CheckActionDone(id);
   }
 
   void _DisableButton() {
@@ -28,11 +32,32 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
     });
   }
 
+  UpdateUserPoints(points) {
+    UserService().UpdatePoints(points);
+  }
+
+  UpdateActionDone(ID) async {
+    UserService().UpdateActionDone(ID);
+  }
+
+  CheckActionDone(ID) async {
+    await UserService()
+        .CheckActionDone(ID)
+        .then((value) => _isActionDone = value);
+
+    if (mounted) {
+      setState(() {
+        _isActionDone;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    CheckActionDone(id);
     final Query _collectionRef = FirebaseFirestore.instance
         .collection('takeactions')
-        .where("actionID", isEqualTo: id);
+        .where(FieldPath.documentId, isEqualTo: id);
 
     return Scaffold(
       appBar: AppBar(
@@ -102,7 +127,7 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              !item['done']
+                              !_isActionDone
                                   ? ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                         // Foreground color
@@ -114,12 +139,13 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                                         minimumSize: Size(200, 50),
                                       ),
                                       onPressed: () {
-                                        _isButtonDisabled
-                                            ? null
-                                            : FirebaseFirestore.instance
-                                                .collection('takeactions')
-                                                .doc(item.reference.id)
-                                                .update({'done': true});
+                                        if (_isButtonDisabled) {
+                                          null;
+                                        } else {
+                                          UpdateActionDone(item.reference.id);
+                                          UpdateUserPoints(
+                                              int.parse(item['actionpts']));
+                                        }
                                       },
                                       child: Text(
                                         _isButtonDisabled
