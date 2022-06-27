@@ -76,13 +76,17 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                   child: Row(children: [
                                     Column(
                                       children: [
-                                        Text(
-                                          item['modName'],
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Color.fromARGB(
-                                                  255, 131, 131, 131),
-                                              fontWeight: FontWeight.w500),
+                                        Container(
+                                          width: 155,
+                                          child: Text(
+                                            item['modName'],
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                color: Color.fromARGB(
+                                                    255, 131, 131, 131),
+                                                fontWeight: FontWeight.bold),
+                                            textAlign: TextAlign.left,
+                                          ),
                                         ),
                                         SizedBox(
                                           height: 4,
@@ -116,28 +120,30 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                             .size
                                                             .width,
                                                   ),
-                                                  Container(
-                                                    color: Colors.black26,
-                                                    child: Center(
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text(
-                                                            item['category'],
-                                                            style: TextStyle(
-                                                                fontSize: 16,
-                                                                color: Colors
-                                                                    .white,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  )
+                                                  Container(height: 10),
+                                                  FittedBox(
+                                                      fit: BoxFit.fitHeight,
+                                                      child: Container(
+                                                        width: 100,
+                                                        child: Text(
+                                                          item['category']
+                                                              .replaceAll(
+                                                                  "\\n", "\n"),
+                                                          style: TextStyle(
+                                                              fontSize: 16,
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      255,
+                                                                      255,
+                                                                      255),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                        ),
+                                                      )),
                                                 ],
                                               ),
                                             ),
@@ -181,13 +187,17 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                 child: Row(children: [
                                   Column(
                                     children: [
-                                      Text(
-                                        item['modName'],
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: Color.fromARGB(
-                                                255, 131, 131, 131),
-                                            fontWeight: FontWeight.w500),
+                                      Container(
+                                        width: 155,
+                                        child: Text(
+                                          item['modName'],
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Color.fromARGB(
+                                                  255, 131, 131, 131),
+                                              fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.left,
+                                        ),
                                       ),
                                       SizedBox(
                                         height: 4,
@@ -220,28 +230,29 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                       .size
                                                       .width,
                                                 ),
-                                                Container(
-                                                  color: Colors.black26,
-                                                  child: Center(
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Text(
-                                                          item['category'],
-                                                          style: TextStyle(
-                                                              fontSize: 16,
-                                                              color:
-                                                                  Colors.white,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                )
+                                                FittedBox(
+                                                    fit: BoxFit.fitHeight,
+                                                    child: Container(
+                                                      width: 100,
+                                                      child: Text(
+                                                        item['category']
+                                                            .replaceAll(
+                                                                "\\n", "\n"),
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    255,
+                                                                    255,
+                                                                    255),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                      ),
+                                                    )),
                                               ],
                                             ),
                                           ),
@@ -260,107 +271,113 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
             width: MediaQuery.of(context).size.width,
             color: Color.fromARGB(255, 245, 255, 243),
             child: ExpansionTile(
-              title: Text('Completed',
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Color.fromARGB(255, 80, 80, 80),
-                      fontWeight: FontWeight.bold)),
-              children: [
-                // I'll name the data fr
-                SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 250,
-                    child: StreamBuilder(
-                        stream: _collectionRef2.snapshots(),
-                        builder:
-                            (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (!snapshot.hasData) {
-                            return const Center(child: Text('Loading...'));
-                          }
-                          return Expanded(
-                              child: ListView(
-                            shrinkWrap: false,
-                            scrollDirection: Axis.horizontal,
-                            children: snapshot.data!.docs.map((item) {
-                              return Center(
-                                child: Row(children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        item['modName'],
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: Color.fromARGB(
-                                                255, 131, 131, 131),
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      SizedBox(
-                                        height: 4,
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ChallengeMain(
-                                                        id: item['modID'],
-                                                        name: item['modName'],
-                                                      )));
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 24),
-                                          height: 150,
-                                          width: 200,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            child: Stack(
-                                              children: [
-                                                Image.network(
-                                                  item['modIMG'],
-                                                  fit: BoxFit.cover,
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                ),
-                                                Container(
-                                                  color: Colors.black26,
-                                                  child: Center(
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Text(
-                                                          item['category'],
+                title: const Text('Complete',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Color.fromARGB(255, 80, 80, 80),
+                        fontWeight: FontWeight.bold)),
+                children: [
+                  // I'll name the data fr
+                  SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 250,
+                      child: StreamBuilder(
+                          stream: _collectionRef2.snapshots(),
+                          builder:
+                              (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (!snapshot.hasData) {
+                              return const Center(child: Text('Loading...'));
+                            }
+                            return Expanded(
+                                child: ListView(
+                              shrinkWrap: false,
+                              scrollDirection: Axis.horizontal,
+                              children: snapshot.data!.docs.map((item) {
+                                return Center(
+                                  child: Row(children: [
+                                    Column(
+                                      children: [
+                                        Container(
+                                          width: 155,
+                                          child: Text(
+                                            item['modName'],
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                color: Color.fromARGB(
+                                                    255, 131, 131, 131),
+                                                fontWeight: FontWeight.bold),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 4,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ChallengeMain(
+                                                          id: item['modID'],
+                                                          name: item['modName'],
+                                                        )));
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 24),
+                                            height: 150,
+                                            width: 200,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: Stack(
+                                                children: [
+                                                  Image.network(
+                                                    item['modIMG'],
+                                                    fit: BoxFit.cover,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
+                                                  ),
+                                                  Container(height: 10),
+                                                  FittedBox(
+                                                      fit: BoxFit.fitHeight,
+                                                      child: Container(
+                                                        width: 100,
+                                                        child: Text(
+                                                          item['category']
+                                                              .replaceAll(
+                                                                  "\\n", "\n"),
                                                           style: TextStyle(
                                                               fontSize: 16,
-                                                              color:
-                                                                  Colors.white,
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      255,
+                                                                      255,
+                                                                      255),
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                        ),
+                                                      )),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                ]),
-                              );
-                            }).toList(),
-                          ));
-                        })),
-              ],
-            )),
+                                        )
+                                      ],
+                                    )
+                                  ]),
+                                );
+                              }).toList(),
+                            ));
+                          })),
+                ])),
       ],
     );
   }
