@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
@@ -11,6 +14,23 @@ class Badges extends StatefulWidget {
 }
 
 class _BadgesState extends State<Badges> {
+  final Query _collectionRef = FirebaseFirestore.instance
+      .collection('badges')
+      .where("module", isEqualTo: "general");
+
+  final Query _collectionRef1 = FirebaseFirestore.instance
+      .collection('badges')
+      .where("module", isEqualTo: "consumption");
+
+  final Query _collectionRef2 = FirebaseFirestore.instance
+      .collection('badges')
+      .where("module", isEqualTo: "energy");
+  @override
+  void initState() {
+    super.initState();
+    WidgetsFlutterBinding.ensureInitialized();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +48,7 @@ class _BadgesState extends State<Badges> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      backgroundColor: Color.fromARGB(255, 245, 245, 245),
+      backgroundColor: Color.fromARGB(255, 246, 246, 246),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -57,48 +77,49 @@ class _BadgesState extends State<Badges> {
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 130, 130, 130)),
+                              color: Color.fromARGB(255, 139, 161, 170)),
                         )),
                     const SizedBox(height: 15),
-                    GridView.count(
-                      primary: false,
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.all(10),
-                      crossAxisSpacing: 30,
-                      mainAxisSpacing: 30,
-                      crossAxisCount: 4,
-                      children: <Widget>[
-                        Container(
-                            width: 10.0,
-                            height: 10.0,
-                            decoration: new BoxDecoration(
-                              color: Color.fromARGB(255, 195, 195, 195),
-                              shape: BoxShape.circle,
-                            )),
-                        Container(
-                            width: 10.0,
-                            height: 10.0,
-                            decoration: new BoxDecoration(
-                              color: Color.fromARGB(255, 195, 195, 195),
-                              shape: BoxShape.circle,
-                            )),
-                        Container(
-                            width: 10.0,
-                            height: 10.0,
-                            decoration: new BoxDecoration(
-                              color: Color.fromARGB(255, 195, 195, 195),
-                              shape: BoxShape.circle,
-                            )),
-                        Container(
-                          width: 10.0,
-                          height: 10.0,
-                          decoration: new BoxDecoration(
-                            color: Color.fromARGB(255, 195, 195, 195),
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ],
-                    ),
+                    // grid view
+
+                    StreamBuilder(
+                        stream: _collectionRef.snapshots(),
+                        builder:
+                            (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (!snapshot.hasData) {
+                            return const Center(child: Text('Loading...'));
+                          }
+                          return GridView.count(
+                            primary: false,
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.all(5),
+                            crossAxisSpacing: 20,
+                            mainAxisSpacing: 15,
+                            crossAxisCount: 4,
+                            children: snapshot.data!.docs.map((item) {
+                              return Container(child: LayoutBuilder(
+                                  builder: (context, constraints) {
+                                if (item['earned'] == true) {
+                                  return GestureDetector(
+                                      onTap: () {
+                                        badgespecifics(context);
+                                      },
+                                      child: Image(
+                                          image: AssetImage(
+                                              "assets/badges/badge" +
+                                                  item['icon'] +
+                                                  ".png")));
+                                } else {
+                                  return Image(
+                                      image: AssetImage(
+                                          "assets/badges/nobadge.png"));
+                                }
+                              }));
+                            }).toList(),
+                          );
+                        }),
+
+                    // new
                     const SizedBox(height: 15),
                     Padding(
                         padding: EdgeInsets.only(right: 240),
@@ -107,76 +128,45 @@ class _BadgesState extends State<Badges> {
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 130, 130, 130)),
+                              color: Color.fromARGB(255, 139, 161, 170)),
                         )),
-                    GridView.count(
-                      primary: false,
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.all(10),
-                      crossAxisSpacing: 30,
-                      mainAxisSpacing: 30,
-                      crossAxisCount: 4,
-                      children: <Widget>[
-                        Container(
-                            width: 10.0,
-                            height: 10.0,
-                            decoration: new BoxDecoration(
-                              color: Color.fromARGB(255, 195, 195, 195),
-                              shape: BoxShape.circle,
-                            )),
-                        Container(
-                            width: 10.0,
-                            height: 10.0,
-                            decoration: new BoxDecoration(
-                              color: Color.fromARGB(255, 195, 195, 195),
-                              shape: BoxShape.circle,
-                            )),
-                        Container(
-                            width: 10.0,
-                            height: 10.0,
-                            decoration: new BoxDecoration(
-                              color: Color.fromARGB(255, 195, 195, 195),
-                              shape: BoxShape.circle,
-                            )),
-                        Container(
-                          width: 10.0,
-                          height: 10.0,
-                          decoration: new BoxDecoration(
-                            color: Color.fromARGB(255, 195, 195, 195),
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                        Container(
-                            width: 10.0,
-                            height: 10.0,
-                            decoration: new BoxDecoration(
-                              color: Color.fromARGB(255, 195, 195, 195),
-                              shape: BoxShape.circle,
-                            )),
-                        Container(
-                            width: 10.0,
-                            height: 10.0,
-                            decoration: new BoxDecoration(
-                              color: Color.fromARGB(255, 195, 195, 195),
-                              shape: BoxShape.circle,
-                            )),
-                        Container(
-                            width: 10.0,
-                            height: 10.0,
-                            decoration: new BoxDecoration(
-                              color: Color.fromARGB(255, 195, 195, 195),
-                              shape: BoxShape.circle,
-                            )),
-                        Container(
-                          width: 10.0,
-                          height: 10.0,
-                          decoration: new BoxDecoration(
-                            color: Color.fromARGB(255, 195, 195, 195),
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ],
-                    ),
+                    const SizedBox(height: 15),
+                    StreamBuilder(
+                        stream: _collectionRef1.snapshots(),
+                        builder:
+                            (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (!snapshot.hasData) {
+                            return const Center(child: Text('Loading...'));
+                          }
+                          return GridView.count(
+                            primary: false,
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.all(5),
+                            crossAxisSpacing: 20,
+                            mainAxisSpacing: 15,
+                            crossAxisCount: 4,
+                            children: snapshot.data!.docs.map((item) {
+                              return Container(child: LayoutBuilder(
+                                  builder: (context, constraints) {
+                                if (item['earned'] == true) {
+                                  return GestureDetector(
+                                      onTap: () {
+                                        badgespecifics(context);
+                                      },
+                                      child: Image(
+                                          image: AssetImage(
+                                              "assets/badges/badge" +
+                                                  item['icon'] +
+                                                  ".png")));
+                                } else {
+                                  return Image(
+                                      image: AssetImage(
+                                          "assets/badges/nobadge.png"));
+                                }
+                              }));
+                            }).toList(),
+                          );
+                        }),
                     const SizedBox(height: 15),
                     Padding(
                         padding: EdgeInsets.only(right: 290),
@@ -185,92 +175,45 @@ class _BadgesState extends State<Badges> {
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 130, 130, 130)),
+                              color: Color.fromARGB(255, 139, 161, 170)),
                         )),
                     const SizedBox(height: 15),
-                    GridView.count(
-                      primary: false,
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.all(10),
-                      crossAxisSpacing: 30,
-                      mainAxisSpacing: 30,
-                      crossAxisCount: 4,
-                      children: <Widget>[
-                        Container(
-                            width: 10.0,
-                            height: 10.0,
-                            decoration: new BoxDecoration(
-                              color: Color.fromARGB(255, 195, 195, 195),
-                              shape: BoxShape.circle,
-                            )),
-                        Container(
-                            width: 10.0,
-                            height: 10.0,
-                            decoration: new BoxDecoration(
-                              color: Color.fromARGB(255, 195, 195, 195),
-                              shape: BoxShape.circle,
-                            )),
-                        Container(
-                            width: 10.0,
-                            height: 10.0,
-                            decoration: new BoxDecoration(
-                              color: Color.fromARGB(255, 195, 195, 195),
-                              shape: BoxShape.circle,
-                            )),
-                        Container(
-                          width: 10.0,
-                          height: 10.0,
-                          decoration: new BoxDecoration(
-                            color: Color.fromARGB(255, 195, 195, 195),
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                        Container(
-                            width: 10.0,
-                            height: 10.0,
-                            decoration: new BoxDecoration(
-                              color: Color.fromARGB(255, 195, 195, 195),
-                              shape: BoxShape.circle,
-                            )),
-                        Container(
-                            width: 10.0,
-                            height: 10.0,
-                            decoration: new BoxDecoration(
-                              color: Color.fromARGB(255, 195, 195, 195),
-                              shape: BoxShape.circle,
-                            )),
-                        Container(
-                          width: 10.0,
-                          height: 10.0,
-                          decoration: new BoxDecoration(
-                            color: Color.fromARGB(255, 195, 195, 195),
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                        Container(
-                            width: 10.0,
-                            height: 10.0,
-                            decoration: new BoxDecoration(
-                              color: Color.fromARGB(255, 195, 195, 195),
-                              shape: BoxShape.circle,
-                            )),
-                        Container(
-                            width: 10.0,
-                            height: 10.0,
-                            decoration: new BoxDecoration(
-                              color: Color.fromARGB(255, 195, 195, 195),
-                              shape: BoxShape.circle,
-                            )),
-                        Container(
-                          width: 10.0,
-                          height: 10.0,
-                          decoration: new BoxDecoration(
-                            color: Color.fromARGB(255, 195, 195, 195),
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ],
-                    ),
+                    StreamBuilder(
+                        stream: _collectionRef2.snapshots(),
+                        builder:
+                            (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (!snapshot.hasData) {
+                            return const Center(child: Text('Loading...'));
+                          }
+                          return GridView.count(
+                            primary: false,
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.all(5),
+                            crossAxisSpacing: 20,
+                            mainAxisSpacing: 15,
+                            crossAxisCount: 4,
+                            children: snapshot.data!.docs.map((item) {
+                              return Container(child: LayoutBuilder(
+                                  builder: (context, constraints) {
+                                if (item['earned'] == true) {
+                                  return GestureDetector(
+                                      onTap: () {
+                                        badgespecifics(context);
+                                      },
+                                      child: Image(
+                                          image: AssetImage(
+                                              "assets/badges/badge" +
+                                                  item['icon'] +
+                                                  ".png")));
+                                } else {
+                                  return Image(
+                                      image: AssetImage(
+                                          "assets/badges/nobadge.png"));
+                                }
+                              }));
+                            }).toList(),
+                          );
+                        }),
                   ])))
             ],
           ),
@@ -278,4 +221,20 @@ class _BadgesState extends State<Badges> {
       ),
     );
   }
+}
+
+void badgespecifics(context) {
+  showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+          decoration: BoxDecoration(
+              color: Color.fromARGB(255, 246, 246, 246),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
+              )),
+          child: Column(
+            children: [Text("Badge Specifics")],
+          )));
 }
