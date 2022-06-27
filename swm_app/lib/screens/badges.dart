@@ -28,17 +28,92 @@ class _BadgesState extends State<Badges> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
+      backgroundColor: Color.fromARGB(255, 245, 245, 245),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
-                "Badges",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                "Badge Collection",
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 70, 70, 70)),
               ),
+              const SizedBox(height: 20),
+              Padding(
+                  padding: EdgeInsets.only(right: 290),
+                  child: Text(
+                    "General",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 130, 130, 130)),
+                  )),
+              const SizedBox(height: 15),
+              GridView.count(
+                primary: false,
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(10),
+                crossAxisSpacing: 30,
+                mainAxisSpacing: 30,
+                crossAxisCount: 4,
+                children: <Widget>[
+                  Container(
+                      width: 10.0,
+                      height: 10.0,
+                      decoration: new BoxDecoration(
+                        color: Color.fromARGB(255, 195, 195, 195),
+                        shape: BoxShape.circle,
+                      )),
+                  Container(
+                      width: 10.0,
+                      height: 10.0,
+                      decoration: new BoxDecoration(
+                        color: Color.fromARGB(255, 195, 195, 195),
+                        shape: BoxShape.circle,
+                      )),
+                  Container(
+                      width: 10.0,
+                      height: 10.0,
+                      decoration: new BoxDecoration(
+                        color: Color.fromARGB(255, 195, 195, 195),
+                        shape: BoxShape.circle,
+                      )),
+                  Container(
+                    width: 10.0,
+                    height: 10.0,
+                    decoration: new BoxDecoration(
+                      color: Color.fromARGB(255, 195, 195, 195),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 15),
+              Padding(
+                  padding: EdgeInsets.only(right: 240),
+                  child: Text(
+                    "Consumption",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 130, 130, 130)),
+                  )),
+              const SizedBox(height: 15),
+              Padding(
+                  padding: EdgeInsets.only(right: 290),
+                  child: Text(
+                    "Energy",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 130, 130, 130)),
+                  )),
+              const SizedBox(height: 15),
             ],
           ),
         ),
