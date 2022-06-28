@@ -65,7 +65,9 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                           builder:
                               (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                             if (!snapshot.hasData) {
-                              return const Center(child: Text('Loading...'));
+                              return CircularProgressIndicator(
+                                color: Colors.green,
+                              );
                             }
                             return Expanded(
                                 child: ListView(
@@ -176,7 +178,9 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                         builder:
                             (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (!snapshot.hasData) {
-                            return const Center(child: Text('Loading...'));
+                            return CircularProgressIndicator(
+                              color: Colors.green,
+                            );
                           }
                           return Expanded(
                               child: ListView(
@@ -286,7 +290,9 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                           builder:
                               (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                             if (!snapshot.hasData) {
-                              return const Center(child: Text('Loading...'));
+                              return CircularProgressIndicator(
+                                color: Colors.green,
+                              );
                             }
                             return Expanded(
                                 child: ListView(
