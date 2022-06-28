@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:swm_app/screens/awareness_main.dart';
 import 'package:swm_app/services/fact_service.dart';
 import 'package:swm_app/screens/quiz_screen.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -7,32 +8,38 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 class FactsScreen extends StatefulWidget {
   int index;
   int id;
-  FactsScreen({Key? key, required this.index, required this.id})
+  String name;
+  FactsScreen(
+      {Key? key, required this.index, required this.id, required this.name})
       : super(key: key);
 
   @override
   // ignore: no_logic_in_create_state
-  State<FactsScreen> createState() => _FactsScreenState(index, id);
+  State<FactsScreen> createState() => _FactsScreenState(index, id, name);
 }
 
 class _FactsScreenState extends State<FactsScreen> {
   int _factIndex = 0;
-  _FactsScreenState(this._factIndex, this.id);
+  _FactsScreenState(this._factIndex, this.id, this.name);
   List userProfilesList = [];
   int size = 0;
   int id;
+  String name;
+
   @override
   void initState() {
     super.initState();
-    fetchDatabaseList();
+    fetchDatabaseList(id);
   }
+
+//add PreviousFact to go back too *important*
 
   void _nextFact() {
     setState(() {
       _factIndex++;
     });
     // what happens at the end of the facts
-    if (_factIndex >= 4) {
+    if (_factIndex > size) {
       _resetFacts();
     }
   }
@@ -46,21 +53,25 @@ class _FactsScreenState extends State<FactsScreen> {
 
   @override
   Future<int> fetchDataSize() async {
-    var respectsQuery = FirebaseFirestore.instance.collection('awafacts');
+    var respectsQuery = FirebaseFirestore.instance
+        .collection('awafacts')
+        .where("parentmoduleid", isEqualTo: id);
     var querySnapshot = await respectsQuery.get();
     var totalEquals = querySnapshot.docs.length;
     return totalEquals;
   }
 
-  fetchDatabaseList() async {
-    dynamic resultant = await FactService().getFactsList();
+  fetchDatabaseList(id) async {
+    dynamic resultant = await FactService().getFactsList(id);
 
     if (resultant == null) {
       print('Unable to retrieve for some reason');
     } else {
       setState(() {
-        userProfilesList = resultant;
-        size = userProfilesList.length;
+        userProfilesList =
+            resultant; //  <-----------  this contains all the data of facts use this with _factindex to load data *important*
+        size = userProfilesList
+            .length; //  <-----------  this contains size of the data use it to compare stuff related to size *important*
       });
       print("p2 $size");
     }
@@ -68,9 +79,13 @@ class _FactsScreenState extends State<FactsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("fact nummer $_factIndex");
     final Query _collectionRef = FirebaseFirestore.instance
         .collection('awafacts')
-        .where("awaID", isEqualTo: _factIndex);
+        .where("awaID", isEqualTo: _factIndex)
+        .where("parentmoduleid",
+            isEqualTo:
+                id); //  <-----------  remove this line dont load data from here *important*
 
     return Scaffold(
       appBar: AppBar(
@@ -84,7 +99,8 @@ class _FactsScreenState extends State<FactsScreen> {
         iconTheme: const IconThemeData(color: Colors.black),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => AwarenessMain(id: id, name: name))),
         ),
       ),
       body: Center(
@@ -109,7 +125,7 @@ class _FactsScreenState extends State<FactsScreen> {
                           animationDuration: 5000,
                           barRadius: const Radius.circular(16),
                           lineHeight: 20,
-                          percent: (_factIndex) / 3,
+                          percent: (_factIndex) / size,
                           backgroundColor: Color.fromARGB(255, 212, 240, 204),
                           progressColor: Color.fromARGB(255, 23, 141, 4),
                         ),
@@ -151,20 +167,23 @@ class _FactsScreenState extends State<FactsScreen> {
                         Container(height: 40),
                         GestureDetector(
                             onTap: () {
-                              if (_factIndex <= 2) {
+                              if (_factIndex <= size) {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => FactsScreen(
                                           index: _factIndex,
                                           id: id,
+                                          name: name,
                                         )));
                                 _nextFact();
                               } else {
+                                _resetFacts();
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => QuizScreen(
                                           id: id,
+                                          name: name,
                                         )));
-                                _nextFact();
-                                _resetFacts();
+                                //  _nextFact();
+
                               }
                             },
                             // change to navigation to awareness screen
@@ -172,7 +191,7 @@ class _FactsScreenState extends State<FactsScreen> {
                                 fit: BoxFit.fitHeight,
                                 child: Container(
                                   width: 290,
-                                  child: _factIndex >= 3
+                                  child: _factIndex > size - 1
                                       ? Text(
                                           "Continue to Quiz➜",
                                           style: const TextStyle(
@@ -183,7 +202,7 @@ class _FactsScreenState extends State<FactsScreen> {
                                           textAlign: TextAlign.right,
                                         )
                                       : Text(
-                                          "Swipe for more ➜",
+                                          "Next ➜",
                                           style: const TextStyle(
                                               fontSize: 14,
                                               color: Color.fromARGB(

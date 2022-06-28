@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:swm_app/Components/answer.dart';
+import 'package:swm_app/screens/awareness_main.dart';
 
 class QuizScreen extends StatefulWidget {
   int id;
-  QuizScreen({Key? key, required this.id}) : super(key: key);
+  String name;
+  QuizScreen({Key? key, required this.id, required this.name})
+      : super(key: key);
 
   @override
-  _QuizScreenState createState() => _QuizScreenState(id);
+  _QuizScreenState createState() => _QuizScreenState(id, name);
 }
 
 class _QuizScreenState extends State<QuizScreen> {
@@ -21,7 +24,8 @@ class _QuizScreenState extends State<QuizScreen> {
   bool endOfQuiz = false;
   String chosenAnswer = "";
   int id;
-  _QuizScreenState(this.id);
+  String name;
+  _QuizScreenState(this.id, this.name);
 
   // function that checks wether answer was correct and ads to progress bar
   void _questionAnswered(String answerText, bool answerScore) {
@@ -83,7 +87,8 @@ class _QuizScreenState extends State<QuizScreen> {
         iconTheme: const IconThemeData(color: Colors.black),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => AwarenessMain(id: id, name: name))),
         ),
       ),
       body: Center(

@@ -47,7 +47,8 @@ class AwarenessMain extends StatelessWidget {
               GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => FactsScreen(index: 1, id: id)));
+                        builder: (context) =>
+                            FactsScreen(index: 1, id: id, name: name)));
                   },
                   // change to navigation to awareness screen
                   child: SizedBox(
@@ -72,7 +73,7 @@ class AwarenessMain extends StatelessWidget {
               GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => QuizScreen(id: id)));
+                        builder: (context) => QuizScreen(id: id, name: name)));
                   },
                   // change to navigation to tasks screen
                   child: SizedBox(

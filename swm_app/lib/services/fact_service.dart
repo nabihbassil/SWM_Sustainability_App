@@ -7,7 +7,7 @@ class FactService {
 
   int counter = 0;
 
-  Future getFactsList() async {
+  Future getFactsList(id) async {
     List itemsList = [];
     try {
       await profileList.get().then((querySnapshot) {
@@ -22,9 +22,11 @@ class FactService {
     }
   }
 
-  Future<List<Facts>> getUserTaskList() async {
-    QuerySnapshot qShot =
-        await FirebaseFirestore.instance.collection('awafacts').get();
+  Future<List<Facts>> getUserTaskList(id) async {
+    QuerySnapshot qShot = await FirebaseFirestore.instance
+        .collection('awafacts')
+        .where("parentmoduleid", isEqualTo: id)
+        .get();
 
     return qShot.docs
         .map((doc) => Facts(
