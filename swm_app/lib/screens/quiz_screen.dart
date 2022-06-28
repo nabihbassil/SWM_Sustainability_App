@@ -87,8 +87,7 @@ class _QuizScreenState extends State<QuizScreen> {
         iconTheme: const IconThemeData(color: Colors.black),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => AwarenessMain(id: id, name: name))),
+          onPressed: () => Navigator.of(context).pop(),
         ),
       ),
       body: Center(
