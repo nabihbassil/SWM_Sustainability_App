@@ -37,12 +37,17 @@ class _LevelsState extends State<Levels> {
             children: <Widget>[
               Text(
                 "Levels Overview",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 24,
+                    color: Color.fromARGB(255, 45, 75, 40),
+                    fontWeight: FontWeight.bold),
               ),
+              Image.asset('assets/Picture1.jpg'),
             ],
           ),
         ),
       ),
+      backgroundColor: Color.fromARGB(255, 232, 243, 228),
     );
   }
 }

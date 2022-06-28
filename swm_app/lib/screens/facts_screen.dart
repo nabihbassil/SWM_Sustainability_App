@@ -107,8 +107,8 @@ class _FactsScreenState extends State<FactsScreen> {
                           barRadius: const Radius.circular(16),
                           lineHeight: 20,
                           percent: (_factIndex) / 3,
-                          backgroundColor: Color.fromARGB(255, 224, 223, 223),
-                          progressColor: Color.fromARGB(255, 11, 88, 151),
+                          backgroundColor: Color.fromARGB(255, 212, 240, 204),
+                          progressColor: Color.fromARGB(255, 23, 141, 4),
                         ),
                         Container(
                           height: 30,
