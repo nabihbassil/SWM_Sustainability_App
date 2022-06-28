@@ -5,10 +5,11 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:swm_app/Components/answer.dart';
 
 class QuizScreen extends StatefulWidget {
-  const QuizScreen({Key? key}) : super(key: key);
+  int id;
+  QuizScreen({Key? key, required this.id}) : super(key: key);
 
   @override
-  _QuizScreenState createState() => _QuizScreenState();
+  _QuizScreenState createState() => _QuizScreenState(id);
 }
 
 class _QuizScreenState extends State<QuizScreen> {
@@ -19,6 +20,8 @@ class _QuizScreenState extends State<QuizScreen> {
   bool correctAnswerSelected = false;
   bool endOfQuiz = false;
   String chosenAnswer = "";
+  int id;
+  _QuizScreenState(this.id);
 
   // function that checks wether answer was correct and ads to progress bar
   void _questionAnswered(String answerText, bool answerScore) {

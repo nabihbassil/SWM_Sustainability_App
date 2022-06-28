@@ -6,18 +6,21 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class FactsScreen extends StatefulWidget {
   int index;
-  FactsScreen({Key? key, required this.index}) : super(key: key);
+  int id;
+  FactsScreen({Key? key, required this.index, required this.id})
+      : super(key: key);
 
   @override
   // ignore: no_logic_in_create_state
-  State<FactsScreen> createState() => _FactsScreenState(index);
+  State<FactsScreen> createState() => _FactsScreenState(index, id);
 }
 
 class _FactsScreenState extends State<FactsScreen> {
   int _factIndex = 0;
-  _FactsScreenState(this._factIndex);
+  _FactsScreenState(this._factIndex, this.id);
   List userProfilesList = [];
   int size = 0;
+  int id;
   @override
   void initState() {
     super.initState();
@@ -152,11 +155,14 @@ class _FactsScreenState extends State<FactsScreen> {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => FactsScreen(
                                           index: _factIndex,
+                                          id: id,
                                         )));
                                 _nextFact();
                               } else {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => QuizScreen()));
+                                    builder: (context) => QuizScreen(
+                                          id: id,
+                                        )));
                                 _nextFact();
                                 _resetFacts();
                               }

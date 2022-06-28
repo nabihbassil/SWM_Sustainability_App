@@ -30,7 +30,7 @@ class AwarenessIntro extends StatelessWidget {
             GestureDetector(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => AwarenessMain(id: id)));
+                      builder: (context) => AwarenessMain(id: id, name: name)));
                 },
                 child: Container(
                   decoration: BoxDecoration(

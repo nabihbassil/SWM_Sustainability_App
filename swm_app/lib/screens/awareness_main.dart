@@ -5,7 +5,10 @@ import 'package:swm_app/screens/facts_screen.dart';
 import 'package:swm_app/screens/quiz_screen.dart';
 
 class AwarenessMain extends StatelessWidget {
-  const AwarenessMain({Key? key, required int id}) : super(key: key);
+  String name;
+  int id;
+  AwarenessMain({Key? key, required this.id, required this.name})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,7 @@ class AwarenessMain extends StatelessWidget {
               GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => FactsScreen(index: 1)));
+                        builder: (context) => FactsScreen(index: 1, id: id)));
                   },
                   // change to navigation to awareness screen
                   child: SizedBox(
@@ -57,7 +60,7 @@ class AwarenessMain extends StatelessWidget {
               Padding(
                   padding: EdgeInsets.only(left: 65, right: 65),
                   child: Text(
-                    "Discover how Food Waste is harming our planet.",
+                    "Discover how $name is harming our planet.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 15,
@@ -68,8 +71,8 @@ class AwarenessMain extends StatelessWidget {
               const SizedBox(height: 30),
               GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => QuizScreen()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => QuizScreen(id: id)));
                   },
                   // change to navigation to tasks screen
                   child: SizedBox(
@@ -82,7 +85,7 @@ class AwarenessMain extends StatelessWidget {
               Padding(
                   padding: EdgeInsets.only(left: 65, right: 65),
                   child: Text(
-                    "Test your knowledge in Food Waste!",
+                    "Test your knowledge in $name!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 15,
