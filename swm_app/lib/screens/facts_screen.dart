@@ -12,14 +12,31 @@ class FactsScreen extends StatefulWidget {
 }
 
 class _FactsScreenState extends State<FactsScreen> {
-  int index;
-  _FactsScreenState(this.index);
+  int _factIndex = 0;
+  _FactsScreenState(this._factIndex);
   List userProfilesList = [];
   int size = 0;
   @override
   void initState() {
     super.initState();
     fetchDatabaseList();
+  }
+
+  void _nextFact() {
+    setState(() {
+      _factIndex++;
+    });
+    // what happens at the end of the quiz
+    if (_factIndex >= 6) {
+      _resetFacts();
+    }
+  }
+
+  // function that describes what happens at the end of the quiz
+  void _resetFacts() {
+    setState(() {
+      _factIndex = 0;
+    });
   }
 
   @override
@@ -48,7 +65,7 @@ class _FactsScreenState extends State<FactsScreen> {
   Widget build(BuildContext context) {
     final Query _collectionRef = FirebaseFirestore.instance
         .collection('awafacts')
-        .where("awaID", isEqualTo: index);
+        .where("awaID", isEqualTo: _factIndex);
 
     return Scaffold(
       appBar: AppBar(
@@ -125,19 +142,29 @@ class _FactsScreenState extends State<FactsScreen> {
                           ),
                         ),
                         Container(height: 40),
-                        FittedBox(
-                            fit: BoxFit.fitHeight,
-                            child: Container(
-                              width: 290,
-                              child: Text(
-                                "Swipe for more ➜",
-                                style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color.fromARGB(255, 131, 131, 131),
-                                    fontWeight: FontWeight.normal),
-                                textAlign: TextAlign.right,
-                              ),
-                            )),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => FactsScreen(
+                                        index: _factIndex,
+                                      )));
+                              _nextFact();
+                            },
+                            // change to navigation to awareness screen
+                            child: FittedBox(
+                                fit: BoxFit.fitHeight,
+                                child: Container(
+                                  width: 290,
+                                  child: Text(
+                                    "Swipe for more ➜",
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        color:
+                                            Color.fromARGB(255, 131, 131, 131),
+                                        fontWeight: FontWeight.normal),
+                                    textAlign: TextAlign.right,
+                                  ),
+                                ))),
                       ],
                     ),
                   );
