@@ -8,6 +8,9 @@ class UserModel {
   int? points;
   String? imgURL;
   List? actionsDone;
+  List? ModulesDone;
+  List? ModulesInProgress;
+  List? BadgesDone;
 
   UserModel(
       {this.uid,
@@ -16,7 +19,10 @@ class UserModel {
       this.lastName,
       this.points,
       this.imgURL,
-      this.actionsDone});
+      this.actionsDone,
+      this.ModulesDone,
+      this.BadgesDone,
+      this.ModulesInProgress});
 
   // receiving data from server
   factory UserModel.fromMap(map) {
@@ -28,6 +34,9 @@ class UserModel {
       points: map['points'],
       imgURL: map['imgURL'],
       actionsDone: map['actionsDone'],
+      ModulesDone: map['ModulesDone'],
+      BadgesDone: map['BadgesDone'],
+      ModulesInProgress: map['ModulesInProgress'],
     );
   }
 
@@ -41,6 +50,9 @@ class UserModel {
       'points': points,
       'imgURL': imgURL,
       'actionsDone': FieldValue.arrayUnion([]),
+      'ModulesDone': FieldValue.arrayUnion([]),
+      'BadgesDone': FieldValue.arrayUnion([]),
+      'ModulesInProgress': FieldValue.arrayUnion([]),
     };
   }
 }
