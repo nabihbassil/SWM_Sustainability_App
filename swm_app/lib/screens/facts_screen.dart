@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:swm_app/services/fact_service.dart';
+import 'package:swm_app/screens/quiz_screen.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class FactsScreen extends StatefulWidget {
   int index;
@@ -26,13 +28,13 @@ class _FactsScreenState extends State<FactsScreen> {
     setState(() {
       _factIndex++;
     });
-    // what happens at the end of the quiz
-    if (_factIndex >= 6) {
+    // what happens at the end of the facts
+    if (_factIndex >= 4) {
       _resetFacts();
     }
   }
 
-  // function that describes what happens at the end of the quiz
+  // function that describes what happens at the end of the facts
   void _resetFacts() {
     setState(() {
       _factIndex = 0;
@@ -99,13 +101,15 @@ class _FactsScreenState extends State<FactsScreen> {
                         Container(
                           height: 20,
                         ),
-                        SizedBox(
-                            height: 17,
-                            width: 500,
-                            child: Image.asset(
-                              'assets/progressbarfact.png',
-                              fit: BoxFit.contain,
-                            )),
+                        LinearPercentIndicator(
+                          animateFromLastPercent: true,
+                          animationDuration: 5000,
+                          barRadius: const Radius.circular(16),
+                          lineHeight: 20,
+                          percent: (_factIndex) / 3,
+                          backgroundColor: Color.fromARGB(255, 224, 223, 223),
+                          progressColor: Color.fromARGB(255, 11, 88, 151),
+                        ),
                         Container(
                           height: 30,
                         ),
@@ -144,26 +148,43 @@ class _FactsScreenState extends State<FactsScreen> {
                         Container(height: 40),
                         GestureDetector(
                             onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => FactsScreen(
-                                        index: _factIndex,
-                                      )));
-                              _nextFact();
+                              if (_factIndex <= 2) {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => FactsScreen(
+                                          index: _factIndex,
+                                        )));
+                                _nextFact();
+                              } else {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => QuizScreen()));
+                                _nextFact();
+                                _resetFacts();
+                              }
                             },
                             // change to navigation to awareness screen
                             child: FittedBox(
                                 fit: BoxFit.fitHeight,
                                 child: Container(
                                   width: 290,
-                                  child: Text(
-                                    "Swipe for more ➜",
-                                    style: const TextStyle(
-                                        fontSize: 14,
-                                        color:
-                                            Color.fromARGB(255, 131, 131, 131),
-                                        fontWeight: FontWeight.normal),
-                                    textAlign: TextAlign.right,
-                                  ),
+                                  child: _factIndex >= 3
+                                      ? Text(
+                                          "Continue to Quiz➜",
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Color.fromARGB(
+                                                  255, 33, 36, 119),
+                                              fontWeight: FontWeight.normal),
+                                          textAlign: TextAlign.right,
+                                        )
+                                      : Text(
+                                          "Swipe for more ➜",
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Color.fromARGB(
+                                                  255, 131, 131, 131),
+                                              fontWeight: FontWeight.normal),
+                                          textAlign: TextAlign.right,
+                                        ),
                                 ))),
                       ],
                     ),
