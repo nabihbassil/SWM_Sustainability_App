@@ -102,7 +102,8 @@ class _BadgesState extends State<Badges> {
                                 if (item['earned'] == true) {
                                   return GestureDetector(
                                       onTap: () {
-                                        badgespecifics(context);
+                                        badgespecifics(context, item['icon'],
+                                            item['name'], item['description']);
                                       },
                                       child: Image(
                                           image: AssetImage(
@@ -151,7 +152,8 @@ class _BadgesState extends State<Badges> {
                                 if (item['earned'] == true) {
                                   return GestureDetector(
                                       onTap: () {
-                                        badgespecifics(context);
+                                        badgespecifics(context, item['icon'],
+                                            item['name'], item['description']);
                                       },
                                       child: Image(
                                           image: AssetImage(
@@ -198,7 +200,8 @@ class _BadgesState extends State<Badges> {
                                 if (item['earned'] == true) {
                                   return GestureDetector(
                                       onTap: () {
-                                        badgespecifics(context);
+                                        badgespecifics(context, item['icon'],
+                                            item['name'], item['description']);
                                       },
                                       child: Image(
                                           image: AssetImage(
@@ -223,18 +226,49 @@ class _BadgesState extends State<Badges> {
   }
 }
 
-void badgespecifics(context) {
+void badgespecifics(context, badgenum, badgename, badgedescription) {
   showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
           decoration: BoxDecoration(
-              color: Color.fromARGB(255, 246, 246, 246),
+              color: Color.fromARGB(255, 232, 232, 232),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25),
                 topRight: Radius.circular(25),
               )),
           child: Column(
-            children: [Text("Badge Specifics")],
-          )));
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                const SizedBox(height: 20),
+                SizedBox(
+                    height: 120,
+                    child: Image(
+                        image: AssetImage(
+                            "assets/badges/badge" + badgenum + ".png"))),
+                const SizedBox(height: 15),
+                Text(
+                  badgename,
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 113, 130, 137)),
+                ),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.only(left: 35, right: 35),
+                  child: Text(
+                    "   " +
+                        badgedescription +
+                        "\n\nCongratulations on earning the badge!",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        fontSize: 19,
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic,
+                        color: Color.fromARGB(255, 70, 70, 70)),
+                  ),
+                )
+              ])));
 }
