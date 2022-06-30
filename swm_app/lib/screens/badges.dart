@@ -102,7 +102,8 @@ class _BadgesState extends State<Badges> {
                                 if (item['earned'] == true) {
                                   return GestureDetector(
                                       onTap: () {
-                                        badgespecifics(context);
+                                        badgespecifics(context, item['icon'],
+                                            item['module']);
                                       },
                                       child: Image(
                                           image: AssetImage(
@@ -151,7 +152,8 @@ class _BadgesState extends State<Badges> {
                                 if (item['earned'] == true) {
                                   return GestureDetector(
                                       onTap: () {
-                                        badgespecifics(context);
+                                        badgespecifics(context, item['icon'],
+                                            item['module']);
                                       },
                                       child: Image(
                                           image: AssetImage(
@@ -198,7 +200,8 @@ class _BadgesState extends State<Badges> {
                                 if (item['earned'] == true) {
                                   return GestureDetector(
                                       onTap: () {
-                                        badgespecifics(context);
+                                        badgespecifics(context, item['icon'],
+                                            item['module']);
                                       },
                                       child: Image(
                                           image: AssetImage(
@@ -223,18 +226,34 @@ class _BadgesState extends State<Badges> {
   }
 }
 
-void badgespecifics(context) {
+void badgespecifics(context, badgenum, badgedescription) {
   showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
           decoration: BoxDecoration(
-              color: Color.fromARGB(255, 246, 246, 246),
+              color: Color.fromARGB(255, 222, 222, 222),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25),
                 topRight: Radius.circular(25),
               )),
           child: Column(
-            children: [Text("Badge Specifics")],
-          )));
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                const SizedBox(height: 20),
+                SizedBox(
+                    height: 120,
+                    child: Image(
+                        image: AssetImage(
+                            "assets/badges/badge" + badgenum + ".png"))),
+                const SizedBox(height: 20),
+                Text(
+                  badgedescription,
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 70, 70, 70)),
+                ),
+              ])));
 }
