@@ -62,7 +62,7 @@ class _FactsScreenState extends State<FactsScreen> {
   }
 
   fetchDatabaseList(id) async {
-    dynamic resultant = await FactService().getFactsList(id);
+    dynamic resultant = await FactService().getUserTaskList(id);
 
     if (resultant == null) {
       print('Unable to retrieve for some reason');
