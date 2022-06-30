@@ -16,7 +16,7 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
   String id;
   _SingleActionScreenState(this.id);
   late bool _isButtonDisabled;
-  var _isActionDone = true;
+  var _isActionDone = false;
 
   @override
   void initState() {
