@@ -52,11 +52,11 @@ class UserModel {
       'lastName': lastName,
       'points': points,
       'imgURL': imgURL,
-      'actionsDone': FieldValue.arrayUnion([]),
-      'ModulesDone': FieldValue.arrayUnion([]),
-      'BadgesDone': FieldValue.arrayUnion([]),
-      'ModulesInProgress': FieldValue.arrayUnion([]),
-      'QuizDone': FieldValue.arrayUnion([]),
+      'actionsDone': FieldValue.arrayUnion(['0']),
+      'ModulesDone': FieldValue.arrayUnion(['0']),
+      'BadgesDone': FieldValue.arrayUnion(['0']),
+      'ModulesInProgress': FieldValue.arrayUnion(['0']),
+      'QuizDone': FieldValue.arrayUnion(['0']),
     };
   }
 }

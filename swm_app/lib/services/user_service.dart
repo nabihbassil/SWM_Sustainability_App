@@ -133,7 +133,7 @@ class UserService {
 
     bool isQuizDone = LQuizzes.contains(quizID);
 
-    if (isQuizDone && notDoneTasksLength == 0) {
+    if (isQuizDone && notDoneTasksLength == 1) {
       setModuleDone(ID);
     } else {
       setModuleInProgress(ID);

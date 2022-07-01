@@ -148,7 +148,9 @@ class _TakeActionState extends State<TakeAction> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 SingleActionScreen(
-                                                    id: item.reference.id)));
+                                                  id: item.reference.id,
+                                                  modID: id,
+                                                )));
                                   },
                                   child: Text(
                                     item['actiontitle'],
@@ -228,7 +230,9 @@ class _TakeActionState extends State<TakeAction> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 SingleActionScreen(
-                                                    id: item1.reference.id)));
+                                                  id: item1.reference.id,
+                                                  modID: id,
+                                                )));
                                   },
                                   child: Text(
                                     item1['actiontitle'],

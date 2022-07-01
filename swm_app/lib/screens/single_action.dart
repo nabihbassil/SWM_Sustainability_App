@@ -5,16 +5,19 @@ import 'package:swm_app/services/user_service.dart';
 
 class SingleActionScreen extends StatefulWidget {
   String id;
-  SingleActionScreen({Key? key, required this.id}) : super(key: key);
+  int modID;
+  SingleActionScreen({Key? key, required this.id, required this.modID})
+      : super(key: key);
 
   @override
   // ignore: no_logic_in_create_state
-  _SingleActionScreenState createState() => _SingleActionScreenState(id);
+  _SingleActionScreenState createState() => _SingleActionScreenState(id, modID);
 }
 
 class _SingleActionScreenState extends State<SingleActionScreen> {
   String id;
-  _SingleActionScreenState(this.id);
+  int modID;
+  _SingleActionScreenState(this.id, this.modID);
   late bool _isButtonDisabled;
   var _isActionDone = false;
 
@@ -36,9 +39,9 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
     UserService().UpdatePoints(points);
   }
 
-  UpdateActionDone(ID) async {
+  UpdateActionDone(ID, modID) async {
     UserService().UpdateActionDone(ID);
-    UserService().updateModuleLogic(ID);
+    UserService().updateModuleLogic(modID);
   }
 
   CheckActionDone(ID) async {
@@ -143,7 +146,8 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                                         if (_isButtonDisabled) {
                                           null;
                                         } else {
-                                          UpdateActionDone(item.reference.id);
+                                          UpdateActionDone(
+                                              item.reference.id, modID);
                                           UpdateUserPoints(
                                               int.parse(item['actionpts']));
                                         }
