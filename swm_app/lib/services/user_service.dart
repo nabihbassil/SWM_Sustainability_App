@@ -113,7 +113,7 @@ class UserService {
 
     print("DOOOOOOOOONNNEEEEEE $DoneTasksLength");*/
 
-    var notDoneTasksLength = await FirebaseFirestore.instance
+    var notDoneTasksLength = FirebaseFirestore.instance
         .collection('takeactions')
         .where("parentmoduleid", isEqualTo: ID)
         .where(FieldPath.documentId, whereNotIn: LTasks)
