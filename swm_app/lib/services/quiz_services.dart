@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:swm_app/model/Quiz_model.dart';
-import 'package:swm_app/model/facts_model.dart';
 
 class QuizService {
   int counter = 0;

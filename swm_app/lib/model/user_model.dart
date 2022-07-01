@@ -11,6 +11,7 @@ class UserModel {
   List? ModulesDone;
   List? ModulesInProgress;
   List? BadgesDone;
+  List? QuizDone;
 
   UserModel(
       {this.uid,
@@ -22,7 +23,8 @@ class UserModel {
       this.actionsDone,
       this.ModulesDone,
       this.BadgesDone,
-      this.ModulesInProgress});
+      this.ModulesInProgress,
+      this.QuizDone});
 
   // receiving data from server
   factory UserModel.fromMap(map) {
@@ -37,6 +39,7 @@ class UserModel {
       ModulesDone: map['ModulesDone'],
       BadgesDone: map['BadgesDone'],
       ModulesInProgress: map['ModulesInProgress'],
+      QuizDone: map['QuizDone'],
     );
   }
 
@@ -53,6 +56,7 @@ class UserModel {
       'ModulesDone': FieldValue.arrayUnion([]),
       'BadgesDone': FieldValue.arrayUnion([]),
       'ModulesInProgress': FieldValue.arrayUnion([]),
+      'QuizDone': FieldValue.arrayUnion([]),
     };
   }
 }

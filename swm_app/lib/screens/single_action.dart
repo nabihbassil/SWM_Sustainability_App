@@ -38,6 +38,7 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
 
   UpdateActionDone(ID) async {
     UserService().UpdateActionDone(ID);
+    UserService().updateModuleLogic(ID);
   }
 
   CheckActionDone(ID) async {
