@@ -2,6 +2,8 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:swm_app/model/badges_model.dart';
+import 'package:swm_app/model/quiz_model.dart';
 import 'package:swm_app/model/user_model.dart';
 
 class UserService {
@@ -36,7 +38,7 @@ class UserService {
   }
 
   void UpdateActionDone(ID) async {
-    FirebaseFirestore.instance.collection("users").doc(user?.uid).update({
+    await FirebaseFirestore.instance.collection("users").doc(user?.uid).update({
       "actionsDone": FieldValue.arrayUnion([ID])
     });
   }
@@ -64,8 +66,10 @@ class UserService {
     return loggedInUser.actionsDone!.toList(growable: true);
   }
 
-  Future GetAllQuizzesDone(modID) async {
+  Future<bool> GetIfQuizDone(modID) async {
     List<String>? _list;
+    List? LQuizzes = ['0'];
+    String quizID = '';
     await FirebaseFirestore.instance
         .collection("users")
         .doc(user?.uid)
@@ -73,7 +77,33 @@ class UserService {
         .then((value) {
       loggedInUser = UserModel.fromMap(value.data());
     });
-    return loggedInUser.QuizDone!.toList(growable: true);
+
+    LQuizzes = loggedInUser.QuizDone;
+
+    QuerySnapshot qShot = await FirebaseFirestore.instance
+        .collection('quiz')
+        .where("parentmoduleid", isEqualTo: modID)
+        .get();
+
+    qShot.docs.map((doc) async => {quizID = doc.id});
+
+    bool isQuizDone = LQuizzes!.contains(quizID);
+    return isQuizDone;
+  }
+
+  Future<int> GetSizeofToDoTasks(modID, LTasks) async {
+    int notDoneTasksLength = -1;
+    print("modID $modID");
+    await FirebaseFirestore.instance
+        .collection('takeactions')
+        .where("parentmoduleid", isEqualTo: modID)
+        .where(FieldPath.documentId, whereNotIn: LTasks)
+        .get()
+        .then((value) => notDoneTasksLength = value.size);
+
+    print("notDoneTasksLength $notDoneTasksLength");
+
+    return notDoneTasksLength;
   }
 
   void setModuleInProgress(ID) async {
@@ -92,49 +122,33 @@ class UserService {
     });
   }
 
-  void updateModuleLogic(ID) async {
-    List LTasks = ['0'];
-    List LQuizzes = ['0'];
-    String quizID = "";
-    //int ListLength = 0;
-
-    print("in func $ID");
-
-    await GetAllActionDone(ID).then((value) => LTasks = value);
-    // ListLength = LTasks.length;
-    print("L1 $LTasks");
-
-    /*var DoneTasksLength = await FirebaseFirestore.instance
-        .collection('takeactions')
-        .where("parentmoduleid", isEqualTo: ID)
-        .where(FieldPath.documentId, whereIn: LTasks)
-        .snapshots()
-        .length;
-
-    print("DOOOOOOOOONNNEEEEEE $DoneTasksLength");*/
-
-    var notDoneTasksLength = FirebaseFirestore.instance
-        .collection('takeactions')
-        .where("parentmoduleid", isEqualTo: ID)
-        .where(FieldPath.documentId, whereNotIn: LTasks)
-        .snapshots()
-        .length;
-
-    print("NOOOOTTT $notDoneTasksLength");
-
-    await GetAllQuizzesDone(ID).then((value) => LQuizzes = value);
-
+  Future<List<Badges>> GetRelatedBadges(ID) async {
     QuerySnapshot qShot = await FirebaseFirestore.instance
-        .collection('quiz')
+        .collection('badges')
         .where("parentmoduleid", isEqualTo: ID)
         .get();
 
-    qShot.docs.map((doc) async => {quizID = doc.id});
+    return qShot.docs
+        .map((doc) => Badges(
+              relateModID: doc.get("relateModID"),
+            ))
+        .toList();
+  }
 
-    bool isQuizDone = LQuizzes.contains(quizID);
+  void CompleteModuleBadges(ID) async {
+    List userProfilesList = await GetRelatedBadges(ID);
+    FirebaseFirestore.instance.collection("users").doc(user?.uid).update({
+      "BadgesDone": FieldValue.arrayUnion([userProfilesList])
+    });
+  }
 
-    if (isQuizDone && notDoneTasksLength == 1) {
+  void updateModuleLogic(ID, isQuizDone, notDoneTasksLength) async {
+    print("notDoneTasksLength $notDoneTasksLength");
+    print("boolquiz $isQuizDone");
+
+    if (isQuizDone && notDoneTasksLength == 0) {
       setModuleDone(ID);
+      CompleteModuleBadges(ID);
     } else {
       setModuleInProgress(ID);
     }
