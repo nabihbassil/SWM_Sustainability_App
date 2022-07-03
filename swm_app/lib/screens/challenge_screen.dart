@@ -44,13 +44,13 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
   @override
   void initState() {
     super.initState();
+    GetAllModulesInProgress();
+    GetAllModulesDone();
     WidgetsFlutterBinding.ensureInitialized();
   }
 
   @override
   Widget build(BuildContext context) {
-    GetAllModulesInProgress();
-    GetAllModulesDone();
     return ListView(
       children: <Widget>[
         const Padding(
