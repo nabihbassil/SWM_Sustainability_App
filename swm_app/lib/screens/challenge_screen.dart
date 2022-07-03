@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:swm_app/screens/challenge_main.dart';
+import 'package:swm_app/services/user_service.dart';
 
 class ChallengeScreen extends StatefulWidget {
   const ChallengeScreen({Key? key}) : super(key: key);
@@ -13,17 +14,32 @@ class ChallengeScreen extends StatefulWidget {
 }
 
 class _ChallengeScreenState extends State<ChallengeScreen> {
-  final Query _collectionRef = FirebaseFirestore.instance
-      .collection('modules')
-      .where("done", isEqualTo: "progress");
+  List LProgress = ['0'];
+  List LDone = ['0'];
+  List LNew = ['0'];
 
-  final Query _collectionRef1 = FirebaseFirestore.instance
-      .collection('modules')
-      .where("done", isEqualTo: "new");
+  GetAllModulesDone() async {
+    await UserService().GetAllModulesDone().then((value) => LDone = value);
+    if (mounted) {
+      setState(() {
+        LDone;
+        LNew = LDone + LProgress;
+      });
+    }
+  }
 
-  final Query _collectionRef2 = FirebaseFirestore.instance
-      .collection('modules')
-      .where("done", isEqualTo: "complete");
+  GetAllModulesInProgress() async {
+    await UserService()
+        .GetAllModulesInProgress()
+        .then((value) => LProgress = value);
+    print("print progreesss $LProgress");
+    if (mounted) {
+      setState(() {
+        LProgress;
+        LNew = LDone + LProgress;
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -33,6 +49,8 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    GetAllModulesInProgress();
+    GetAllModulesDone();
     return ListView(
       children: <Widget>[
         const Padding(
@@ -60,14 +78,15 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                   SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: 250,
-                      child: StreamBuilder(
-                          stream: _collectionRef.snapshots(),
+                      child: FutureBuilder(
+                          future: FirebaseFirestore.instance
+                              .collection('modules')
+                              .where("modID", whereIn: LProgress)
+                              .get(),
                           builder:
                               (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                             if (!snapshot.hasData) {
-                              return CircularProgressIndicator(
-                                color: Colors.green,
-                              );
+                              return const Center(child: Text('Loading...'));
                             }
                             return Expanded(
                                 child: ListView(
@@ -173,14 +192,15 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                 SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: 250,
-                    child: StreamBuilder(
-                        stream: _collectionRef1.snapshots(),
+                    child: FutureBuilder(
+                        future: FirebaseFirestore.instance
+                            .collection('modules')
+                            .where("modID", whereNotIn: LNew)
+                            .get(),
                         builder:
                             (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (!snapshot.hasData) {
-                            return CircularProgressIndicator(
-                              color: Colors.green,
-                            );
+                            return const Center(child: Text('Loading...'));
                           }
                           return Expanded(
                               child: ListView(
@@ -285,14 +305,15 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                   SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: 250,
-                      child: StreamBuilder(
-                          stream: _collectionRef2.snapshots(),
+                      child: FutureBuilder(
+                          future: FirebaseFirestore.instance
+                              .collection('modules')
+                              .where("modID", whereIn: LDone)
+                              .get(),
                           builder:
                               (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                             if (!snapshot.hasData) {
-                              return CircularProgressIndicator(
-                                color: Colors.green,
-                              );
+                              return const Center(child: Text('Loading...'));
                             }
                             return Expanded(
                                 child: ListView(

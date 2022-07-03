@@ -66,6 +66,30 @@ class UserService {
     return loggedInUser.actionsDone!.toList(growable: true);
   }
 
+  Future GetAllModulesDone() async {
+    List<String>? _list;
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user?.uid)
+        .get()
+        .then((value) {
+      loggedInUser = UserModel.fromMap(value.data());
+    });
+    return loggedInUser.ModulesDone!.toList(growable: true);
+  }
+
+  Future GetAllModulesInProgress() async {
+    List<String>? _list;
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user?.uid)
+        .get()
+        .then((value) {
+      loggedInUser = UserModel.fromMap(value.data());
+    });
+    return loggedInUser.ModulesInProgress!.toList(growable: true);
+  }
+
   Future<bool> GetIfQuizDone(modID) async {
     List<String>? _list;
     List? LQuizzes = ['0'];
