@@ -52,18 +52,17 @@ class _FactsScreenState extends State<FactsScreen> {
   }
 
   @override
-  Future<int> fetchDataSize() async {
-    var respectsQuery = FirebaseFirestore.instance
-        .collection('awafacts')
-        .where("parentmoduleid", isEqualTo: id);
-    var querySnapshot = await respectsQuery.get();
-    var totalEquals = querySnapshot.docs.length;
-    return totalEquals;
-  }
+  //Future<int> fetchDataSize() async {
+  //var respectsQuery = FirebaseFirestore.instance
+  //  .collection('awafacts')
+  //  .where("parentmoduleid", isEqualTo: id);
+  //var querySnapshot = await respectsQuery.get();
+  //var totalEquals = querySnapshot.docs.length;
+  //return totalEquals;
+  //}
 
   fetchDatabaseList(id) async {
     dynamic resultant = await FactService().getUserTaskList(id);
-
     if (resultant == null) {
       print('Unable to retrieve for some reason');
     } else {
@@ -79,13 +78,13 @@ class _FactsScreenState extends State<FactsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("fact nummer $_factIndex");
-    final Query _collectionRef = FirebaseFirestore.instance
-        .collection('awafacts')
-        .where("awaID", isEqualTo: _factIndex)
-        .where("parentmoduleid",
-            isEqualTo:
-                id); //  <-----------  remove this line dont load data from here *important*
+    //print("fact nummer $_factIndex");
+    //final Query _collectionRef = FirebaseFirestore.instance
+    //.collection('awafacts')
+    //.where("awaID", isEqualTo: _factIndex)
+    //.where("parentmoduleid",
+    //  isEqualTo:
+    //    id); //  <-----------  remove this line dont load data from here *important*
 
     return Scaffold(
       appBar: AppBar(
@@ -103,119 +102,104 @@ class _FactsScreenState extends State<FactsScreen> {
         ),
       ),
       body: Center(
-        child: StreamBuilder(
-            stream: _collectionRef.snapshots(),
-            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (!snapshot.hasData) {
-                return const Center(child: Text('Loading...'));
-              }
-              return ListView(
-                children: snapshot.data!.docs.map((item) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          height: 20,
-                        ),
-                        LinearPercentIndicator(
-                          animateFromLastPercent: true,
-                          animationDuration: 5000,
-                          barRadius: const Radius.circular(16),
-                          lineHeight: 20,
-                          percent: (_factIndex) / size,
-                          backgroundColor: Color.fromARGB(255, 212, 240, 204),
-                          progressColor: Color.fromARGB(255, 23, 141, 4),
-                        ),
-                        Container(
-                          height: 30,
-                        ),
-                        Container(
-                            width: 300,
-                            child: Text(
-                              "Did you know...",
-                              style: const TextStyle(
-                                  fontSize: 18,
-                                  color: Color.fromARGB(255, 18, 68, 10),
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.left,
-                            )),
-                        Container(height: 30),
-                        FittedBox(
-                            fit: BoxFit.fitHeight,
-                            child: Container(
-                              width: 260,
-                              child: Text(
-                                item['awatext'].replaceAll("\\n", "\n"),
-                                style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                    fontWeight: FontWeight.normal),
-                                textAlign: TextAlign.left,
-                              ),
-                            )),
-                        Container(height: 20),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                            item['awaimg'],
-                            height: 170.0,
-                          ),
-                        ),
-                        Container(height: 40),
-                        GestureDetector(
-                            onTap: () {
-                              if (_factIndex <= size) {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => FactsScreen(
-                                          index: _factIndex,
-                                          id: id,
-                                          name: name,
-                                        )));
-                                _nextFact();
-                              } else {
-                                _resetFacts();
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => QuizScreen(
-                                          id: id,
-                                          name: name,
-                                        )));
-                                //  _nextFact();
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              height: 20,
+            ),
+            LinearPercentIndicator(
+              animateFromLastPercent: true,
+              animationDuration: 5000,
+              barRadius: const Radius.circular(16),
+              lineHeight: 20,
+              percent: _factIndex / size,
+              backgroundColor: Color.fromARGB(255, 212, 240, 204),
+              progressColor: Color.fromARGB(255, 23, 141, 4),
+            ),
+            Container(
+              height: 30,
+            ),
+            Container(
+                width: 300,
+                child: Text(
+                  "Did you know...",
+                  style: const TextStyle(
+                      fontSize: 18,
+                      color: Color.fromARGB(255, 18, 68, 10),
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                )),
+            Container(height: 30),
+            FittedBox(
+                fit: BoxFit.fitHeight,
+                child: Container(
+                  width: 260,
+                  child: Text(
+                    userProfilesList[_factIndex].awatext,
+                    style: const TextStyle(
+                        fontSize: 16,
+                        color: Color.fromARGB(255, 0, 0, 0),
+                        fontWeight: FontWeight.normal),
+                    textAlign: TextAlign.left,
+                  ),
+                )),
+            Container(height: 20),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.network(
+                userProfilesList[_factIndex].awaimg,
+                height: 170.0,
+              ),
+            ),
+            Container(height: 40),
+            GestureDetector(
+                onTap: () {
+                  if (_factIndex <= size) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => FactsScreen(
+                              index: _factIndex,
+                              id: id,
+                              name: name,
+                            )));
+                    _nextFact();
+                  } else {
+                    _resetFacts();
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => QuizScreen(
+                              id: id,
+                              name: name,
+                            )));
+                    //  _nextFact();
 
-                              }
-                            },
-                            // change to navigation to awareness screen
-                            child: FittedBox(
-                                fit: BoxFit.fitHeight,
-                                child: Container(
-                                  width: 290,
-                                  child: _factIndex > size - 1
-                                      ? Text(
-                                          "Continue to Quiz➜",
-                                          style: const TextStyle(
-                                              fontSize: 14,
-                                              color: Color.fromARGB(
-                                                  255, 33, 36, 119),
-                                              fontWeight: FontWeight.normal),
-                                          textAlign: TextAlign.right,
-                                        )
-                                      : Text(
-                                          "Next ➜",
-                                          style: const TextStyle(
-                                              fontSize: 14,
-                                              color: Color.fromARGB(
-                                                  255, 131, 131, 131),
-                                              fontWeight: FontWeight.normal),
-                                          textAlign: TextAlign.right,
-                                        ),
-                                ))),
-                      ],
-                    ),
-                  );
-                }).toList(),
-              );
-            }),
+                  }
+                },
+                // change to navigation to awareness screen
+                child: FittedBox(
+                    fit: BoxFit.fitHeight,
+                    child: Container(
+                      width: 290,
+                      child: _factIndex > size - 1
+                          ? Text(
+                              "Continue to Quiz➜",
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Color.fromARGB(255, 33, 36, 119),
+                                  fontWeight: FontWeight.normal),
+                              textAlign: TextAlign.right,
+                            )
+                          : Text(
+                              "Next ➜",
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Color.fromARGB(255, 131, 131, 131),
+                                  fontWeight: FontWeight.normal),
+                              textAlign: TextAlign.right,
+                            ),
+                    ))),
+          ],
+        ),
       ),
     );
   }
