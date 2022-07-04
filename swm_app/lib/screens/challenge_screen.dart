@@ -68,6 +68,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
             width: MediaQuery.of(context).size.width,
             color: Color.fromARGB(255, 252, 248, 239),
             child: ExpansionTile(
+                initiallyExpanded: true,
                 title: const Text('In Progress',
                     style: TextStyle(
                         fontSize: 20,
