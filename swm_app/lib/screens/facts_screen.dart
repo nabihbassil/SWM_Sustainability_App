@@ -72,7 +72,7 @@ class _FactsScreenState extends State<FactsScreen> {
         size = userProfilesList
             .length; //  <-----------  this contains size of the data use it to compare stuff related to size *important*
       });
-      print("p2 $size");
+      print("size $size  factindex is $_factIndex");
     }
   }
 
@@ -112,9 +112,9 @@ class _FactsScreenState extends State<FactsScreen> {
             LinearPercentIndicator(
               animateFromLastPercent: true,
               animationDuration: 5000,
-              barRadius: const Radius.circular(16),
+              barRadius: const Radius.circular(16.0),
               lineHeight: 20,
-              percent: _factIndex / size,
+              percent: (_factIndex / size) as double,
               backgroundColor: Color.fromARGB(255, 212, 240, 204),
               progressColor: Color.fromARGB(255, 23, 141, 4),
             ),
@@ -156,7 +156,8 @@ class _FactsScreenState extends State<FactsScreen> {
             Container(height: 40),
             GestureDetector(
                 onTap: () {
-                  if (_factIndex <= size) {
+                  if (_factIndex < size - 1) {
+                    print("iiiiiiiffffffff");
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => FactsScreen(
                               index: _factIndex,
@@ -165,6 +166,7 @@ class _FactsScreenState extends State<FactsScreen> {
                             )));
                     _nextFact();
                   } else {
+                    print("eeeellllssseeeee");
                     _resetFacts();
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => QuizScreen(
@@ -179,25 +181,24 @@ class _FactsScreenState extends State<FactsScreen> {
                 child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Container(
-                      width: 290,
-                      child: _factIndex > size - 1
-                          ? Text(
-                              "Continue to Quiz➜",
-                              style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Color.fromARGB(255, 33, 36, 119),
-                                  fontWeight: FontWeight.normal),
-                              textAlign: TextAlign.right,
-                            )
-                          : Text(
-                              "Next ➜",
-                              style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Color.fromARGB(255, 131, 131, 131),
-                                  fontWeight: FontWeight.normal),
-                              textAlign: TextAlign.right,
-                            ),
-                    ))),
+                        width: 290,
+                        child: _factIndex < size - 1
+                            ? Text(
+                                "Next ➜",
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color.fromARGB(255, 131, 131, 131),
+                                    fontWeight: FontWeight.normal),
+                                textAlign: TextAlign.right,
+                              )
+                            : Text(
+                                "Continue to Quiz➜",
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color.fromARGB(255, 33, 36, 119),
+                                    fontWeight: FontWeight.normal),
+                                textAlign: TextAlign.right,
+                              )))),
           ],
         ),
       ),

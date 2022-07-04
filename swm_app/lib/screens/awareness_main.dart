@@ -48,7 +48,7 @@ class AwarenessMain extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) =>
-                            FactsScreen(index: 1, id: id, name: name)));
+                            FactsScreen(index: 0, id: id, name: name)));
                   },
                   // change to navigation to awareness screen
                   child: SizedBox(
