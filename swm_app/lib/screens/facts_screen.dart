@@ -114,7 +114,7 @@ class _FactsScreenState extends State<FactsScreen> {
               animationDuration: 5000,
               barRadius: const Radius.circular(16.0),
               lineHeight: 20,
-              percent: (_factIndex / size) as double,
+              percent: _factIndex / size,
               backgroundColor: Color.fromARGB(255, 212, 240, 204),
               progressColor: Color.fromARGB(255, 23, 141, 4),
             ),
