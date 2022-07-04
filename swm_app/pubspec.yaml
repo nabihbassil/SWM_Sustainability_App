@@ -46,6 +46,7 @@ dependencies:
   percent_indicator: ^4.0.1
   image_picker: ^0.8.5+3
   flutter_launcher_icons: ^0.9.3
+  google_fonts: ^3.0.1
   
 flutter_icons:
   android: true
@@ -100,6 +101,8 @@ flutter:
     - assets/levels.jpg
     - assets/comillas.png
     - assets/comillas2.png
+    - assets/moreicon.png
+    - assets/levelicon.png
 
 
 
