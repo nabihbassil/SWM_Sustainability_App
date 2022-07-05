@@ -43,6 +43,7 @@ dependencies:
   flutter_bloc: ^8.0.1
   firebase_storage: ^10.2.15
   firebase_database: ^9.0.15
+  google_fonts: ^3.0.1
   percent_indicator: ^4.0.1
   image_picker: ^0.8.5+3
   flutter_launcher_icons: ^0.9.3
@@ -100,6 +101,8 @@ flutter:
     - assets/levels.jpg
     - assets/comillas.png
     - assets/comillas2.png
+    - assets/levelicon.png
+    - assets/moreicon.png
 
 
 

@@ -1,11 +1,15 @@
+import 'dart:ui';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:swm_app/model/user_model.dart';
 import 'package:swm_app/screens/badges.dart';
 import 'package:swm_app/screens/levels.dart';
-<<<<<<< Updated upstream
-=======
 import 'package:swm_app/services/user_service.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
->>>>>>> Stashed changes
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -15,8 +19,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class ProfileScreenState extends State<ProfileScreen> {
-<<<<<<< Updated upstream
-=======
   final Query _badgesearned = FirebaseFirestore.instance.collection('badges');
   int points = 800;
   int leveltotal = 1000;
@@ -31,10 +33,10 @@ class ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
->>>>>>> Stashed changes
   @override
   void initState() {
     super.initState();
+    fetchUserData();
   }
 
   @override
@@ -44,28 +46,11 @@ class ProfileScreenState extends State<ProfileScreen> {
         child: Padding(
           padding: const EdgeInsets.all(1),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const Text(
-                "Profile",
-                style: TextStyle(
-                    fontSize: 25,
-                    color: Color.fromARGB(255, 70, 70, 70),
-                    fontWeight: FontWeight.bold),
-              ),
               const SizedBox(height: 20),
               Container(
-<<<<<<< Updated upstream
-                width: 100.0,
-                height: 100.0,
-                decoration: new BoxDecoration(
-                  color: Color.fromARGB(255, 195, 195, 195),
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const SizedBox(height: 60),
-=======
                 width: 130.0,
                 height: 130.0,
                 child: CircleAvatar(
@@ -93,29 +78,16 @@ class ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.bold),
                   )),
               const SizedBox(height: 15),
->>>>>>> Stashed changes
               GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => Levels()));
                   },
                   // change to navigation to awareness screen
-                  child: Container(
-                      height: 100,
-                      width: 200,
-                      color: Color.fromARGB(255, 215, 240, 206),
+                  child: SizedBox(
+                      height: 120,
+                      width: 350,
                       child: Center(
-<<<<<<< Updated upstream
-                          child: Text(
-                        "Levels Overview",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Color.fromARGB(255, 85, 148, 75),
-                            fontWeight: FontWeight.bold),
-                      )))),
-              const SizedBox(height: 50),
-=======
                           child:
                               Stack(clipBehavior: Clip.none, children: <Widget>[
                         Container(
@@ -242,7 +214,6 @@ class ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.bold),
                   )),
               const SizedBox(height: 10),
->>>>>>> Stashed changes
               GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(
@@ -251,19 +222,56 @@ class ProfileScreenState extends State<ProfileScreen> {
                   // change to navigation to tasks screen
                   child: Container(
                       height: 100,
-                      width: 200,
-                      color: Color.fromARGB(255, 255, 239, 199),
+                      width: 350,
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 227, 227, 227),
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
                       child: Center(
-                          child: Text(
-                        "Badges",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Color.fromARGB(255, 228, 169, 18),
-                            fontWeight: FontWeight.bold),
-                      )))),
-              const SizedBox(height: 7),
-              const SizedBox(height: 42),
+                          child: Row(children: <Widget>[
+                        SizedBox(width: 10),
+                        StreamBuilder(
+                            stream: _badgesearned.snapshots(),
+                            builder: (context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (!snapshot.hasData) {
+                                return const Center(child: Text('Loading...'));
+                              }
+
+                              return Expanded(
+                                child: ListView(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    children: snapshot.data!.docs.map((item) {
+                                      return Container(child: LayoutBuilder(
+                                          builder: (context, constraints) {
+                                        if (item['earned'] == true) {
+                                          return Center(
+                                              child: Container(
+                                            height: 70,
+                                            width: 75,
+                                            child: Image(
+                                                image: AssetImage(
+                                                    "assets/badges/badge" +
+                                                        item['icon'] +
+                                                        ".png")),
+                                          ));
+                                        } else {
+                                          return (SizedBox.shrink());
+                                        }
+                                      }));
+                                    }).toList()),
+                              );
+                            }),
+                        SizedBox(width: 10),
+                        Container(
+                          height: 22,
+                          width: 18,
+                          child: Image(
+                            image: AssetImage('assets/moreicon.png'),
+                          ),
+                        ),
+                        SizedBox(width: 12),
+                      ])))),
             ],
           ),
         ),
