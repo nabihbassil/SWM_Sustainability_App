@@ -5,8 +5,10 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:swm_app/model/user_model.dart';
 import 'package:swm_app/screens/badges.dart';
 import 'package:swm_app/screens/levels.dart';
+import 'package:swm_app/services/user_service.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -17,9 +19,21 @@ class ProfileScreen extends StatefulWidget {
 
 class ProfileScreenState extends State<ProfileScreen> {
   final Query _badgesearned = FirebaseFirestore.instance.collection('badges');
+
+  UserModel userData = UserModel();
+
+  fetchUserData() async {
+    userData = await UserService().getUserData();
+
+    setState(() {
+      userData;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    fetchUserData();
   }
 
   @override
@@ -42,8 +56,8 @@ class ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               const SizedBox(height: 10),
-              const Text(
-                "Name",
+              Text(
+                "${userData.firstName}",
                 style: TextStyle(
                     fontSize: 22,
                     color: Color.fromARGB(255, 70, 70, 70),
