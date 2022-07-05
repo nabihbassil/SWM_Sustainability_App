@@ -11,7 +11,7 @@ class UserService {
   UserModel loggedInUser = UserModel();
 
   Future getUserData() async {
-    FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection("users")
         .doc(user?.uid)
         .get()
