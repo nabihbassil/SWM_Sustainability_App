@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:swm_app/Components/answer.dart';
 import 'package:swm_app/screens/awareness_main.dart';
+import 'package:swm_app/services/quiz_services.dart';
 
 class QuizScreen extends StatefulWidget {
   int id;
@@ -26,6 +27,8 @@ class _QuizScreenState extends State<QuizScreen> {
   int id;
   String name;
   _QuizScreenState(this.id, this.name);
+  List QuizData = [];
+  int size = 0;
 
   // function that checks wether answer was correct and ads to progress bar
   void _questionAnswered(String answerText, bool answerScore) {
@@ -71,6 +74,23 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   void initState() {
     super.initState();
+    loadQuizData(id);
+  }
+
+  Future loadQuizData(id) async {
+    dynamic resultant = await QuizService().getQuizList(id);
+    if (resultant == null) {
+      print('Unable to retrieve for some reason');
+    } else {
+      setState(() {
+        QuizData =
+            resultant; //  <-----------  this contains all the data of facts use this with _factindex to load data *important*
+        size = QuizData
+            .length; //  <-----------  this contains size of the data use it to compare stuff related to size *important*
+      });
+      print("size $size ");
+      print("QuizData $QuizData ");
+    }
   }
 
   @override
