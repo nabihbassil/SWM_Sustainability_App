@@ -19,6 +19,7 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> {
   // definition of variables to track progess
   int _questionIndex = 0;
+  bool answerScore = false;
   int _totalScore = 0;
   bool answerWasSelected = false;
   bool correctAnswerSelected = false;
@@ -26,11 +27,12 @@ class _QuizScreenState extends State<QuizScreen> {
   String chosenAnswer = "";
   int id;
   String name;
-  _QuizScreenState(this.id, this.name);
   List QuizData = [];
   int size = 0;
 
-  // function that checks wether answer was correct and ads to progress bar
+  _QuizScreenState(this.id, this.name);
+
+  // function that checks wether answer was correct
   void _questionAnswered(String answerText, bool answerScore) {
     setState(() {
       //answer was selected
@@ -43,7 +45,7 @@ class _QuizScreenState extends State<QuizScreen> {
       }
 
       // when the quiz ends
-      if (_questionIndex + 1 == _questions.length) {
+      if (_questionIndex + 1 == QuizData.length) {
         endOfQuiz = true;
       }
     });
@@ -57,7 +59,7 @@ class _QuizScreenState extends State<QuizScreen> {
       correctAnswerSelected = false;
     });
     // what happens at the end of the quiz
-    if (_questionIndex >= _questions.length) {
+    if (_questionIndex >= QuizData.length) {
       _resetQuiz();
     }
   }
@@ -83,10 +85,7 @@ class _QuizScreenState extends State<QuizScreen> {
       print('Unable to retrieve for some reason');
     } else {
       setState(() {
-        QuizData =
-            resultant; //  <-----------  this contains all the data of facts use this with _factindex to load data *important*
-        size = QuizData
-            .length; //  <-----------  this contains size of the data use it to compare stuff related to size *important*
+        QuizData = resultant;
       });
       print("size $size ");
       print("QuizData $QuizData ");
@@ -114,7 +113,7 @@ class _QuizScreenState extends State<QuizScreen> {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               LinearPercentIndicator(
@@ -122,7 +121,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 animationDuration: 5000,
                 barRadius: const Radius.circular(16),
                 lineHeight: 20,
-                percent: (_questionIndex + 1) / _questions.length,
+                percent: (_questionIndex + 1) / QuizData.length,
                 backgroundColor: Color.fromARGB(255, 224, 223, 223),
                 progressColor: Color.fromARGB(255, 11, 88, 151),
               ),
@@ -147,10 +146,10 @@ class _QuizScreenState extends State<QuizScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    _questions[_questionIndex]['question'] as String,
+                    QuizData[_questionIndex].question,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 20.0,
+                      fontSize: 15.0,
                       color: Color.fromARGB(255, 255, 255, 255),
                       fontWeight: FontWeight.bold,
                     ),
@@ -158,23 +157,25 @@ class _QuizScreenState extends State<QuizScreen> {
                 ),
               ),
               // displaying the answers: question[questionIndex]['answers] points to question at given index and given key. this value is then mapped to return a list of type <String, Object>.map() takes a function which runs through each value of list and then returns an iterable.so, it returns Answer() widget with given parameters.
-              ...(_questions[_questionIndex]['answers']
-                      as List<Map<String, dynamic>>)
-                  .map(
+              ...(QuizData[_questionIndex].answers).map(
                 (answer) => Answer(
-                  answerText: answer['answerText'],
-                  borderColor: answerWasSelected
+                  answerText: answer,
+                  borderColor: Colors.green,
+                  /*borderColor: answerWasSelected
                       ? answer['score']
                           ? Colors.green
                           : Colors.red
-                      : Colors.white,
+                      : Colors.white,*/
                   answerTap: () {
                     // if answer was already selected then nothing happens onTap
                     if (answerWasSelected) {
                       return;
                     }
                     //answer is being selected
-                    _questionAnswered(answer['answerText'], answer['score']);
+                    if (answer == QuizData[_questionIndex].correct) {
+                      answerScore = true;
+                    }
+                    _questionAnswered(answer, answerScore);
                   },
                 ),
               ),
@@ -197,17 +198,17 @@ class _QuizScreenState extends State<QuizScreen> {
                               : 'You are wrong, "${chosenAnswer}" is not the right answer.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 18.0,
+                            fontSize: 2.0,
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 0, 0, 0),
                           ),
                         ),
                         SizedBox(height: 5.0),
                         Text(
-                          _questions[_questionIndex]['explanation'] as String,
+                          QuizData[_questionIndex].explanation,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 15.0,
+                            fontSize: 2.0,
                             fontWeight: FontWeight.normal,
                             color: Color.fromARGB(255, 0, 0, 0),
                           ),
@@ -245,9 +246,9 @@ class _QuizScreenState extends State<QuizScreen> {
                   child: Center(
                       child: Column(
                     children: [
-                      (_totalScore / _questions.length) > 0.5
+                      (_totalScore / QuizData.length) > 0.5
                           ? Text(
-                              'Congratulations! Your final score is: ${_totalScore}/${_questions.length}. We will add 100 points to your personal wallet.',
+                              'Congratulations! Your final score is: ${_totalScore}/${QuizData.length}. We will add 100 points to your personal wallet.',
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
@@ -255,7 +256,7 @@ class _QuizScreenState extends State<QuizScreen> {
                               ),
                             )
                           : Text(
-                              'Sorry! Your final score is: ${_totalScore}/${_questions.length}. Please try again.',
+                              'Sorry! Your final score is: ${_totalScore}/${QuizData.length}. Please try again.',
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
@@ -272,91 +273,3 @@ class _QuizScreenState extends State<QuizScreen> {
     );
   }
 }
-
-// data set of questions
-final _questions = const [
-  {
-    'question': 'How long is New Zealand’s Ninety Mile Beach?',
-    'answers': [
-      {'answerText': '88km, so 55 miles long.', 'score': true},
-      {'answerText': '55km, so 34 miles long.', 'score': false},
-      {'answerText': '90km, so 56 miles long.', 'score': false},
-    ],
-    'explanation':
-        'The ninety mile beach is only 88km, so 55 miles long. It is classified as an official highway in New Zealand.',
-  },
-  {
-    'question':
-        'In which month does the German festival of Oktoberfest mostly take place?',
-    'answers': [
-      {'answerText': 'January', 'score': false},
-      {'answerText': 'October', 'score': false},
-      {'answerText': 'September', 'score': true},
-    ],
-    'explanation': 'TBD',
-  },
-  {
-    'question': 'Who composed the music for Sonic the Hedgehog 3?',
-    'answers': [
-      {'answerText': 'Britney Spears', 'score': false},
-      {'answerText': 'Timbaland', 'score': false},
-      {'answerText': 'Michael Jackson', 'score': true},
-    ],
-    'explanation': 'TBD',
-  },
-  {
-    'question': 'In Georgia (the state), it’s illegal to eat what with a fork?',
-    'answers': [
-      {'answerText': 'Hamburgers', 'score': false},
-      {'answerText': 'Fried chicken', 'score': true},
-      {'answerText': 'Pizza', 'score': false},
-    ],
-    'explanation': 'TBD',
-  },
-  {
-    'question':
-        'Which part of his body did musician Gene Simmons from Kiss insure for one million dollars?',
-    'answers': [
-      {'answerText': 'His tongue', 'score': true},
-      {'answerText': 'His leg', 'score': false},
-      {'answerText': 'His butt', 'score': false},
-    ],
-    'explanation': 'TBD',
-  },
-  {
-    'question': 'In which country are Panama hats made?',
-    'answers': [
-      {'answerText': 'Ecuador', 'score': true},
-      {'answerText': 'Panama (duh)', 'score': false},
-      {'answerText': 'Portugal', 'score': false},
-    ],
-    'explanation': 'TBD',
-  },
-  {
-    'question': 'From which country do French fries originate?',
-    'answers': [
-      {'answerText': 'Belgium', 'score': true},
-      {'answerText': 'France (duh)', 'score': false},
-      {'answerText': 'Switzerland', 'score': false},
-    ],
-    'explanation': 'TBD',
-  },
-  {
-    'question': 'Which sea creature has three hearts?',
-    'answers': [
-      {'answerText': 'Great White Sharks', 'score': false},
-      {'answerText': 'Killer Whales', 'score': false},
-      {'answerText': 'The Octopus', 'score': true},
-    ],
-    'explanation': 'TBD',
-  },
-  {
-    'question': 'Which European country eats the most chocolate per capita?',
-    'answers': [
-      {'answerText': 'Belgium', 'score': false},
-      {'answerText': 'The Netherlands', 'score': false},
-      {'answerText': 'Switzerland', 'score': true},
-    ],
-    'explanation': 'TBD',
-  },
-];
