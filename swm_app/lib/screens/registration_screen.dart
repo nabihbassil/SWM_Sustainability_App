@@ -30,7 +30,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final emailEditingController = TextEditingController();
   final passwordEditingController = TextEditingController();
   final confirmPasswordEditingController = TextEditingController();
-  File _pickedImage = File("dflt.jpg");
+  File _pickedImage = File("assets/emptyprofile.png");
   String url = '';
 
   @override
@@ -41,7 +41,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   void initState() {
     super.initState();
-    _pickedImage = File("dflt.jpg");
+    _pickedImage = File("assets/emptyprofile.png");
   }
 
   void _pickImageCamera() async {
@@ -65,7 +65,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   void _remove() {
     setState(() {
-      _pickedImage = new File("your initial file");
+      _pickedImage = File("assets/emptyprofile.png");
     });
   }
 
@@ -453,10 +453,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     print("p1");
 
-    final ref = FirebaseStorage.instance.ref().child('usersImages').child(
-        "${userModel.firstName}_${userModel.lastName}_${Random().nextInt(999)}.jpg");
-    await ref.putFile(_pickedImage);
-    url = await ref.getDownloadURL();
+    print("_pickedImage is ${_pickedImage.path}");
+
+    if (!_pickedImage.path.contains("emptyprofile")) {
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('usersImages')
+          .child("${userModel.firstName}_${userModel.lastName}_.jpg");
+      await ref.putFile(_pickedImage);
+
+      print("ref is $ref");
+
+      url = await ref.getDownloadURL();
+    }
+//   gs://swm-app-de721.appspot.com/usersImages/emptyprofile.png
+//   https://firebasestorage.googleapis.com/v0/b/swm-app-de721.appspot.com/o/usersImages%2Fqqwe_qweqeqw_.jpg?alt=media&token=6ec6dccf-2086-44ed-856b-2efbeacfbdeb
 
     print(url);
 
