@@ -103,6 +103,9 @@ flutter:
     - assets/comillas2.png
     - assets/levelicon.png
     - assets/moreicon.png
+    - assets/level1icon.png
+    - assets/level2icon.png
+    - assets/level3icon.png
 
 
 
