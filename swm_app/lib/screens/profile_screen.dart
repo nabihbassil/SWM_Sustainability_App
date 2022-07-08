@@ -30,6 +30,7 @@ class ProfileScreenState extends State<ProfileScreen> {
 
     setState(() {
       userData;
+      points = userData.points!;
     });
   }
 
