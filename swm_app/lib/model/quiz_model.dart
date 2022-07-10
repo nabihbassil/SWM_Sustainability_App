@@ -8,7 +8,7 @@ class Quiz {
   int? points;
   String? explanation;
   String? correct;
-  int? parentID;
+  String? parentID;
 
   Quiz(
       {this.question,
