@@ -17,10 +17,10 @@ class QuizScreen extends StatefulWidget {
 
 class _QuizScreenState extends State<QuizScreen> {
   // definition of variables
-  int _questionIndex =
+  int questionIndex =
       0; //index of the questions, important to track progress and load new questions
   bool answerScore = false; //defines wether selected answer is right or wrong
-  int _totalScore = 0; // tracks the score
+  int totalScore = 0; // tracks the score
   bool endOfQuiz = false; //helps to define what happens at the end of the quiz
   String QuizRefID = "";
   List QuizData = []; //list where data from Firestore is stored
@@ -33,10 +33,10 @@ class _QuizScreenState extends State<QuizScreen> {
   void _questionAnswered(bool answerscore) {
     setState(() {
       if (answerScore) {
-        _totalScore++;
+        totalScore++;
       }
       // when the quiz ends
-      if (_questionIndex + 1 == QuizData.length) {
+      if (questionIndex + 1 == QuizData.length) {
         endOfQuiz = true;
       }
     });
@@ -45,7 +45,7 @@ class _QuizScreenState extends State<QuizScreen> {
   // function that describes what happens when you click on next question button
   void _nextQuestions() {
     setState(() {
-      _questionIndex++;
+      questionIndex++;
     });
     // calls function to define what happens at the end of the quiz
     //if (_questionIndex >= QuizData.length) {
@@ -56,8 +56,8 @@ class _QuizScreenState extends State<QuizScreen> {
   // function that describes what happens at the end of the quiz
   void _resetQuiz() {
     setState(() {
-      _questionIndex = 0;
-      _totalScore = 0;
+      questionIndex = 0;
+      totalScore = 0;
       endOfQuiz = false;
     });
   }
@@ -114,7 +114,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 animationDuration: 5000,
                 barRadius: const Radius.circular(16),
                 lineHeight: 20,
-                percent: (_questionIndex + 1) / QuizData.length,
+                percent: (questionIndex + 1) / QuizData.length,
                 backgroundColor: Color.fromARGB(255, 224, 223, 223),
                 progressColor: Color.fromARGB(255, 11, 88, 151),
               ),
@@ -139,7 +139,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    QuizData[_questionIndex].question,
+                    QuizData[questionIndex].question,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20.0,
@@ -150,13 +150,13 @@ class _QuizScreenState extends State<QuizScreen> {
                 ),
               ),
               // displaying the answers: the answers are mapped to return Answer() widget with given parameters from Components.
-              ...(QuizData[_questionIndex].answers).map(
+              ...(QuizData[questionIndex].answers).map(
                 (answer) => Answer(
                   answerText: answer,
                   // here it is defined what happens with the selcted answer
                   answerTap: () {
                     //checks whether selected answer is right or wrong
-                    answer == QuizData[_questionIndex].correct
+                    answer == QuizData[questionIndex].correct
                         ? answerScore = true
                         : answerScore = false;
                     // calls function to add to score and check whether quiz is at the end or not
@@ -215,7 +215,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                     padding:
                                         EdgeInsets.only(left: 35, right: 35),
                                     child: Text(
-                                      QuizData[_questionIndex].explanation,
+                                      QuizData[questionIndex].explanation,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           fontSize: 19,
@@ -268,7 +268,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                                     QuizFinish(
                                                         id: id,
                                                         name: name,
-                                                        totalScore: _totalScore,
+                                                        totalScore: totalScore,
                                                         possibleScore:
                                                             QuizData.length,
                                                         quizRefID: QuizRefID,
