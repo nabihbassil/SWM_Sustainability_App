@@ -31,7 +31,7 @@ class QuizService {
                 answers: e.get("answers"),
                 explanation: e.get("explanation"),
                 points: points,
-                parentID: id,
+                parentID: docID,
                 correct: e.get("correct")))
             .toList());
   }
