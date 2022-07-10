@@ -43,6 +43,12 @@ class UserService {
     });
   }
 
+  void UpdateQuizDone(ID) async {
+    await FirebaseFirestore.instance.collection("users").doc(user?.uid).update({
+      "QuizDone": FieldValue.arrayUnion([ID])
+    });
+  }
+
   Future CheckActionDone(ID) async {
     await FirebaseFirestore.instance
         .collection("users")
@@ -54,7 +60,7 @@ class UserService {
     return loggedInUser.actionsDone!.contains(ID);
   }
 
-  Future GetAllActionDone(modID) async {
+  Future GetAllActionDone() async {
     List<String>? _list;
     await FirebaseFirestore.instance
         .collection("users")
@@ -176,5 +182,16 @@ class UserService {
     } else {
       setModuleInProgress(ID);
     }
+  }
+
+  Future<bool> IsQuizAlreadyDone(String quizRefID) async {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user?.uid)
+        .get()
+        .then((value) {
+      loggedInUser = UserModel.fromMap(value.data());
+    });
+    return loggedInUser.QuizDone!.contains(quizRefID);
   }
 }

@@ -33,7 +33,7 @@ class _TakeActionState extends State<TakeAction> {
   }
 
   GetActionDone(id) async {
-    await UserService().GetAllActionDone(id).then((value) => L1 = value);
+    await UserService().GetAllActionDone().then((value) => L1 = value);
     L2 = L1;
     if (mounted) {
       setState(() {

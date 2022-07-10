@@ -45,9 +45,8 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
     int notDoneLength = -1;
 
     UserService().UpdateActionDone(ID);
-    LTasks = await UserService()
-        .GetAllActionDone(ID)
-        .then((value) => LTasks = value);
+    LTasks =
+        await UserService().GetAllActionDone().then((value) => LTasks = value);
     isQuizDone = await UserService().GetIfQuizDone(modID);
     notDoneLength = await UserService().GetSizeofToDoTasks(modID, LTasks);
     UserService().updateModuleLogic(modID, isQuizDone, notDoneLength);

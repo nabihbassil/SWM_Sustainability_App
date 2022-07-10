@@ -13,8 +13,6 @@ import 'package:swm_app/services/user_service.dart';
 import 'package:swm_app/main.dart';
 
 void main() {
-  updateModuleLogic(1);
-
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
@@ -31,32 +29,4 @@ void main() {
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
   });
-}
-
-void updateModuleLogic(ID) async {
-  List L1 = ['0'];
-  ID = 1;
-  print("in func $ID");
-
-  await UserService().GetAllActionDone(ID).then((value) => L1 = value);
-
-  print("L1 $L1");
-
-  var DoneTasksLength = await FirebaseFirestore.instance
-      .collection('takeactions')
-      .where("parentmoduleid", isEqualTo: ID)
-      .where(FieldPath.documentId, whereIn: L1)
-      .snapshots()
-      .length;
-
-  print("DOOOOOOOOONNNEEEEEE $DoneTasksLength");
-
-  var notDoneTasksLength = await FirebaseFirestore.instance
-      .collection('takeactions')
-      .where("parentmoduleid", isEqualTo: ID)
-      .where(FieldPath.documentId, whereNotIn: L1)
-      .snapshots()
-      .length;
-
-  print("NOOOOTTT $notDoneTasksLength");
 }
