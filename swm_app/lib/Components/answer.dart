@@ -4,13 +4,9 @@ import 'package:flutter/rendering.dart';
 // button of each answer
 class Answer extends StatelessWidget {
   final String answerText;
-  final Color borderColor;
   final VoidCallback answerTap;
 
-  Answer(
-      {required this.answerText,
-      required this.borderColor,
-      required this.answerTap});
+  Answer({required this.answerText, required this.answerTap});
 
   @SemanticsHintOverrides()
   Widget build(BuildContext context) {
@@ -22,7 +18,7 @@ class Answer extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.all(color: borderColor, width: 2.0),
+          border: Border.all(color: Colors.white, width: 2.0),
           borderRadius: BorderRadius.circular(10.0),
           boxShadow: [
             BoxShadow(
@@ -35,7 +31,7 @@ class Answer extends StatelessWidget {
         ),
         child: Text(answerText,
             style: TextStyle(
-              fontSize: 15.0,
+              fontSize: 18.0,
             )),
       ),
     );
