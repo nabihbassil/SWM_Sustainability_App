@@ -22,7 +22,7 @@ class _QuizScreenState extends State<QuizScreen> {
   bool answerScore = false; //defines wether selected answer is right or wrong
   int _totalScore = 0; // tracks the score
   bool endOfQuiz = false; //helps to define what happens at the end of the quiz
-
+  String QuizRefID = "";
   List QuizData = []; //list where data from Firestore is stored
 
   int id;
@@ -78,6 +78,7 @@ class _QuizScreenState extends State<QuizScreen> {
         QuizData = resultant;
       });
       print("QuizData $QuizData ");
+      QuizRefID = QuizData[0].parentID;
     }
   }
 
@@ -260,17 +261,17 @@ class _QuizScreenState extends State<QuizScreen> {
                                           padding: const EdgeInsets.all(20),
                                           child: ElevatedButton.icon(
                                             onPressed: () {
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          QuizFinish(
-                                                              id: id,
-                                                              name: name,
-                                                              totalScore:
-                                                                  _totalScore,
-                                                              possibleScore:
-                                                                  QuizData
-                                                                      .length)));
+                                              Navigator.of(context)
+                                                  .push(MaterialPageRoute(
+                                                builder: (context) =>
+                                                    QuizFinish(
+                                                        id: id,
+                                                        name: name,
+                                                        totalScore: _totalScore,
+                                                        possibleScore:
+                                                            QuizData.length,
+                                                        quizRefID: QuizRefID),
+                                              ));
                                               _nextQuestions();
                                             },
                                             icon: Icon(Icons.flag_outlined),

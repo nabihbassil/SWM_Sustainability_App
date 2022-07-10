@@ -8,12 +8,14 @@ class QuizFinish extends StatelessWidget {
   // totalScore and possibleScore will be passed from QuizScreen
   final int totalScore;
   final int possibleScore;
+  String quizRefID;
   QuizFinish(
       {Key? key,
       required this.id,
       required this.name,
       required this.totalScore,
-      required this.possibleScore})
+      required this.possibleScore,
+      required String this.quizRefID})
       : super(key: key);
 
   @override
