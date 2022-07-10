@@ -24,7 +24,7 @@ class _QuizScreenState extends State<QuizScreen> {
   bool endOfQuiz = false; //helps to define what happens at the end of the quiz
   String QuizRefID = "";
   List QuizData = []; //list where data from Firestore is stored
-
+  int quizPoints = 0;
   int id;
   String name;
   _QuizScreenState(this.id, this.name);
@@ -79,6 +79,7 @@ class _QuizScreenState extends State<QuizScreen> {
       });
       print("QuizData $QuizData ");
       QuizRefID = QuizData[0].parentID;
+      quizPoints = QuizData[0].points;
     }
   }
 
@@ -270,7 +271,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                                         totalScore: _totalScore,
                                                         possibleScore:
                                                             QuizData.length,
-                                                        quizRefID: QuizRefID),
+                                                        quizRefID: QuizRefID,
+                                                        quizPoints: quizPoints),
                                               ));
                                               _nextQuestions();
                                             },
