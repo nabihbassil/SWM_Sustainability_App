@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:swm_app/screens/awareness_main.dart';
 import 'package:swm_app/screens/challenge_main.dart';
 
-class QuizFinish extends StatelessWidget {
+class QuizFinish extends StatefulWidget {
   int id;
   String name;
   // totalScore and possibleScore will be passed from QuizScreen
-  final int totalScore;
-  final int possibleScore;
+  int totalScore;
+  int possibleScore;
+
   QuizFinish(
       {Key? key,
       required this.id,
@@ -16,6 +17,11 @@ class QuizFinish extends StatelessWidget {
       required this.possibleScore})
       : super(key: key);
 
+  @override
+  _QuizFinishState createState() => _QuizFinishState();
+}
+
+class _QuizFinishState extends State<QuizFinish> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +37,8 @@ class QuizFinish extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => ChallengeMain(id: id, name: name))),
+              builder: (context) =>
+                  ChallengeMain(id: widget.id, name: widget.name))),
         ),
       ),
       body: Center(
@@ -68,7 +75,7 @@ class QuizFinish extends StatelessWidget {
               const SizedBox(height: 30),
               Center(
                   child: Text(
-                "Your final score is \n$totalScore / $possibleScore",
+                "Your final score is \n${widget.totalScore} / ${widget.possibleScore}",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 20,
@@ -90,7 +97,8 @@ class QuizFinish extends StatelessWidget {
               ElevatedButton.icon(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ChallengeMain(id: id, name: name)));
+                      builder: (context) =>
+                          ChallengeMain(id: widget.id, name: widget.name)));
                 },
                 icon: Icon(Icons.school),
                 label: Text(
