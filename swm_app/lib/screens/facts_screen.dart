@@ -101,105 +101,111 @@ class _FactsScreenState extends State<FactsScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              height: 20,
-            ),
-            LinearPercentIndicator(
-              animateFromLastPercent: true,
-              animationDuration: 5000,
-              barRadius: const Radius.circular(16.0),
-              lineHeight: 20,
-              percent: _factIndex / size,
-              backgroundColor: Color.fromARGB(255, 212, 240, 204),
-              progressColor: Color.fromARGB(255, 23, 141, 4),
-            ),
-            Container(
-              height: 30,
-            ),
-            Container(
-                width: 300,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                height: 20,
+              ),
+              LinearPercentIndicator(
+                animateFromLastPercent: true,
+                animationDuration: 5000,
+                barRadius: const Radius.circular(16.0),
+                lineHeight: 20,
+                percent: (_factIndex + 1) / size,
+                backgroundColor: Color.fromARGB(255, 224, 223, 223),
+                progressColor: Color.fromARGB(255, 11, 88, 151),
+              ),
+              Container(
+                height: 30,
+              ),
+              Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  width: double.infinity,
+                  child: Text(
+                    userProfilesList[_factIndex].awatitle,
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Color.fromARGB(255, 70, 70, 70),
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  )),
+              Container(height: 30),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                width: double.infinity,
                 child: Text(
-                  "Did you know...",
+                  (userProfilesList[_factIndex].awatext)
+                      .replaceAll("\\n", "\n"),
                   style: const TextStyle(
                       fontSize: 18,
-                      color: Color.fromARGB(255, 18, 68, 10),
-                      fontWeight: FontWeight.bold),
+                      color: Color.fromARGB(255, 0, 0, 0),
+                      fontWeight: FontWeight.normal),
                   textAlign: TextAlign.left,
-                )),
-            Container(height: 30),
-            FittedBox(
-                fit: BoxFit.fitHeight,
-                child: Container(
-                  width: 260,
-                  child: Text(
-                    userProfilesList[_factIndex].awatext,
-                    style: const TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 0, 0, 0),
-                        fontWeight: FontWeight.normal),
-                    textAlign: TextAlign.left,
-                  ),
-                )),
-            Container(height: 20),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Image.network(
-                userProfilesList[_factIndex].awaimg,
-                height: 170.0,
+                ),
               ),
-            ),
-            Container(height: 40),
-            GestureDetector(
-                onTap: () {
-                  if (_factIndex < size - 1) {
-                    print("iiiiiiiffffffff");
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => FactsScreen(
-                              index: _factIndex,
-                              id: id,
-                              name: name,
-                            )));
-                    _nextFact();
-                  } else {
-                    print("eeeellllssseeeee");
-                    _resetFacts();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => QuizScreen(
-                              id: id,
-                              name: name,
-                            )));
-                    //  _nextFact();
+              Container(height: 20),
+              Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.network(
+                      userProfilesList[_factIndex].awaimg,
+                      width: double.infinity,
+                    ),
+                  )),
+              Container(height: 40),
+              GestureDetector(
+                  onTap: () {
+                    if (_factIndex < size - 1) {
+                      print("iiiiiiiffffffff");
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => FactsScreen(
+                                index: _factIndex,
+                                id: id,
+                                name: name,
+                              )));
+                      _nextFact();
+                    } else {
+                      print("eeeellllssseeeee");
+                      _resetFacts();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => QuizScreen(
+                                id: id,
+                                name: name,
+                              )));
+                      //  _nextFact();
 
-                  }
-                },
-                // change to navigation to awareness screen
-                child: FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Container(
-                        width: 290,
-                        child: _factIndex < size - 1
-                            ? Text(
-                                "Next ➜",
-                                style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color.fromARGB(255, 131, 131, 131),
-                                    fontWeight: FontWeight.normal),
-                                textAlign: TextAlign.right,
-                              )
-                            : Text(
-                                "Continue to Quiz➜",
-                                style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color.fromARGB(255, 33, 36, 119),
-                                    fontWeight: FontWeight.normal),
-                                textAlign: TextAlign.right,
-                              )))),
-          ],
+                    }
+                  },
+                  // change to navigation to awareness screen
+                  child: FittedBox(
+                      fit: BoxFit.fitHeight,
+                      child: Container(
+                          width: 290,
+                          child: _factIndex < size - 1
+                              ? Text(
+                                  "Next ➜",
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Color.fromARGB(255, 131, 131, 131),
+                                      fontWeight: FontWeight.normal),
+                                  textAlign: TextAlign.right,
+                                )
+                              : Text(
+                                  "Continue to Quiz➜",
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Color.fromARGB(255, 33, 36, 119),
+                                      fontWeight: FontWeight.normal),
+                                  textAlign: TextAlign.right,
+                                )))),
+            ],
+          ),
         ),
       ),
     );

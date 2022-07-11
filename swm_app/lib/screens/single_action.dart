@@ -95,110 +95,108 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
               }
               return ListView(
                 children: snapshot.data!.docs.map((item) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          height: 30,
-                        ),
-                        Container(
-                            width: 300,
-                            child: Text(
-                              item['actiontitle'],
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  color: Color.fromARGB(255, 18, 68, 10),
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.left,
-                            )),
-                        Container(height: 20),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                            item['actionimg'],
-                            height: 170.0,
-                          ),
-                        ),
-                        Container(height: 20),
-                        FittedBox(
-                            fit: BoxFit.fitHeight,
-                            child: Container(
-                              width: 290,
+                  return SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(35),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                              width: double.infinity,
                               child: Text(
-                                item['actioncontent'].replaceAll("\\n", "\n"),
-                                style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                    fontWeight: FontWeight.normal),
+                                item['actiontitle'],
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    color: Color.fromARGB(255, 70, 70, 70),
+                                    fontWeight: FontWeight.bold),
                                 textAlign: TextAlign.left,
-                              ),
-                            )),
-                        Container(height: 20),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              !_isActionDone
-                                  ? ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        // Foreground color
-                                        onPrimary:
-                                            Color.fromARGB(255, 228, 170, 18),
-                                        // Background color
-                                        primary:
-                                            Color.fromARGB(255, 255, 239, 199),
-                                        minimumSize: Size(200, 50),
-                                      ),
-                                      onPressed: () {
-                                        if (_isButtonDisabled) {
-                                          null;
-                                        } else {
-                                          UpdateActionDone(
-                                              item.reference.id, modID);
-                                          UpdateUserPoints(
-                                              int.parse(item['actionpts']));
-                                        }
-                                      },
-                                      child: Text(
-                                        _isButtonDisabled
-                                            ? "Good Job on Completing the Task"
-                                            : "I Did This!",
-                                        style: const TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      ))
-                                  : ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        // Foreground color
-                                        onPrimary:
-                                            Color.fromARGB(255, 85, 148, 75),
-                                        // Background color
-                                        primary:
-                                            Color.fromARGB(255, 255, 255, 255),
-                                        minimumSize: Size(200, 50),
-                                      ),
-                                      onPressed: null,
-                                      child: const Text(
-                                          'Good Job on Completing the Task!',
+                              )),
+                          Container(height: 20),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.network(
+                              'https://images.pexels.com/photos/4997810/pexels-photo-4997810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                              width: double.infinity,
+                            ),
+                          ),
+                          Container(height: 20),
+                          Container(
+                            width: double.infinity,
+                            child: Text(
+                              item['actioncontent'].replaceAll("\\n", "\n"),
+                              style: const TextStyle(
+                                  fontSize: 18,
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontWeight: FontWeight.normal),
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                          Container(height: 20),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                !_isActionDone
+                                    ? ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          // Foreground color
+                                          onPrimary:
+                                              Color.fromARGB(255, 228, 170, 18),
+                                          // Background color
+                                          primary: Color.fromARGB(
+                                              255, 255, 239, 199),
+                                          minimumSize: Size(200, 50),
+                                        ),
+                                        onPressed: () {
+                                          if (_isButtonDisabled) {
+                                            null;
+                                          } else {
+                                            UpdateActionDone(
+                                                item.reference.id, modID);
+                                            UpdateUserPoints(
+                                                int.parse(item['actionpts']));
+                                          }
+                                        },
+                                        child: Text(
+                                          _isButtonDisabled
+                                              ? "Good Job on Completing the Task"
+                                              : "I Did This!",
                                           style: const TextStyle(
                                               fontSize: 15,
-                                              color: Color.fromARGB(
-                                                  255, 85, 148, 75),
-                                              fontStyle: FontStyle.italic,
-                                              fontWeight: FontWeight.bold)),
-                                    )
-                            ]),
-                        Container(height: 10),
-                        Text(
-                          item["actionpts"] + "pts",
-                          style: const TextStyle(
-                              fontSize: 15,
-                              color: Color.fromARGB(255, 228, 170, 18),
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                                              fontWeight: FontWeight.bold),
+                                        ))
+                                    : ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          // Foreground color
+                                          onPrimary:
+                                              Color.fromARGB(255, 85, 148, 75),
+                                          // Background color
+                                          primary: Color.fromARGB(
+                                              255, 255, 255, 255),
+                                          minimumSize: Size(200, 50),
+                                        ),
+                                        onPressed: null,
+                                        child: const Text(
+                                            'Good Job on Completing the Task!',
+                                            style: const TextStyle(
+                                                fontSize: 15,
+                                                color: Color.fromARGB(
+                                                    255, 85, 148, 75),
+                                                fontStyle: FontStyle.italic,
+                                                fontWeight: FontWeight.bold)),
+                                      )
+                              ]),
+                          Container(height: 10),
+                          Text(
+                            item["actionpts"] + "pts",
+                            style: const TextStyle(
+                                fontSize: 15,
+                                color: Color.fromARGB(255, 228, 170, 18),
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 }).toList(),
