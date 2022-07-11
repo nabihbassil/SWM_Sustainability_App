@@ -99,7 +99,7 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(35),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Container(
