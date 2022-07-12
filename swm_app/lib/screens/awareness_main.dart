@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swm_app/Components/hamburger_menu.dart';
 import 'package:swm_app/screens/awareness_intro.dart';
-import 'package:swm_app/screens/challenge_main.dart';
 import 'package:swm_app/screens/facts_screen.dart';
 import 'package:swm_app/screens/quiz_screen.dart';
 
@@ -36,7 +34,7 @@ class AwarenessMain extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Padding(
+              const Padding(
                   padding: EdgeInsets.only(right: 220),
                   child: Text(
                     "Awareness",
@@ -61,11 +59,11 @@ class AwarenessMain extends StatelessWidget {
                       ))),
               const SizedBox(height: 7),
               Padding(
-                  padding: EdgeInsets.only(left: 65, right: 65),
+                  padding: const EdgeInsets.only(left: 65, right: 65),
                   child: Text(
                     "Discover how $name is harming our planet.",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 15,
                         color: Color.fromARGB(255, 100, 100, 100),
                         fontStyle: FontStyle.italic,
@@ -86,11 +84,11 @@ class AwarenessMain extends StatelessWidget {
                       ))),
               const SizedBox(height: 7),
               Padding(
-                  padding: EdgeInsets.only(left: 65, right: 65),
+                  padding: const EdgeInsets.only(left: 65, right: 65),
                   child: Text(
                     "Test your knowledge in $name!",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 15,
                         color: Color.fromARGB(255, 100, 100, 100),
                         fontStyle: FontStyle.italic,

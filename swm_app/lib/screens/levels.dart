@@ -1,10 +1,7 @@
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:swm_app/services/user_service.dart';
 import 'package:swm_app/model/user_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Levels extends StatefulWidget {
   const Levels({Key? key}) : super(key: key);
@@ -37,7 +34,7 @@ class _LevelsState extends State<Levels> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 232, 243, 228),
+        backgroundColor: const Color.fromARGB(255, 232, 243, 228),
         appBar: AppBar(
           title: Image.asset(
             "assets/SWM.png",
@@ -59,7 +56,7 @@ class _LevelsState extends State<Levels> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text(
+                const Text(
                   "Levels Overview",
                   style: TextStyle(
                       fontSize: 24,
@@ -70,8 +67,8 @@ class _LevelsState extends State<Levels> {
                 Container(
                   width: 350.00,
                   height: 30.00,
-                  decoration: new BoxDecoration(
-                      image: new DecorationImage(
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
                         image: ExactAssetImage('assets/comillas.png'),
                         fit: BoxFit.fitWidth,
                       ),
@@ -82,10 +79,10 @@ class _LevelsState extends State<Levels> {
                 ),
                 Container(
                     width: 350,
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    child: Text(
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    child: const Text(
                       'Our points reflects the knowledge you have gained for a better understanding of sustainability as well as your individual actions towards a more sustainable lifestyle.\n\n Your points are accumulated and help you to reach certain levels. For each you level you receive an award. Scroll down to see what each level might offer.       ',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 98, 119, 95),
                         fontWeight: FontWeight.w500,
@@ -95,8 +92,8 @@ class _LevelsState extends State<Levels> {
                 Container(
                     width: 350.00,
                     height: 30.00,
-                    decoration: new BoxDecoration(
-                      image: new DecorationImage(
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
                         image: ExactAssetImage('assets/comillas2.png'),
                         fit: BoxFit.fitWidth,
                       ),
@@ -114,13 +111,13 @@ class _LevelsState extends State<Levels> {
                           child: Container(
                             width: 360.00,
                             height: 130,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Color.fromARGB(255, 247, 255, 239),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
                             child: ListTile(
                               leading: ConstrainedBox(
-                                constraints: BoxConstraints(
+                                constraints: const BoxConstraints(
                                   minWidth: 80,
                                   minHeight: 50,
                                   maxWidth: 100,
@@ -128,12 +125,12 @@ class _LevelsState extends State<Levels> {
                                 ),
                                 child: Image.asset("assets/level1icon.png"),
                               ),
-                              title: Text("Level 1 ",
+                              title: const Text("Level 1 ",
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: Color.fromARGB(255, 2, 2, 2),
                                       fontWeight: FontWeight.bold)),
-                              subtitle: Text(
+                              subtitle: const Text(
                                   'SWM will plant 5 trees in partnership with Bäume fürs Leben on your behalf',
                                   style: TextStyle(
                                       fontSize: 14,
@@ -148,7 +145,7 @@ class _LevelsState extends State<Levels> {
                         Positioned(
                           bottom: 30,
                           right: 30,
-                          child: Container(
+                          child: SizedBox(
                             width: 300,
                             child: LinearPercentIndicator(
                               animateFromLastPercent: true,
@@ -157,34 +154,34 @@ class _LevelsState extends State<Levels> {
                               lineHeight: 10,
                               percent: points / leveltotal,
                               backgroundColor:
-                                  Color.fromARGB(255, 212, 240, 204),
-                              progressColor: Color.fromARGB(255, 23, 141, 4),
+                                  const Color.fromARGB(255, 212, 240, 204),
+                              progressColor: const Color.fromARGB(255, 23, 141, 4),
                             ),
                           ),
                         ),
                         Positioned(
                           bottom: 4,
                           right: 30,
-                          child: Container(
+                          child: SizedBox(
                             width: 300,
                             child: Row(
                               children: [
-                                Text(
+                                const Text(
                                   'Your progress',
                                   style: TextStyle(
                                       color: Color.fromARGB(255, 106, 132, 102),
                                       fontSize: 14,
                                       fontStyle: FontStyle.italic),
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 Text(
                                   points.toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16,
                                       color: Color.fromARGB(255, 95, 135, 89),
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Text(
+                                const Text(
                                   "/1000",
                                   style: TextStyle(
                                       fontSize: 12,
@@ -210,13 +207,13 @@ class _LevelsState extends State<Levels> {
                           child: Container(
                             width: 350.00,
                             height: 140,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Color.fromARGB(255, 249, 249, 249),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
                             child: ListTile(
                               leading: ConstrainedBox(
-                                constraints: BoxConstraints(
+                                constraints: const BoxConstraints(
                                   minWidth: 60,
                                   minHeight: 50,
                                   maxWidth: 80,
@@ -224,12 +221,12 @@ class _LevelsState extends State<Levels> {
                                 ),
                                 child: Image.asset("assets/level2icon.png"),
                               ),
-                              title: Text("Level 2 ",
+                              title: const Text("Level 2 ",
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: Color.fromARGB(255, 54, 52, 52),
                                       fontWeight: FontWeight.bold)),
-                              subtitle: Text('SWM will provide this reward',
+                              subtitle: const Text('SWM will provide this reward',
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Color.fromARGB(255, 123, 123, 123),
@@ -254,13 +251,13 @@ class _LevelsState extends State<Levels> {
                           child: Container(
                             width: 340.00,
                             height: 140,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Color.fromARGB(255, 249, 249, 249),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
                             child: ListTile(
                               leading: ConstrainedBox(
-                                constraints: BoxConstraints(
+                                constraints: const BoxConstraints(
                                   minWidth: 60,
                                   minHeight: 50,
                                   maxWidth: 80,
@@ -268,12 +265,12 @@ class _LevelsState extends State<Levels> {
                                 ),
                                 child: Image.asset("assets/level3icon.png"),
                               ),
-                              title: Text("Level 3 ",
+                              title: const Text("Level 3 ",
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: Color.fromARGB(255, 54, 52, 52),
                                       fontWeight: FontWeight.bold)),
-                              subtitle: Text('SWM will provide',
+                              subtitle: const Text('SWM will provide',
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Color.fromARGB(255, 123, 123, 123),

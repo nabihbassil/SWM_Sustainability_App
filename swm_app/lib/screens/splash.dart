@@ -9,15 +9,16 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
+  @override
   void initState() {
     super.initState();
     _navigatetologin();
   }
 
   _navigatetologin() async {
-    await Future.delayed(Duration(milliseconds: 2100), () {});
+    await Future.delayed(const Duration(milliseconds: 2100), () {});
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: ((context) => LoginScreen())));
+        context, MaterialPageRoute(builder: ((context) => const LoginScreen())));
   }
 
   @override
@@ -48,7 +49,7 @@ class _SplashState extends State<Splash> {
                                 )),
                             const SizedBox(height: 63),
                             Container(
-                                child: Text(
+                                child: const Text(
                                     'Its just a few clicks towards \n more sustainability！',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(

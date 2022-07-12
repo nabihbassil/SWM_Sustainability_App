@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +65,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
         ),
         Container(
             width: MediaQuery.of(context).size.width,
-            color: Color.fromARGB(255, 252, 248, 239),
+            color: const Color.fromARGB(255, 252, 248, 239),
             child: ExpansionTile(
                 initiallyExpanded: true,
                 title: const Text('In Progress',
@@ -98,7 +97,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                   child: Row(children: [
                                     Column(
                                       children: [
-                                        Container(
+                                        SizedBox(
                                           width: 155,
                                           child: Text(
                                             item['modName'],
@@ -110,7 +109,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                             textAlign: TextAlign.left,
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 4,
                                         ),
                                         GestureDetector(
@@ -125,7 +124,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                         )));
                                           },
                                           child: Container(
-                                            padding: EdgeInsets.symmetric(
+                                            padding: const EdgeInsets.symmetric(
                                                 horizontal: 24),
                                             height: 150,
                                             width: 200,
@@ -145,13 +144,13 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                   Container(height: 10),
                                                   FittedBox(
                                                       fit: BoxFit.fitHeight,
-                                                      child: Container(
+                                                      child: SizedBox(
                                                         width: 100,
                                                         child: Text(
                                                           item['category']
                                                               .replaceAll(
                                                                   "\\n", "\n"),
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               fontSize: 16,
                                                               color: Color
                                                                   .fromARGB(
@@ -181,9 +180,9 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                 ])),
         Container(
             width: MediaQuery.of(context).size.width,
-            color: Color.fromARGB(255, 238, 247, 249),
+            color: const Color.fromARGB(255, 238, 247, 249),
             child: ExpansionTile(
-              title: Text('Discover New',
+              title: const Text('Discover New',
                   style: TextStyle(
                       fontSize: 20,
                       color: Color.fromARGB(255, 80, 80, 80),
@@ -212,11 +211,11 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                 child: Row(children: [
                                   Column(
                                     children: [
-                                      Container(
+                                      SizedBox(
                                         width: 155,
                                         child: Text(
                                           item['modName'],
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 20,
                                               color: Color.fromARGB(
                                                   255, 131, 131, 131),
@@ -224,7 +223,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                           textAlign: TextAlign.left,
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 4,
                                       ),
                                       GestureDetector(
@@ -239,7 +238,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                       )));
                                         },
                                         child: Container(
-                                          padding: EdgeInsets.symmetric(
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 24),
                                           height: 150,
                                           width: 200,
@@ -257,13 +256,13 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                 ),
                                                 FittedBox(
                                                     fit: BoxFit.fitHeight,
-                                                    child: Container(
+                                                    child: SizedBox(
                                                       width: 100,
                                                       child: Text(
                                                         item['category']
                                                             .replaceAll(
                                                                 "\\n", "\n"),
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontSize: 16,
                                                             color:
                                                                 Color.fromARGB(
@@ -294,7 +293,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
             )),
         Container(
             width: MediaQuery.of(context).size.width,
-            color: Color.fromARGB(255, 245, 255, 243),
+            color: const Color.fromARGB(255, 245, 255, 243),
             child: ExpansionTile(
                 title: const Text('Complete',
                     style: TextStyle(
@@ -325,7 +324,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                   child: Row(children: [
                                     Column(
                                       children: [
-                                        Container(
+                                        SizedBox(
                                           width: 155,
                                           child: Text(
                                             item['modName'],
@@ -337,7 +336,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                             textAlign: TextAlign.left,
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 4,
                                         ),
                                         GestureDetector(
@@ -352,7 +351,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                         )));
                                           },
                                           child: Container(
-                                            padding: EdgeInsets.symmetric(
+                                            padding: const EdgeInsets.symmetric(
                                                 horizontal: 24),
                                             height: 150,
                                             width: 200,
@@ -372,13 +371,13 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                   Container(height: 10),
                                                   FittedBox(
                                                       fit: BoxFit.fitHeight,
-                                                      child: Container(
+                                                      child: SizedBox(
                                                         width: 100,
                                                         child: Text(
                                                           item['category']
                                                               .replaceAll(
                                                                   "\\n", "\n"),
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               fontSize: 16,
                                                               color: Color
                                                                   .fromARGB(

@@ -1,8 +1,5 @@
-import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
 import 'package:swm_app/Components/singlearticle.dart';
@@ -35,12 +32,12 @@ class _NewsScreenState extends State<NewsScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text(
+              const Text(
                 "Articles",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
-              Container(
+              SizedBox(
                   width: 400,
                   height: 500,
                   child: ListView.builder(

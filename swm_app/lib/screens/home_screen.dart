@@ -1,8 +1,5 @@
-import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
 import 'package:swm_app/Components/singlearticle.dart';
@@ -73,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
-                    child: Text(
+                    child: const Text(
                       "Current Challenges",
                       style: TextStyle(
                           fontSize: 20,
@@ -81,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.bold),
                     ),
                   )),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: 120,
@@ -105,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   Align(
                                     alignment: Alignment.topLeft,
-                                    child: Container(
+                                    child: SizedBox(
                                       width: 340,
                                       child: Text(
                                         item['modName'],
@@ -117,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 4,
                                   ),
                                   GestureDetector(
@@ -133,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     },
                                     child: Container(
                                       padding:
-                                          EdgeInsets.symmetric(horizontal: 10),
+                                          const EdgeInsets.symmetric(horizontal: 10),
                                       height: 90,
                                       width: 370,
                                       child: ClipRRect(
@@ -153,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               child: Text(
                                                 item['category']
                                                     .replaceAll("\\n", "\n"),
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 15,
                                                     color: Color.fromARGB(
                                                         255, 255, 255, 255),
@@ -177,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
-                    child: Text(
+                    child: const Text(
                       "Latest Articles",
                       style: TextStyle(
                           fontSize: 20,
@@ -185,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.bold),
                     ),
                   )),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: 210,
@@ -198,11 +195,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       return ArticleCard(_newsList[index] as Article);
                     },
                   ))),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
-                    child: Text(
+                    child: const Text(
                       "Your Level",
                       style: TextStyle(
                           fontSize: 20,
@@ -210,11 +207,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.bold),
                     ),
                   )),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Levels()));
+                        MaterialPageRoute(builder: (context) => const Levels()));
                   },
                   // change to navigation to awareness screen
                   child: SizedBox(
@@ -226,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Container(
                             height: 90,
                             width: 350,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Color.fromARGB(255, 224, 239, 242),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)))),
@@ -235,15 +232,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Container(
                               height: 10,
                               width: 350,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   color: Color.fromARGB(255, 224, 239, 242),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20)))),
                         ),
-                        Positioned(
+                        const Positioned(
                           bottom: 40,
                           left: 140,
-                          child: Container(
+                          child: SizedBox(
                             height: 75,
                             child: Image(
                               image: AssetImage('assets/levelicon.png'),
@@ -256,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text(
                               "Level " + level.toString(),
                               textAlign: TextAlign.left,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 14,
                                   color: Color.fromARGB(255, 85, 148, 75),
                                   fontWeight: FontWeight.bold),
@@ -267,12 +264,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text(level.toString(),
                                 textAlign: TextAlign.left,
                                 style: GoogleFonts.arvo(
-                                  textStyle: TextStyle(
+                                  textStyle: const TextStyle(
                                       fontSize: 32,
                                       color: Color.fromARGB(255, 208, 166, 15),
                                       fontWeight: FontWeight.bold),
                                 ))),
-                        Positioned(
+                        const Positioned(
                             top: 8,
                             right: 15,
                             child: Text(
@@ -287,7 +284,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Positioned(
                             bottom: 22,
                             left: 5,
-                            child: Container(
+                            child: SizedBox(
                               width: 340,
                               child: LinearPercentIndicator(
                                 animateFromLastPercent: true,
@@ -296,8 +293,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 lineHeight: 10,
                                 percent: points / leveltotal,
                                 backgroundColor:
-                                    Color.fromARGB(255, 167, 196, 161),
-                                progressColor: Color.fromARGB(255, 23, 141, 4),
+                                    const Color.fromARGB(255, 167, 196, 161),
+                                progressColor: const Color.fromARGB(255, 23, 141, 4),
                               ),
                             )),
                         Positioned(
@@ -306,7 +303,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text(
                               points.toString(),
                               textAlign: TextAlign.left,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
                                 color: Color.fromARGB(255, 132, 168, 116),
                                 fontWeight: FontWeight.bold,
@@ -318,7 +315,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text(
                               " / " + leveltotal.toString(),
                               textAlign: TextAlign.left,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 12,
                                 color: Color.fromARGB(255, 135, 135, 135),
                                 fontWeight: FontWeight.bold,

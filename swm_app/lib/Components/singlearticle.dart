@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:swm_app/model/news_model.dart';
 import 'package:intl/intl.dart';
@@ -6,11 +5,11 @@ import 'package:swm_app/screens/single_news.dart';
 
 class ArticleCard extends StatelessWidget {
   final Article _article;
-  ArticleCard(this._article);
+  const ArticleCard(this._article);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         width: 370,
         child: Card(
             child: Padding(
@@ -24,7 +23,7 @@ class ArticleCard extends StatelessWidget {
                         child: Expanded(
                             child: Text(
                           "${_article.title}",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 39, 39, 39)),
@@ -32,9 +31,9 @@ class ArticleCard extends StatelessWidget {
                 Padding(
                     padding: const EdgeInsets.only(right: 8),
                     child: Text(
-                        "${DateFormat('dd/MM/yy').format(_article.date!).toString()}",
+                        DateFormat('dd/MM/yy').format(_article.date!).toString(),
                         textAlign: TextAlign.start,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 124, 124, 124))))
@@ -54,15 +53,15 @@ class ArticleCard extends StatelessWidget {
                     // Foreground color
                     onPrimary: Colors.lightGreen,
                     // Background color
-                    primary: Color.fromARGB(255, 215, 240, 206)),
+                    primary: const Color.fromARGB(255, 215, 240, 206)),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) =>
                           SingleNewsScreen(title: _article.title ?? "")));
                 },
-                child: Text(
+                child: const Text(
                   'Learn More',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     color: Color.fromARGB(255, 85, 148, 75),
                     fontWeight: FontWeight.bold,

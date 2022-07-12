@@ -1,8 +1,5 @@
-import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:swm_app/model/user_model.dart';
@@ -51,25 +48,25 @@ class ProfileScreenState extends State<ProfileScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               const SizedBox(height: 20),
-              Container(
+              SizedBox(
                 width: 130.0,
                 height: 130.0,
                 child: CircleAvatar(
-                  backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                  backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                   backgroundImage: NetworkImage(
-                      "${userData.imgURL ?? "https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg"}"),
+                      userData.imgURL ?? "https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg"),
                 ),
               ),
               const SizedBox(height: 10),
               Text(
                 "${userData.firstName ?? ""} ${userData.lastName ?? ""}",
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 22,
                     color: Color.fromARGB(255, 70, 70, 70),
                     fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 15),
-              Padding(
+              const Padding(
                   padding: EdgeInsets.only(right: 170),
                   child: Text(
                     "Sustainability Level",
@@ -82,7 +79,7 @@ class ProfileScreenState extends State<ProfileScreen> {
               GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Levels()));
+                        MaterialPageRoute(builder: (context) => const Levels()));
                   },
                   // change to navigation to awareness screen
                   child: SizedBox(
@@ -94,7 +91,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                         Container(
                             height: 90,
                             width: 350,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Color.fromARGB(255, 224, 239, 242),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)))),
@@ -103,15 +100,15 @@ class ProfileScreenState extends State<ProfileScreen> {
                           child: Container(
                               height: 10,
                               width: 350,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   color: Color.fromARGB(255, 224, 239, 242),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20)))),
                         ),
-                        Positioned(
+                        const Positioned(
                           bottom: 40,
                           left: 140,
-                          child: Container(
+                          child: SizedBox(
                             height: 75,
                             child: Image(
                               image: AssetImage('assets/levelicon.png'),
@@ -124,7 +121,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                             child: Text(
                               "Level " + level.toString(),
                               textAlign: TextAlign.left,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 14,
                                   color: Color.fromARGB(255, 85, 148, 75),
                                   fontWeight: FontWeight.bold),
@@ -135,12 +132,12 @@ class ProfileScreenState extends State<ProfileScreen> {
                             child: Text(level.toString(),
                                 textAlign: TextAlign.left,
                                 style: GoogleFonts.arvo(
-                                  textStyle: TextStyle(
+                                  textStyle: const TextStyle(
                                       fontSize: 32,
                                       color: Color.fromARGB(255, 208, 166, 15),
                                       fontWeight: FontWeight.bold),
                                 ))),
-                        Positioned(
+                        const Positioned(
                             top: 8,
                             right: 15,
                             child: Text(
@@ -155,7 +152,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                         Positioned(
                             bottom: 22,
                             left: 5,
-                            child: Container(
+                            child: SizedBox(
                               width: 340,
                               child: LinearPercentIndicator(
                                 animateFromLastPercent: true,
@@ -164,8 +161,8 @@ class ProfileScreenState extends State<ProfileScreen> {
                                 lineHeight: 10,
                                 percent: points / leveltotal,
                                 backgroundColor:
-                                    Color.fromARGB(255, 167, 196, 161),
-                                progressColor: Color.fromARGB(255, 23, 141, 4),
+                                    const Color.fromARGB(255, 167, 196, 161),
+                                progressColor: const Color.fromARGB(255, 23, 141, 4),
                               ),
                             )),
                         Positioned(
@@ -174,7 +171,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                             child: Text(
                               points.toString(),
                               textAlign: TextAlign.left,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
                                 color: Color.fromARGB(255, 132, 168, 116),
                                 fontWeight: FontWeight.bold,
@@ -186,14 +183,14 @@ class ProfileScreenState extends State<ProfileScreen> {
                             child: Text(
                               " / " + leveltotal.toString(),
                               textAlign: TextAlign.left,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 12,
                                 color: Color.fromARGB(255, 135, 135, 135),
                                 fontWeight: FontWeight.bold,
                               ),
                             )),
                       ])))),
-              Padding(
+              const Padding(
                   padding: EdgeInsets.only(left: 35, right: 35),
                   child: Text(
                     "  Keep up the good work! Try some new tasks for a bonus reward when you reach the next level!",
@@ -205,7 +202,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.bold),
                   )),
               const SizedBox(height: 15),
-              Padding(
+              const Padding(
                   padding: EdgeInsets.only(right: 280),
                   child: Text(
                     "Badges",
@@ -218,18 +215,18 @@ class ProfileScreenState extends State<ProfileScreen> {
               GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Badges()));
+                        MaterialPageRoute(builder: (context) => const Badges()));
                   },
                   // change to navigation to tasks screen
                   child: Container(
                       height: 100,
                       width: 350,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           color: Color.fromARGB(255, 227, 227, 227),
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                       child: Center(
                           child: Row(children: <Widget>[
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         StreamBuilder(
                             stream: _badgesearned.snapshots(),
                             builder: (context,
@@ -247,7 +244,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                                           builder: (context, constraints) {
                                         if (item['earned'] == true) {
                                           return Center(
-                                              child: Container(
+                                              child: SizedBox(
                                             height: 70,
                                             width: 75,
                                             child: Image(
@@ -257,21 +254,21 @@ class ProfileScreenState extends State<ProfileScreen> {
                                                         ".png")),
                                           ));
                                         } else {
-                                          return (SizedBox.shrink());
+                                          return (const SizedBox.shrink());
                                         }
                                       }));
                                     }).toList()),
                               );
                             }),
-                        SizedBox(width: 10),
-                        Container(
+                        const SizedBox(width: 10),
+                        const SizedBox(
                           height: 22,
                           width: 18,
                           child: Image(
                             image: AssetImage('assets/moreicon.png'),
                           ),
                         ),
-                        SizedBox(width: 12),
+                        const SizedBox(width: 12),
                       ])))),
             ],
           ),

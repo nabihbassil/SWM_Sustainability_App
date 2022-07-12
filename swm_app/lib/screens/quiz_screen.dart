@@ -115,25 +115,27 @@ class _QuizScreenState extends State<QuizScreen> {
                 barRadius: const Radius.circular(16),
                 lineHeight: 20,
                 percent: (questionIndex + 1) / QuizData.length,
-                backgroundColor: Color.fromARGB(255, 224, 223, 223),
-                progressColor: Color.fromARGB(255, 11, 88, 151),
+                backgroundColor: const Color.fromARGB(255, 224, 223, 223),
+                progressColor: const Color.fromARGB(255, 11, 88, 151),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               // Displays the questions
               Container(
                 width: double.infinity,
                 height: 180.0,
-                margin: EdgeInsets.only(bottom: 10.0, left: 30.0, right: 30.0),
-                padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
+                margin: const EdgeInsets.only(
+                    bottom: 10.0, left: 30.0, right: 30.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 50.0, vertical: 20.0),
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 11, 88, 151),
+                  color: const Color.fromARGB(255, 11, 88, 151),
                   borderRadius: BorderRadius.circular(10.0),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 1,
                       blurRadius: 3,
-                      offset: Offset(0, 2),
+                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),
@@ -141,7 +143,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   child: Text(
                     QuizData[questionIndex].question,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20.0,
                       color: Color.fromARGB(255, 255, 255, 255),
                       fontWeight: FontWeight.bold,
@@ -169,7 +171,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         backgroundColor: Colors.transparent,
                         builder: (context) => Container(
                             height: MediaQuery.of(context).size.height * 0.53,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Color.fromARGB(255, 232, 232, 232),
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(25),
@@ -185,7 +187,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                     answerScore
                                         ? 'Right answer'
                                         : 'Wrong answer',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.bold,
                                         color:
@@ -198,26 +200,19 @@ class _QuizScreenState extends State<QuizScreen> {
                                         ? Icons.thumb_up_alt
                                         : Icons.thumb_down_alt,
                                     color: answerScore
-                                        ? Color.fromARGB(255, 75, 113, 76)
-                                        : Color.fromARGB(255, 137, 46, 46),
-                                    shadows: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 1,
-                                        blurRadius: 3,
-                                        offset: Offset(0, 2),
-                                      ),
-                                    ],
+                                        ? const Color.fromARGB(255, 75, 113, 76)
+                                        : const Color.fromARGB(
+                                            255, 137, 46, 46),
                                   ),
                                   const SizedBox(height: 20),
                                   // displaying the explanation
                                   Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 35, right: 35),
+                                    padding: const EdgeInsets.only(
+                                        left: 35, right: 35),
                                     child: Text(
                                       QuizData[questionIndex].explanation,
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 19,
                                           fontWeight: FontWeight.bold,
                                           fontStyle: FontStyle.italic,
@@ -237,9 +232,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                               _nextQuestions();
                                               Navigator.pop(context);
                                             },
-                                            icon: Icon(
+                                            icon: const Icon(
                                                 Icons.navigate_next_rounded),
-                                            label: Text(
+                                            label: const Text(
                                               "Next Question",
                                             ),
                                             style: ElevatedButton.styleFrom(
@@ -276,8 +271,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                               ));
                                               _nextQuestions();
                                             },
-                                            icon: Icon(Icons.flag_outlined),
-                                            label: Text(
+                                            icon:
+                                                const Icon(Icons.flag_outlined),
+                                            label: const Text(
                                               "Finish Quiz",
                                             ),
                                             style: ElevatedButton.styleFrom(

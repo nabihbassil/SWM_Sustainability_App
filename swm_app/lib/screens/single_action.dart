@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:swm_app/model/user_model.dart';
 import 'package:swm_app/services/user_service.dart';
 
 class SingleActionScreen extends StatefulWidget {
@@ -102,11 +101,11 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Container(
+                          SizedBox(
                               width: double.infinity,
                               child: Text(
                                 item['actiontitle'],
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 24,
                                     color: Color.fromARGB(255, 70, 70, 70),
                                     fontWeight: FontWeight.bold),
@@ -121,7 +120,7 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                             ),
                           ),
                           Container(height: 20),
-                          Container(
+                          SizedBox(
                             width: double.infinity,
                             child: Text(
                               item['actioncontent'].replaceAll("\\n", "\n"),
@@ -141,11 +140,11 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                                         style: ElevatedButton.styleFrom(
                                           // Foreground color
                                           onPrimary:
-                                              Color.fromARGB(255, 228, 170, 18),
+                                              const Color.fromARGB(255, 228, 170, 18),
                                           // Background color
-                                          primary: Color.fromARGB(
+                                          primary: const Color.fromARGB(
                                               255, 255, 239, 199),
-                                          minimumSize: Size(200, 50),
+                                          minimumSize: const Size(200, 50),
                                         ),
                                         onPressed: () {
                                           if (_isButtonDisabled) {
@@ -169,16 +168,16 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                                         style: ElevatedButton.styleFrom(
                                           // Foreground color
                                           onPrimary:
-                                              Color.fromARGB(255, 85, 148, 75),
+                                              const Color.fromARGB(255, 85, 148, 75),
                                           // Background color
-                                          primary: Color.fromARGB(
+                                          primary: const Color.fromARGB(
                                               255, 255, 255, 255),
-                                          minimumSize: Size(200, 50),
+                                          minimumSize: const Size(200, 50),
                                         ),
                                         onPressed: null,
                                         child: const Text(
                                             'Good Job on Completing the Task!',
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 fontSize: 15,
                                                 color: Color.fromARGB(
                                                     255, 85, 148, 75),

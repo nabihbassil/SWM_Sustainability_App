@@ -37,8 +37,8 @@ class _SingleNewsScreen extends State<SingleNewsScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
-                "$title",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                title,
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ],
           ),
