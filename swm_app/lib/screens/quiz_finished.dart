@@ -104,10 +104,10 @@ class _QuizFinishState extends State<QuizFinish> {
                     fontWeight: FontWeight.bold),
               )),
               const SizedBox(height: 30),
-              Icon(
+              const Icon(
                 Icons.verified_user,
                 size: 60.0,
-                color: const Color.fromARGB(255, 75, 113, 76),
+                color: Color.fromARGB(255, 75, 113, 76),
               ),
               const SizedBox(height: 30),
               // quiz performance
