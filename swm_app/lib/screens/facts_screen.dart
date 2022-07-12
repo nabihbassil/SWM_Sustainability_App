@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:swm_app/screens/awareness_main.dart';
 import 'package:swm_app/services/fact_service.dart';
 import 'package:swm_app/screens/quiz_screen.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -117,8 +115,8 @@ class _FactsScreenState extends State<FactsScreen> {
                 barRadius: const Radius.circular(16.0),
                 lineHeight: 20,
                 percent: (_factIndex + 1) / size,
-                backgroundColor: Color.fromARGB(255, 224, 223, 223),
-                progressColor: Color.fromARGB(255, 11, 88, 151),
+                backgroundColor: const Color.fromARGB(255, 224, 223, 223),
+                progressColor: const Color.fromARGB(255, 11, 88, 151),
               ),
               Container(
                 height: 30,
@@ -128,7 +126,7 @@ class _FactsScreenState extends State<FactsScreen> {
                   width: double.infinity,
                   child: Text(
                     userProfilesList[_factIndex].awatitle,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 24,
                         color: Color.fromARGB(255, 70, 70, 70),
                         fontWeight: FontWeight.bold),
@@ -185,20 +183,20 @@ class _FactsScreenState extends State<FactsScreen> {
                   // change to navigation to awareness screen
                   child: FittedBox(
                       fit: BoxFit.fitHeight,
-                      child: Container(
+                      child: SizedBox(
                           width: 290,
                           child: _factIndex < size - 1
-                              ? Text(
+                              ? const Text(
                                   "Next ➜",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       fontSize: 14,
                                       color: Color.fromARGB(255, 131, 131, 131),
                                       fontWeight: FontWeight.normal),
                                   textAlign: TextAlign.right,
                                 )
-                              : Text(
+                              : const Text(
                                   "Continue to Quiz➜",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       fontSize: 14,
                                       color: Color.fromARGB(255, 33, 36, 119),
                                       fontWeight: FontWeight.normal),

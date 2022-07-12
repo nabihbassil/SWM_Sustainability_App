@@ -7,18 +7,19 @@ class Answer extends StatelessWidget {
   final Color answerColor;
   final VoidCallback answerTap;
 
-  Answer(
+  const Answer(
       {required this.answerText,
       required this.answerColor,
       required this.answerTap});
 
+  @override
   @SemanticsHintOverrides()
   Widget build(BuildContext context) {
     return InkWell(
       onTap: answerTap,
       child: Container(
-        padding: EdgeInsets.all(15.0),
-        margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
+        padding: const EdgeInsets.all(15.0),
+        margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
         width: double.infinity,
         decoration: BoxDecoration(
           color: answerColor,
@@ -26,7 +27,7 @@ class Answer extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Text(answerText,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 15.0,
             )),
       ),

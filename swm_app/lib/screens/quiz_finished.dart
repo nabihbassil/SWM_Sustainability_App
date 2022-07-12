@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:swm_app/screens/awareness_main.dart';
 import 'package:swm_app/screens/challenge_main.dart';
 import 'package:swm_app/services/user_service.dart';
 
@@ -94,7 +93,7 @@ class _QuizFinishState extends State<QuizFinish> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Congratulations for completing quiz and icon for better look and feel
-              Center(
+              const Center(
                   child: Text(
                 "Congratulations on completing the quiz",
                 textAlign: TextAlign.center,
@@ -108,23 +107,15 @@ class _QuizFinishState extends State<QuizFinish> {
               Icon(
                 Icons.verified_user,
                 size: 60.0,
-                color: Color.fromARGB(255, 75, 113, 76),
-                shadows: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 1,
-                    blurRadius: 3,
-                    offset: Offset(0, 2),
-                  ),
-                ],
+                color: const Color.fromARGB(255, 75, 113, 76),
               ),
               const SizedBox(height: 30),
               // quiz performance
               Center(
                   child: Text(
-                "Your final score is \n${totalScore} / ${possibleScore}",
+                "Your final score is \n$totalScore / $possibleScore",
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 20,
                     color: Colors.grey,
                     fontWeight: FontWeight.bold),
@@ -137,7 +128,7 @@ class _QuizFinishState extends State<QuizFinish> {
                     ? "Note: You have already completed the quiz and received $quizPoints points for this"
                     : "You will get $quizPoints points for your personal wallet",
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 20,
                     color: Color.fromARGB(255, 100, 100, 100),
                     fontStyle: FontStyle.italic,
@@ -150,8 +141,8 @@ class _QuizFinishState extends State<QuizFinish> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => ChallengeMain(id: id, name: name)));
                 },
-                icon: Icon(Icons.school),
-                label: Text(
+                icon: const Icon(Icons.school),
+                label: const Text(
                   "Back to Challenge Overview",
                 ),
                 style: ElevatedButton.styleFrom(

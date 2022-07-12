@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:swm_app/screens/challenge_main.dart';
 import 'package:swm_app/screens/single_action.dart';
 import 'package:swm_app/services/user_service.dart';
 
@@ -77,9 +75,9 @@ class _TakeActionState extends State<TakeAction> {
                       fit: BoxFit.contain,
                     )),
                 const SizedBox(height: 25),
-                Padding(
+                const Padding(
                     padding: EdgeInsets.only(right: 250),
-                    child: const Text("Tasks",
+                    child: Text("Tasks",
                         textAlign: TextAlign.left,
                         style: TextStyle(
                             fontSize: 30,
@@ -89,10 +87,10 @@ class _TakeActionState extends State<TakeAction> {
                 const SizedBox(height: 30),
                 // need to make text.rich a const?
                 Padding(
-                  padding: EdgeInsets.only(right: 220),
+                  padding: const EdgeInsets.only(right: 220),
                   child: Text.rich(
                     TextSpan(
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 25,
                           color: Color.fromARGB(255, 200, 136, 11),
                           fontWeight: FontWeight.bold),
@@ -106,7 +104,7 @@ class _TakeActionState extends State<TakeAction> {
                                 fit: BoxFit.contain,
                               )),
                         ),
-                        TextSpan(
+                        const TextSpan(
                           text: ' To Do',
                         )
                       ],
@@ -142,7 +140,7 @@ class _TakeActionState extends State<TakeAction> {
                                       onPrimary: Colors.amber,
                                       // Background color
                                       primary:
-                                          Color.fromARGB(255, 255, 239, 199)),
+                                          const Color.fromARGB(255, 255, 239, 199)),
                                   onPressed: () {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -170,10 +168,10 @@ class _TakeActionState extends State<TakeAction> {
                     }),
                 const SizedBox(height: 2),
                 Padding(
-                  padding: EdgeInsets.only(right: 220),
+                  padding: const EdgeInsets.only(right: 220),
                   child: Text.rich(
                     TextSpan(
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 25,
                           color: Color.fromARGB(255, 85, 148, 75),
                           fontWeight: FontWeight.bold),
@@ -187,7 +185,7 @@ class _TakeActionState extends State<TakeAction> {
                                 fit: BoxFit.contain,
                               )),
                         ),
-                        TextSpan(
+                        const TextSpan(
                           text: ' Done',
                         )
                       ],
@@ -224,7 +222,7 @@ class _TakeActionState extends State<TakeAction> {
                                       onPrimary: Colors.lightGreen,
                                       // Background color
                                       primary:
-                                          Color.fromARGB(255, 215, 240, 206)),
+                                          const Color.fromARGB(255, 215, 240, 206)),
                                   onPressed: () {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -250,7 +248,7 @@ class _TakeActionState extends State<TakeAction> {
                         }).toList(),
                       ));
                     }),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
               ]),
         ),
       ),

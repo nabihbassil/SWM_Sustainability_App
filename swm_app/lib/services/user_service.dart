@@ -3,7 +3,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:swm_app/model/badges_model.dart';
-import 'package:swm_app/model/quiz_model.dart';
 import 'package:swm_app/model/user_model.dart';
 
 class UserService {

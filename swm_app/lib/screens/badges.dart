@@ -1,8 +1,5 @@
-import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
 
@@ -48,7 +45,7 @@ class _BadgesState extends State<Badges> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      backgroundColor: Color.fromARGB(255, 246, 246, 246),
+      backgroundColor: const Color.fromARGB(255, 246, 246, 246),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -56,21 +53,21 @@ class _BadgesState extends State<Badges> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text(
+              const Text(
                 "Badge Collection",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Color.fromARGB(255, 70, 70, 70)),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Expanded(
                   child: SingleChildScrollView(
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                    Padding(
+                    const Padding(
                         padding: EdgeInsets.only(right: 290),
                         child: Text(
                           "General",
@@ -111,7 +108,7 @@ class _BadgesState extends State<Badges> {
                                                   item['icon'] +
                                                   ".png")));
                                 } else {
-                                  return Image(
+                                  return const Image(
                                       image: AssetImage(
                                           "assets/badges/nobadge.png"));
                                 }
@@ -122,7 +119,7 @@ class _BadgesState extends State<Badges> {
 
                     // new
                     const SizedBox(height: 15),
-                    Padding(
+                    const Padding(
                         padding: EdgeInsets.only(right: 240),
                         child: Text(
                           "Consumption",
@@ -161,7 +158,7 @@ class _BadgesState extends State<Badges> {
                                                   item['icon'] +
                                                   ".png")));
                                 } else {
-                                  return Image(
+                                  return const Image(
                                       image: AssetImage(
                                           "assets/badges/nobadge.png"));
                                 }
@@ -170,7 +167,7 @@ class _BadgesState extends State<Badges> {
                           );
                         }),
                     const SizedBox(height: 15),
-                    Padding(
+                    const Padding(
                         padding: EdgeInsets.only(right: 290),
                         child: Text(
                           "Energy",
@@ -209,7 +206,7 @@ class _BadgesState extends State<Badges> {
                                                   item['icon'] +
                                                   ".png")));
                                 } else {
-                                  return Image(
+                                  return const Image(
                                       image: AssetImage(
                                           "assets/badges/nobadge.png"));
                                 }
@@ -231,7 +228,7 @@ void badgespecifics(context, badgenum, badgename, badgedescription) {
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               color: Color.fromARGB(255, 232, 232, 232),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25),
@@ -250,20 +247,20 @@ void badgespecifics(context, badgenum, badgename, badgedescription) {
                 const SizedBox(height: 15),
                 Text(
                   badgename,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 113, 130, 137)),
                 ),
                 const SizedBox(height: 20),
                 Padding(
-                  padding: EdgeInsets.only(left: 35, right: 35),
+                  padding: const EdgeInsets.only(left: 35, right: 35),
                   child: Text(
                     "   " +
                         badgedescription +
                         "\n\nCongratulations on earning the badge!",
                     textAlign: TextAlign.left,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 19,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.italic,

@@ -22,7 +22,7 @@ class _RewardScreenState extends State<RewardScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
+            children: const <Widget>[
               Text(
                 "Reward Screen",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),

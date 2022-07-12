@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -254,7 +253,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     Stack(
                       children: [
                         Container(
-                          margin: EdgeInsets.symmetric(
+                          margin: const EdgeInsets.symmetric(
                               vertical: 20, horizontal: 30),
                           child: CircleAvatar(
                             radius: 71,
@@ -274,15 +273,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             child: RawMaterialButton(
                               elevation: 10,
                               fillColor: Colors.green,
-                              child: Icon(Icons.add_a_photo),
-                              padding: EdgeInsets.all(15.0),
-                              shape: CircleBorder(),
+                              child: const Icon(Icons.add_a_photo),
+                              padding: const EdgeInsets.all(15.0),
+                              shape: const CircleBorder(),
                               onPressed: () {
                                 showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                        title: Text(
+                                        title: const Text(
                                           'Choose option',
                                           style: TextStyle(
                                               fontWeight: FontWeight.w600,
@@ -295,10 +294,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                                 onTap: _pickImageCamera,
                                                 splashColor: Colors.green,
                                                 child: Row(
-                                                  children: [
+                                                  children: const [
                                                     Padding(
                                                       padding:
-                                                          const EdgeInsets.all(
+                                                          EdgeInsets.all(
                                                               8.0),
                                                       child: Icon(
                                                         Icons.camera,
@@ -320,10 +319,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                                 onTap: _pickImageGallery,
                                                 splashColor: Colors.green,
                                                 child: Row(
-                                                  children: [
+                                                  children: const [
                                                     Padding(
                                                       padding:
-                                                          const EdgeInsets.all(
+                                                          EdgeInsets.all(
                                                               8.0),
                                                       child: Icon(
                                                         Icons.image,
@@ -345,10 +344,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                                 onTap: _remove,
                                                 splashColor: Colors.green,
                                                 child: Row(
-                                                  children: [
+                                                  children: const [
                                                     Padding(
                                                       padding:
-                                                          const EdgeInsets.all(
+                                                          EdgeInsets.all(
                                                               8.0),
                                                       child: Icon(
                                                         Icons.remove_circle,

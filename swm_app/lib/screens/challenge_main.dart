@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swm_app/screens/awareness_intro.dart';
-import 'package:swm_app/screens/awareness_main.dart';
 import 'package:swm_app/screens/take_action_intro.dart';
-import 'package:swm_app/screens/take_actions.dart';
 
 // ignore: must_be_immutable
 class ChallengeMain extends StatefulWidget {
@@ -45,10 +43,10 @@ class _ChallengeMain extends State<ChallengeMain> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
-                  padding: EdgeInsets.only(right: 90),
+                  padding: const EdgeInsets.only(right: 90),
                   child: Text(
                     "$name Challenge",
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 24,
                         color: Color.fromARGB(255, 70, 70, 70),
                         fontWeight: FontWeight.bold),
@@ -71,11 +69,11 @@ class _ChallengeMain extends State<ChallengeMain> {
                       ))),
               const SizedBox(height: 15),
               Padding(
-                  padding: EdgeInsets.only(left: 60, right: 60),
+                  padding: const EdgeInsets.only(left: 60, right: 60),
                   child: Text(
                     "Learn about the impact of $name and test your knowledge",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 100, 100, 100),
                         fontStyle: FontStyle.italic,
@@ -99,11 +97,11 @@ class _ChallengeMain extends State<ChallengeMain> {
                       ))),
               const SizedBox(height: 15),
               Padding(
-                  padding: EdgeInsets.only(left: 60, right: 60),
+                  padding: const EdgeInsets.only(left: 60, right: 60),
                   child: Text(
                     "Explore ways you can reduce $name in your daily life",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 100, 100, 100),
                         fontStyle: FontStyle.italic,

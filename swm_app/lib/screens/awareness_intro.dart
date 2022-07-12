@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swm_app/screens/awareness_main.dart';
 import 'package:swm_app/screens/challenge_main.dart';
-import 'package:swm_app/screens/take_actions.dart';
 
 class AwarenessIntro extends StatelessWidget {
   int id;
