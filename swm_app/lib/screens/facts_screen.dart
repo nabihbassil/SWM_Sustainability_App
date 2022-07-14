@@ -42,6 +42,12 @@ class _FactsScreenState extends State<FactsScreen> {
     }
   }
 
+  void _prevFact() {
+    setState(() {
+      _factIndex = _factIndex - 1;
+    });
+  }
+
   // function that describes what happens at the end of the facts
   void _resetFacts() {
     setState(() {
@@ -157,51 +163,89 @@ class _FactsScreenState extends State<FactsScreen> {
                     ),
                   )),
               Container(height: 40),
-              GestureDetector(
-                  onTap: () {
-                    if (_factIndex < size - 1) {
-                      print("iiiiiiiffffffff");
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => FactsScreen(
-                                index: _factIndex,
-                                id: id,
-                                name: name,
-                              )));
-                      _nextFact();
-                    } else {
-                      print("eeeellllssseeeee");
-                      _resetFacts();
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => QuizScreen(
-                                id: id,
-                                name: name,
-                              )));
-                      //  _nextFact();
-
-                    }
-                  },
-                  // change to navigation to awareness screen
-                  child: FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: SizedBox(
-                          width: 290,
-                          child: _factIndex < size - 1
-                              ? const Text(
-                                  "Next ➜",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Color.fromARGB(255, 131, 131, 131),
-                                      fontWeight: FontWeight.normal),
-                                  textAlign: TextAlign.right,
-                                )
-                              : const Text(
-                                  "Continue to Quiz➜",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Color.fromARGB(255, 33, 36, 119),
-                                      fontWeight: FontWeight.normal),
-                                  textAlign: TextAlign.right,
-                                )))),
+              ListTile(
+                //contentPadding: EdgeInsets.all(<some value here>),//change for side padding
+                title: Row(children: <Widget>[
+                  Expanded(
+                      child: Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            if (_factIndex > 0) {
+                              print("iiiiiiiffffffff");
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => FactsScreen(
+                                        index: _factIndex,
+                                        id: id,
+                                        name: name,
+                                      )));
+                              _prevFact();
+                            }
+                          },
+                          child: _factIndex > 0
+                              ? FittedBox(
+                                  fit: BoxFit.fitHeight,
+                                  child: SizedBox(
+                                      width: 160,
+                                      child: Text(
+                                        "< Back",
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Color.fromARGB(
+                                                255, 131, 131, 131),
+                                            fontWeight: FontWeight.normal),
+                                        textAlign: TextAlign.left,
+                                      )))
+                              : FittedBox(fit: BoxFit.fitHeight))
+                    ],
+                  )),
+                  GestureDetector(
+                    onTap: () {
+                      if (_factIndex < size - 1) {
+                        print("iiiiiiiffffffff");
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => FactsScreen(
+                                  index: _factIndex,
+                                  id: id,
+                                  name: name,
+                                )));
+                        _nextFact();
+                      } else {
+                        print("eeeellllssseeeee");
+                        _resetFacts();
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => QuizScreen(
+                                  id: id,
+                                  name: name,
+                                )));
+                        //  _nextFact();
+                      }
+                    },
+                    child: FittedBox(
+                        fit: BoxFit.fitHeight,
+                        child: SizedBox(
+                            width: 160,
+                            child: _factIndex < size - 1
+                                ? const Text(
+                                    "Next >",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color:
+                                            Color.fromARGB(255, 131, 131, 131),
+                                        fontWeight: FontWeight.normal),
+                                    textAlign: TextAlign.right,
+                                  )
+                                : const Text(
+                                    "Continue to Quiz➜",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Color.fromARGB(255, 33, 36, 119),
+                                        fontWeight: FontWeight.normal),
+                                    textAlign: TextAlign.right,
+                                  ))),
+                  )
+                ]),
+              ),
             ],
           ),
         ),
