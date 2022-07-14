@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
@@ -19,11 +18,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final Query _level = FirebaseFirestore.instance.collection('Levels');
   List<Object> _newsList = [];
-  final Query _news = FirebaseFirestore.instance.collection('news');
-  int points = 800;
-  int leveltotal = 1000;
+
+  int points = 0;
   int level = 1;
+  int leveltotal = 1000;
+
   List LProgress = ['0'];
   UserModel userData = UserModel();
 
@@ -35,6 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
       points = userData.points!;
     });
   }
+
+  getLevel() {}
 
   GetAllModulesInProgress() async {
     await UserService()
@@ -60,11 +63,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Align(
@@ -78,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.bold),
                     ),
                   )),
-              const SizedBox(height: 5),
+              const SizedBox(height: 10),
               SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: 120,
@@ -100,22 +103,27 @@ class _HomeScreenState extends State<HomeScreen> {
                             return Row(children: [
                               Column(
                                 children: [
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: SizedBox(
-                                      width: 340,
-                                      child: Text(
-                                        item['modName'],
-                                        style: const TextStyle(
-                                            fontSize: 15,
-                                            color: Color.fromARGB(
-                                                255, 131, 131, 131),
-                                            fontWeight: FontWeight.bold),
+                                  Row(children: [
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: SizedBox(
+                                        child: Text(
+                                          item['modName'],
+                                          style: const TextStyle(
+                                              fontSize: 15,
+                                              color: Color.fromARGB(
+                                                  255, 131, 131, 131),
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width -
+                                          150,
+                                    )
+                                  ]),
                                   const SizedBox(
-                                    height: 4,
+                                    height: 5,
                                   ),
                                   GestureDetector(
                                     onTap: () {
@@ -129,10 +137,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   )));
                                     },
                                     child: Container(
-                                      padding:
-                                          const EdgeInsets.symmetric(horizontal: 10),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
                                       height: 90,
-                                      width: 370,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.9,
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(8),
                                         child: Stack(
@@ -141,8 +150,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                               item['modIMG'],
                                               fit: BoxFit.cover,
                                               width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
+                                                      .size
+                                                      .width -
+                                                  40,
                                             ),
                                             Positioned(
                                               top: 10,
@@ -171,6 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           }).toList(),
                         ));
                       })),
+              const SizedBox(height: 7),
               Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
@@ -182,10 +193,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.bold),
                     ),
                   )),
-              const SizedBox(height: 5),
+              const SizedBox(height: 10),
               SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: 210,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  height: 200,
                   child: Expanded(
                       child: ListView.builder(
                     shrinkWrap: false,
@@ -195,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return ArticleCard(_newsList[index] as Article);
                     },
                   ))),
-              const SizedBox(height: 5),
+              const SizedBox(height: 10),
               Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
@@ -207,121 +218,125 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.bold),
                     ),
                   )),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const Levels()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const Levels()));
                   },
                   // change to navigation to awareness screen
                   child: SizedBox(
                       height: 120,
-                      width: 350,
+                      width: MediaQuery.of(context).size.width * 0.9,
                       child: Center(
-                          child:
-                              Stack(clipBehavior: Clip.none, children: <Widget>[
-                        Container(
-                            height: 90,
-                            width: 350,
-                            decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 224, 239, 242),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)))),
-                        Positioned(
-                          bottom: 95,
-                          child: Container(
-                              height: 10,
-                              width: 350,
-                              decoration: const BoxDecoration(
-                                  color: Color.fromARGB(255, 224, 239, 242),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)))),
-                        ),
-                        const Positioned(
-                          bottom: 40,
-                          left: 140,
-                          child: SizedBox(
-                            height: 75,
-                            child: Image(
-                              image: AssetImage('assets/levelicon.png'),
+                          child: Stack(
+                              clipBehavior: Clip.none,
+                              alignment: Alignment.center,
+                              children: <Widget>[
+                            Container(
+                                height: 90,
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                decoration: const BoxDecoration(
+                                    color: Color.fromARGB(255, 224, 239, 242),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)))),
+                            Positioned(
+                              bottom: 95,
+                              child: Container(
+                                  height: 10,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.88,
+                                  decoration: const BoxDecoration(
+                                      color: Color.fromARGB(255, 224, 239, 242),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20)))),
                             ),
-                          ),
-                        ),
-                        Positioned(
-                            top: 35,
-                            left: 15,
-                            child: Text(
-                              "Level " + level.toString(),
-                              textAlign: TextAlign.left,
-                              style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Color.fromARGB(255, 85, 148, 75),
-                                  fontWeight: FontWeight.bold),
-                            )),
-                        Positioned(
-                            bottom: 67,
-                            left: 166,
-                            child: Text(level.toString(),
-                                textAlign: TextAlign.left,
-                                style: GoogleFonts.arvo(
-                                  textStyle: const TextStyle(
-                                      fontSize: 32,
-                                      color: Color.fromARGB(255, 208, 166, 15),
+                            const Positioned(
+                              bottom: 40,
+                              child: SizedBox(
+                                height: 75,
+                                child: Image(
+                                  image: AssetImage('assets/levelicon.png'),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                                top: 35,
+                                left: 15,
+                                child: Text(
+                                  "Level " + level.toString(),
+                                  textAlign: TextAlign.left,
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Color.fromARGB(255, 85, 148, 75),
                                       fontWeight: FontWeight.bold),
-                                ))),
-                        const Positioned(
-                            top: 8,
-                            right: 15,
-                            child: Text(
-                              "+",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontSize: 22,
-                                color: Color.fromARGB(255, 106, 144, 161),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )),
-                        Positioned(
-                            bottom: 22,
-                            left: 5,
-                            child: SizedBox(
-                              width: 340,
-                              child: LinearPercentIndicator(
-                                animateFromLastPercent: true,
-                                animationDuration: 5000,
-                                barRadius: const Radius.circular(16.0),
-                                lineHeight: 10,
-                                percent: points / leveltotal,
-                                backgroundColor:
-                                    const Color.fromARGB(255, 167, 196, 161),
-                                progressColor: const Color.fromARGB(255, 23, 141, 4),
-                              ),
-                            )),
-                        Positioned(
-                            bottom: 3,
-                            right: 57,
-                            child: Text(
-                              points.toString(),
-                              textAlign: TextAlign.left,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Color.fromARGB(255, 132, 168, 116),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )),
-                        Positioned(
-                            bottom: 3,
-                            right: 20,
-                            child: Text(
-                              " / " + leveltotal.toString(),
-                              textAlign: TextAlign.left,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: Color.fromARGB(255, 135, 135, 135),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )),
-                      ])))),
+                                )),
+                            Positioned(
+                                bottom: 67,
+                                child: Text(level.toString(),
+                                    textAlign: TextAlign.left,
+                                    style: GoogleFonts.arvo(
+                                      textStyle: const TextStyle(
+                                          fontSize: 32,
+                                          color:
+                                              Color.fromARGB(255, 208, 166, 15),
+                                          fontWeight: FontWeight.bold),
+                                    ))),
+                            const Positioned(
+                                top: 8,
+                                right: 15,
+                                child: Text(
+                                  "+",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    color: Color.fromARGB(255, 106, 144, 161),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )),
+                            Positioned(
+                                bottom: 22,
+                                left: 5,
+                                child: SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.86,
+                                  child: LinearPercentIndicator(
+                                    animateFromLastPercent: true,
+                                    animationDuration: 5000,
+                                    barRadius: const Radius.circular(16.0),
+                                    lineHeight: 10,
+                                    percent: points / leveltotal,
+                                    backgroundColor: const Color.fromARGB(
+                                        255, 167, 196, 161),
+                                    progressColor:
+                                        const Color.fromARGB(255, 23, 141, 4),
+                                  ),
+                                )),
+                            Positioned(
+                                bottom: 3,
+                                right: 57,
+                                child: Text(
+                                  points.toString(),
+                                  textAlign: TextAlign.left,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color.fromARGB(255, 132, 168, 116),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )),
+                            Positioned(
+                                bottom: 3,
+                                right: 20,
+                                child: Text(
+                                  " / " + leveltotal.toString(),
+                                  textAlign: TextAlign.left,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Color.fromARGB(255, 135, 135, 135),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )),
+                          ])))),
             ],
           ),
         ),

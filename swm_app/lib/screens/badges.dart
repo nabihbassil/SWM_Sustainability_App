@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
@@ -67,15 +66,16 @@ class _BadgesState extends State<Badges> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                    const Padding(
-                        padding: EdgeInsets.only(right: 290),
-                        child: Text(
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                            child: Text(
                           "General",
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 139, 161, 170)),
-                        )),
+                        ))),
                     const SizedBox(height: 15),
                     // grid view
 
@@ -119,15 +119,16 @@ class _BadgesState extends State<Badges> {
 
                     // new
                     const SizedBox(height: 15),
-                    const Padding(
-                        padding: EdgeInsets.only(right: 240),
-                        child: Text(
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                            child: Text(
                           "Consumption",
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 139, 161, 170)),
-                        )),
+                        ))),
                     const SizedBox(height: 15),
                     StreamBuilder(
                         stream: _collectionRef1.snapshots(),
@@ -167,15 +168,16 @@ class _BadgesState extends State<Badges> {
                           );
                         }),
                     const SizedBox(height: 15),
-                    const Padding(
-                        padding: EdgeInsets.only(right: 290),
-                        child: Text(
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                            child: Text(
                           "Energy",
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 139, 161, 170)),
-                        )),
+                        ))),
                     const SizedBox(height: 15),
                     StreamBuilder(
                         stream: _collectionRef2.snapshots(),
@@ -234,38 +236,36 @@ void badgespecifics(context, badgenum, badgename, badgedescription) {
                 topLeft: Radius.circular(25),
                 topRight: Radius.circular(25),
               )),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                const SizedBox(height: 20),
-                SizedBox(
-                    height: 120,
-                    child: Image(
-                        image: AssetImage(
-                            "assets/badges/badge" + badgenum + ".png"))),
-                const SizedBox(height: 15),
-                Text(
-                  badgename,
-                  style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 113, 130, 137)),
-                ),
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.only(left: 35, right: 35),
-                  child: Text(
-                    "   " +
-                        badgedescription +
-                        "\n\nCongratulations on earning the badge!",
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(
-                        fontSize: 19,
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
-                        color: Color.fromARGB(255, 70, 70, 70)),
-                  ),
-                )
-              ])));
+          child: ListView(children: <Widget>[
+            const SizedBox(height: 20),
+            SizedBox(
+                height: 120,
+                child: Image(
+                    image:
+                        AssetImage("assets/badges/badge" + badgenum + ".png"))),
+            const SizedBox(height: 15),
+            Text(
+              badgename,
+              style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 113, 130, 137)),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.only(left: 35, right: 35),
+              child: Text(
+                "   " +
+                    badgedescription +
+                    "\n\nCongratulations on earning the badge!",
+                textAlign: TextAlign.left,
+                style: const TextStyle(
+                    fontSize: 19,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    color: Color.fromARGB(255, 70, 70, 70)),
+              ),
+            )
+          ])));
 }

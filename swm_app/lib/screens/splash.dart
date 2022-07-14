@@ -16,9 +16,9 @@ class _SplashState extends State<Splash> {
   }
 
   _navigatetologin() async {
-    await Future.delayed(const Duration(milliseconds: 2100), () {});
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: ((context) => const LoginScreen())));
+    await Future.delayed(const Duration(milliseconds: 2000), () {});
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: ((context) => const LoginScreen())));
   }
 
   @override
