@@ -54,7 +54,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
         Padding(
           padding: EdgeInsets.all(20),
           child: Align(
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               child: Container(
                 child: Text(
                   "Challenges Overview",
@@ -107,7 +107,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                               child: Text(
                                                 item['modName'],
                                                 style: const TextStyle(
-                                                    fontSize: 18,
+                                                    fontSize: 16,
                                                     color: Color.fromARGB(
                                                         255, 131, 131, 131),
                                                     fontWeight:
@@ -167,7 +167,10 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                                       255),
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .bold),
+                                                                      .w500,
+                                                              fontStyle:
+                                                                  FontStyle
+                                                                      .italic),
                                                           textAlign:
                                                               TextAlign.left,
                                                         ),
@@ -225,7 +228,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                             child: Text(
                                               item['modName'],
                                               style: const TextStyle(
-                                                  fontSize: 18,
+                                                  fontSize: 16,
                                                   color: Color.fromARGB(
                                                       255, 131, 131, 131),
                                                   fontWeight: FontWeight.bold),
@@ -275,15 +278,16 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                                 "\\n", "\n"),
                                                         style: const TextStyle(
                                                             fontSize: 16,
-                                                            color:
-                                                                Color.fromARGB(
+                                                            color: Color
+                                                                .fromARGB(
                                                                     255,
                                                                     255,
                                                                     255,
                                                                     255),
                                                             fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                                FontWeight.w500,
+                                                            fontStyle: FontStyle
+                                                                .italic),
                                                         textAlign:
                                                             TextAlign.left,
                                                       ),
@@ -343,7 +347,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                               child: Text(
                                                 item['modName'],
                                                 style: const TextStyle(
-                                                    fontSize: 18,
+                                                    fontSize: 16,
                                                     color: Color.fromARGB(
                                                         255, 131, 131, 131),
                                                     fontWeight:
@@ -402,7 +406,10 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                                       255),
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .bold),
+                                                                      .w500,
+                                                              fontStyle:
+                                                                  FontStyle
+                                                                      .italic),
                                                           textAlign:
                                                               TextAlign.left,
                                                         ),

@@ -32,7 +32,7 @@ class _NewsScreenState extends State<NewsScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: Container(
                     child: Text(
                       "Articles",
