@@ -139,8 +139,8 @@ class _TakeActionState extends State<TakeAction> {
                                       // Foreground color
                                       onPrimary: Colors.amber,
                                       // Background color
-                                      primary:
-                                          const Color.fromARGB(255, 255, 239, 199)),
+                                      primary: const Color.fromARGB(
+                                          255, 255, 239, 199)),
                                   onPressed: () {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -221,8 +221,8 @@ class _TakeActionState extends State<TakeAction> {
                                       // Foreground color
                                       onPrimary: Colors.lightGreen,
                                       // Background color
-                                      primary:
-                                          const Color.fromARGB(255, 215, 240, 206)),
+                                      primary: const Color.fromARGB(
+                                          255, 215, 240, 206)),
                                   onPressed: () {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(

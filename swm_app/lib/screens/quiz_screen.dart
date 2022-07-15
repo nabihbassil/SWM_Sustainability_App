@@ -97,8 +97,7 @@ class _QuizScreenState extends State<QuizScreen> {
         iconTheme: const IconThemeData(color: Colors.black),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => AwarenessMain(id: id, name: name))),
+          onPressed: () => Navigator.of(context).pop(),
         ),
       ),
       body: Center(
@@ -114,7 +113,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 animationDuration: 5000,
                 barRadius: const Radius.circular(16),
                 lineHeight: 20,
-                percent: (questionIndex + 1) / QuizData.length,
+                percent: ((questionIndex + 1) / QuizData.length) * 1.00,
                 backgroundColor: const Color.fromARGB(255, 224, 223, 223),
                 progressColor: const Color.fromARGB(255, 11, 88, 151),
               ),

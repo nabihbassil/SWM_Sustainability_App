@@ -102,6 +102,7 @@ class _LevelsState extends State<Levels> {
                         bottomRight: Radius.circular(20),
                       ),
                     )),
+                Container(height: 15),
                 SizedBox(
                   child: Center(
                     child: Stack(
@@ -155,7 +156,8 @@ class _LevelsState extends State<Levels> {
                               percent: points / leveltotal,
                               backgroundColor:
                                   const Color.fromARGB(255, 212, 240, 204),
-                              progressColor: const Color.fromARGB(255, 23, 141, 4),
+                              progressColor:
+                                  const Color.fromARGB(255, 23, 141, 4),
                             ),
                           ),
                         ),
@@ -226,7 +228,8 @@ class _LevelsState extends State<Levels> {
                                       fontSize: 16,
                                       color: Color.fromARGB(255, 54, 52, 52),
                                       fontWeight: FontWeight.bold)),
-                              subtitle: const Text('SWM will provide this reward',
+                              subtitle: const Text(
+                                  'SWM will provide this reward',
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Color.fromARGB(255, 123, 123, 123),

@@ -47,6 +47,7 @@ dependencies:
   percent_indicator: ^4.0.1
   image_picker: ^0.8.5+3
   flutter_launcher_icons: ^0.9.3
+  url_launcher: ^6.1.5
   
 flutter_icons:
   android: true

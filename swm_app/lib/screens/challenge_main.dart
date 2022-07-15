@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swm_app/screens/awareness_intro.dart';
+import 'package:swm_app/screens/challenge_screen.dart';
 import 'package:swm_app/screens/take_action_intro.dart';
 
 // ignore: must_be_immutable

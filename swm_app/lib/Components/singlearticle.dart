@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:swm_app/model/news_model.dart';
 import 'package:intl/intl.dart';
 import 'package:swm_app/screens/single_news.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ArticleCard extends StatelessWidget {
   final Article _article;
@@ -57,10 +58,12 @@ class ArticleCard extends StatelessWidget {
                     onPrimary: Colors.lightGreen,
                     // Background color
                     primary: const Color.fromARGB(255, 215, 240, 206)),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          SingleNewsScreen(title: _article.title ?? "")));
+                onPressed: () async {
+                  final Uri url = Uri.parse(_article.link.toString());
+
+                  await canLaunchUrl(url)
+                      ? await launchUrl(url, mode: LaunchMode.inAppWebView)
+                      : throw 'Could not lunch $url';
                 },
                 child: const Text(
                   'Learn More',
