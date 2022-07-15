@@ -9,8 +9,11 @@ class Level {
     this.lvlpoints,
   });
 
-  Level.fromSnapshot(snapshot)
-      : description = snapshot.data()['description'],
-        levelID = snapshot.data()['levelID'],
-        lvlpoints = snapshot.data()['lvlpoints'];
+  factory Level.fromJson(Map<String, dynamic> json) {
+    return Level(
+      description: json['question'],
+      levelID: json['answers'],
+      lvlpoints: json['points'],
+    );
+  }
 }

@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List _levelsList = [];
 
   int points = 0;
-  int level = 1;
+  int level = 0;
   int leveltotal = 10000;
 
   List LProgress = ['0'];
@@ -43,18 +43,29 @@ class _HomeScreenState extends State<HomeScreen> {
         .collection('Levels')
         .orderBy('levelID', descending: false)
         .get();
+    List _levelsList = datas.docs
+        .map((doc) => Level(
+              description: doc.get("description"),
+              levelID: doc.get("levelID"),
+              lvlpoints: doc.get("lvlpoints"),
+            ))
+        .toList();
+    int inpt = 0;
+    for (var i = 0; i < _levelsList.length;) {
+      debugPrint(_levelsList[i].lvlpoints);
+      if (points > _levelsList[i].lvlpoints) {
+        i = i++;
+        inpt = inpt + 1;
+      }
+    }
+    debugPrint(inpt.toString());
+    int totalpts = _levelsList[inpt].lvlpoints!;
 
     setState(() {
-      List _levelsList =
-          datas.docs.map((doc) => Level.fromSnapshot(doc)).toList();
-      debugPrint(_levelsList.toString());
-      for (var i = 0; i < _levelsList.length; i++) {
-        debugPrint(_levelsList[i].lvlpoints);
-        if (points > _levelsList[i].lvlpoints) {
-          level = level + 1;
-        }
-      }
-      leveltotal = _levelsList[level].lvlpoints!;
+      datas;
+      _levelsList;
+      level = inpt;
+      leveltotal = totalpts;
     });
   }
 
