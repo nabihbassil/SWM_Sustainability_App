@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 import 'package:swm_app/Components/singlearticle.dart';
+import 'package:swm_app/model/levels_model.dart';
 import 'package:swm_app/model/news_model.dart';
 import 'package:swm_app/model/user_model.dart';
 import 'package:swm_app/screens/challenge_main.dart';
@@ -18,12 +19,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final Query _level = FirebaseFirestore.instance.collection('Levels');
   List<Object> _newsList = [];
+  List _levelsList = [];
 
   int points = 0;
   int level = 1;
-  int leveltotal = 1000;
+  int leveltotal = 10000;
 
   List LProgress = ['0'];
   UserModel userData = UserModel();
@@ -37,7 +38,25 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  getLevel() {}
+  Future getLevelList() async {
+    var datas = await FirebaseFirestore.instance
+        .collection('Levels')
+        .orderBy('levelID', descending: false)
+        .get();
+
+    setState(() {
+      List _levelsList =
+          datas.docs.map((doc) => Level.fromSnapshot(doc)).toList();
+      debugPrint(_levelsList.toString());
+      for (var i = 0; i < _levelsList.length; i++) {
+        debugPrint(_levelsList[i].lvlpoints);
+        if (points > _levelsList[i].lvlpoints) {
+          level = level + 1;
+        }
+      }
+      leveltotal = _levelsList[level].lvlpoints!;
+    });
+  }
 
   GetAllModulesInProgress() async {
     await UserService()
@@ -54,9 +73,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+
     getNewsList();
     fetchUserData();
     GetAllModulesInProgress();
+    getLevelList();
     WidgetsFlutterBinding.ensureInitialized();
   }
 
@@ -313,9 +334,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 )),
                             Positioned(
-                                bottom: 3,
-                                right: 57,
-                                child: Text(
+                              bottom: 3,
+                              right: 20,
+                              child: Row(children: [
+                                Text(
                                   points.toString(),
                                   textAlign: TextAlign.left,
                                   style: const TextStyle(
@@ -323,11 +345,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: Color.fromARGB(255, 132, 168, 116),
                                     fontWeight: FontWeight.bold,
                                   ),
-                                )),
-                            Positioned(
-                                bottom: 3,
-                                right: 20,
-                                child: Text(
+                                ),
+                                Text(
                                   " / " + leveltotal.toString(),
                                   textAlign: TextAlign.left,
                                   style: const TextStyle(
@@ -335,7 +354,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: Color.fromARGB(255, 135, 135, 135),
                                     fontWeight: FontWeight.bold,
                                   ),
-                                )),
+                                )
+                              ]),
+                            )
                           ])))),
             ],
           ),
