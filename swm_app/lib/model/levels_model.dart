@@ -11,9 +11,9 @@ class Level {
 
   factory Level.fromJson(Map<String, dynamic> json) {
     return Level(
-      description: json['question'],
-      levelID: json['answers'],
-      lvlpoints: json['points'],
+      description: json['description'],
+      levelID: json['levelID'],
+      lvlpoints: json['lvlpoints'],
     );
   }
 }
