@@ -10,28 +10,30 @@ class ArticleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: 370,
+        width: MediaQuery.of(context).size.width * 0.9,
+        height: 200,
         child: Card(
-            child: Padding(
-          padding: const EdgeInsets.all(8),
           child: Column(
             children: [
               Row(children: [
                 Expanded(
                     child: Padding(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.only(
+                            top: 10, left: 15, right: 15, bottom: 7),
                         child: Expanded(
                             child: Text(
                           "${_article.title}",
                           style: const TextStyle(
-                              fontSize: 16,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 39, 39, 39)),
                         )))),
                 Padding(
-                    padding: const EdgeInsets.only(right: 8),
+                    padding: const EdgeInsets.only(right: 15),
                     child: Text(
-                        DateFormat('dd/MM/yy').format(_article.date!).toString(),
+                        DateFormat('dd/MM/yy')
+                            .format(_article.date!)
+                            .toString(),
                         textAlign: TextAlign.start,
                         style: const TextStyle(
                             fontSize: 11,
@@ -42,7 +44,8 @@ class ArticleCard extends StatelessWidget {
                 children: [
                   Expanded(
                       child: Padding(
-                          padding: const EdgeInsets.all(8),
+                          padding: const EdgeInsets.only(
+                              left: 15, right: 15, bottom: 5),
                           child: Expanded(child: Text("${_article.summary}"))))
                 ],
               ),
@@ -67,9 +70,9 @@ class ArticleCard extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              )
+              ),
             ],
           ),
-        )));
+        ));
   }
 }

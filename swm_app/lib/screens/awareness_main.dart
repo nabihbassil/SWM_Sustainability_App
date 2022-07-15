@@ -29,20 +29,21 @@ class AwarenessMain extends StatelessWidget {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(1),
+          padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const Padding(
-                  padding: EdgeInsets.only(right: 220),
-                  child: Text(
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                      child: Text(
                     "Awareness",
                     style: TextStyle(
                         fontSize: 24,
                         color: Color.fromARGB(255, 70, 70, 70),
                         fontWeight: FontWeight.bold),
-                  )),
+                  ))),
               const SizedBox(height: 20),
               GestureDetector(
                   onTap: () {

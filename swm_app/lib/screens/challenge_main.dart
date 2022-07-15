@@ -37,20 +37,21 @@ class _ChallengeMain extends State<ChallengeMain> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(1),
+          padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.only(right: 90),
-                  child: Text(
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                      child: Text(
                     "$name Challenge",
                     style: const TextStyle(
                         fontSize: 24,
                         color: Color.fromARGB(255, 70, 70, 70),
                         fontWeight: FontWeight.bold),
-                  )),
+                  ))),
               const SizedBox(height: 30),
               GestureDetector(
                   onTap: () {
@@ -69,7 +70,7 @@ class _ChallengeMain extends State<ChallengeMain> {
                       ))),
               const SizedBox(height: 15),
               Padding(
-                  padding: const EdgeInsets.only(left: 60, right: 60),
+                  padding: const EdgeInsets.only(left: 40, right: 40),
                   child: Text(
                     "Learn about the impact of $name and test your knowledge",
                     textAlign: TextAlign.center,
@@ -97,7 +98,7 @@ class _ChallengeMain extends State<ChallengeMain> {
                       ))),
               const SizedBox(height: 15),
               Padding(
-                  padding: const EdgeInsets.only(left: 60, right: 60),
+                  padding: const EdgeInsets.only(left: 40, right: 40),
                   child: Text(
                     "Explore ways you can reduce $name in your daily life",
                     textAlign: TextAlign.center,
