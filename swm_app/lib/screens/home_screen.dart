@@ -39,10 +39,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future getLevelList() async {
+    print("p1");
+
     var datas = await FirebaseFirestore.instance
         .collection('Levels')
         .orderBy('levelID', descending: false)
         .get();
+
+    print("p2");
     List _levelsLst = datas.docs
         .map((doc) => Level(
               description: doc.get("description"),
@@ -51,20 +55,27 @@ class _HomeScreenState extends State<HomeScreen> {
             ))
         .toList();
 
-    int inpt = 0;
-    for (var i = 0; i < _levelsLst.length;) {
+    print("p3 $_levelsLst");
+
+    int counter = 0;
+    for (var i = 0; i < _levelsLst.length; i++) {
       if (points > _levelsLst[i].lvlpoints) {
-        i = i++;
-        inpt = inpt + 1;
+        counter = counter + 1;
+      } else {
+        break;
       }
     }
-    debugPrint(inpt.toString());
-    int totalpts = _levelsLst[inpt].lvlpoints!;
+    print("p4 $counter");
+
+    debugPrint(counter.toString());
+    int totalpts = _levelsLst[counter].lvlpoints!;
+
+    print("p5 $totalpts");
 
     setState(() {
       datas;
       _levelsList = _levelsLst;
-      level = inpt;
+      level = counter + 1;
       leveltotal = totalpts;
     });
   }
