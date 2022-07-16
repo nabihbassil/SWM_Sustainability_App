@@ -1,4 +1,6 @@
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:swm_app/model/levels_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:swm_app/services/user_service.dart';
 import 'package:swm_app/model/user_model.dart';
@@ -11,9 +13,10 @@ class Levels extends StatefulWidget {
 }
 
 class _LevelsState extends State<Levels> {
-  int points = 800;
-  int leveltotal = 1000;
-  int level = 1;
+  int points = 0;
+  int leveltotal = 10000;
+  int level = 0;
+  List _levelsList = [];
   UserModel userData = UserModel();
 
   fetchUserData() async {
@@ -22,6 +25,48 @@ class _LevelsState extends State<Levels> {
     setState(() {
       userData;
       points = userData.points!;
+    });
+  }
+
+  Future getLevelList() async {
+    print("p1");
+
+    var datas = await FirebaseFirestore.instance
+        .collection('Levels')
+        .orderBy('levelID', descending: false)
+        .get();
+
+    print("p2");
+    List _levelsLst = datas.docs
+        .map((doc) => Level(
+              description: doc.get("description"),
+              levelID: doc.get("levelID"),
+              lvlpoints: doc.get("lvlpoints"),
+            ))
+        .toList();
+
+    print("p3 $_levelsLst");
+
+    int counter = 0;
+    for (var i = 0; i < _levelsLst.length; i++) {
+      if (points > _levelsLst[i].lvlpoints) {
+        counter = counter + 1;
+      } else {
+        break;
+      }
+    }
+    print("p4 $counter");
+
+    debugPrint(counter.toString());
+    int totalpts = _levelsLst[counter].lvlpoints!;
+
+    print("p5 $totalpts");
+
+    setState(() {
+      datas;
+      _levelsList = _levelsLst;
+      level = counter + 1;
+      leveltotal = totalpts;
     });
   }
 
@@ -155,7 +200,8 @@ class _LevelsState extends State<Levels> {
                               percent: points / leveltotal,
                               backgroundColor:
                                   const Color.fromARGB(255, 212, 240, 204),
-                              progressColor: const Color.fromARGB(255, 23, 141, 4),
+                              progressColor:
+                                  const Color.fromARGB(255, 23, 141, 4),
                             ),
                           ),
                         ),
@@ -226,7 +272,8 @@ class _LevelsState extends State<Levels> {
                                       fontSize: 16,
                                       color: Color.fromARGB(255, 54, 52, 52),
                                       fontWeight: FontWeight.bold)),
-                              subtitle: const Text('SWM will provide this reward',
+                              subtitle: const Text(
+                                  'SWM will provide this reward',
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Color.fromARGB(255, 123, 123, 123),
