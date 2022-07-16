@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:swm_app/page_holder.dart';
 import 'package:swm_app/screens/single_action.dart';
 import 'package:swm_app/services/user_service.dart';
 
@@ -58,6 +59,18 @@ class _TakeActionState extends State<TakeAction> {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.home_outlined,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const PageHolder()));
+            },
+          )
+        ],
       ),
       body: Center(
         child: Padding(

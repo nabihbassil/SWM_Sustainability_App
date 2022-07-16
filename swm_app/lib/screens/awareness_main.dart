@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swm_app/page_holder.dart';
 import 'package:swm_app/screens/awareness_intro.dart';
 import 'package:swm_app/screens/facts_screen.dart';
 import 'package:swm_app/screens/quiz_screen.dart';
@@ -25,6 +26,18 @@ class AwarenessMain extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.home_outlined,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const PageHolder()));
+            },
+          )
+        ],
       ),
       body: Center(
         child: Padding(

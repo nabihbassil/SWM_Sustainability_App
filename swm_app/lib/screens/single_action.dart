@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:swm_app/page_holder.dart';
 import 'package:swm_app/services/user_service.dart';
 
 class SingleActionScreen extends StatefulWidget {
@@ -84,6 +85,18 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.home_outlined,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const PageHolder()));
+            },
+          )
+        ],
       ),
       body: Center(
         child: StreamBuilder(
@@ -139,8 +152,8 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                                     ? ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                           // Foreground color
-                                          onPrimary:
-                                              const Color.fromARGB(255, 228, 170, 18),
+                                          onPrimary: const Color.fromARGB(
+                                              255, 228, 170, 18),
                                           // Background color
                                           primary: const Color.fromARGB(
                                               255, 255, 239, 199),
@@ -167,8 +180,8 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                                     : ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                           // Foreground color
-                                          onPrimary:
-                                              const Color.fromARGB(255, 85, 148, 75),
+                                          onPrimary: const Color.fromARGB(
+                                              255, 85, 148, 75),
                                           // Background color
                                           primary: const Color.fromARGB(
                                               255, 255, 255, 255),

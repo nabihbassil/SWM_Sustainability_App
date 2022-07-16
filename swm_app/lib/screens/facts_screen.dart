@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swm_app/page_holder.dart';
 import 'package:swm_app/services/fact_service.dart';
 import 'package:swm_app/screens/quiz_screen.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -104,6 +105,18 @@ class _FactsScreenState extends State<FactsScreen> {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.home_outlined,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const PageHolder()));
+            },
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
