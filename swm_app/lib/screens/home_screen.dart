@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 import 'package:swm_app/Components/singlearticle.dart';
+import 'package:swm_app/model/levels_model.dart';
 import 'package:swm_app/model/news_model.dart';
 import 'package:swm_app/model/user_model.dart';
 import 'package:swm_app/screens/challenge_main.dart';
@@ -18,12 +19,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final Query _level = FirebaseFirestore.instance.collection('Levels');
   List<Object> _newsList = [];
+  List _levelsList = [];
 
   int points = 0;
-  int level = 1;
-  int leveltotal = 1000;
+  int level = 0;
+  int leveltotal = 10000;
 
   List LProgress = ['0'];
   UserModel userData = UserModel();
@@ -37,7 +38,47 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  getLevel() {}
+  Future getLevelList() async {
+    print("p1");
+
+    var datas = await FirebaseFirestore.instance
+        .collection('Levels')
+        .orderBy('levelID', descending: false)
+        .get();
+
+    print("p2");
+    List _levelsLst = datas.docs
+        .map((doc) => Level(
+              description: doc.get("description"),
+              levelID: doc.get("levelID"),
+              lvlpoints: doc.get("lvlpoints"),
+            ))
+        .toList();
+
+    print("p3 $_levelsLst");
+
+    int counter = 0;
+    for (var i = 0; i < _levelsLst.length; i++) {
+      if (points > _levelsLst[i].lvlpoints) {
+        counter = counter + 1;
+      } else {
+        break;
+      }
+    }
+    print("p4 $counter");
+
+    debugPrint(counter.toString());
+    int totalpts = _levelsLst[counter].lvlpoints!;
+
+    print("p5 $totalpts");
+
+    setState(() {
+      datas;
+      _levelsList = _levelsLst;
+      level = counter + 1;
+      leveltotal = totalpts;
+    });
+  }
 
   GetAllModulesInProgress() async {
     await UserService()
@@ -54,9 +95,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+
     getNewsList();
     fetchUserData();
     GetAllModulesInProgress();
+    getLevelList();
     WidgetsFlutterBinding.ensureInitialized();
   }
 
@@ -313,9 +356,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 )),
                             Positioned(
-                                bottom: 3,
-                                right: 57,
-                                child: Text(
+                              bottom: 3,
+                              right: 20,
+                              child: Row(children: [
+                                Text(
                                   points.toString(),
                                   textAlign: TextAlign.left,
                                   style: const TextStyle(
@@ -323,11 +367,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: Color.fromARGB(255, 132, 168, 116),
                                     fontWeight: FontWeight.bold,
                                   ),
-                                )),
-                            Positioned(
-                                bottom: 3,
-                                right: 20,
-                                child: Text(
+                                ),
+                                Text(
                                   " / " + leveltotal.toString(),
                                   textAlign: TextAlign.left,
                                   style: const TextStyle(
@@ -335,7 +376,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: Color.fromARGB(255, 135, 135, 135),
                                     fontWeight: FontWeight.bold,
                                   ),
-                                )),
+                                )
+                              ]),
+                            )
                           ])))),
             ],
           ),
