@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:swm_app/page_holder.dart';
 import 'package:swm_app/screens/awareness_intro.dart';
-import 'package:swm_app/screens/challenge_screen.dart';
 import 'package:swm_app/screens/take_action_intro.dart';
 
 // ignore: must_be_immutable
@@ -33,7 +33,8 @@ class _ChallengeMain extends State<ChallengeMain> {
         iconTheme: const IconThemeData(color: Colors.black),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => PageHolder())),
         ),
       ),
       body: Center(

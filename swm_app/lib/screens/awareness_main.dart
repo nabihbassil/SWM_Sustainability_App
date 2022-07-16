@@ -23,7 +23,8 @@ class AwarenessMain extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.black),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => AwarenessIntro(id: id, name: name))),
         ),
       ),
       body: Center(

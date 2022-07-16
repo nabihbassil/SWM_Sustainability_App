@@ -139,8 +139,8 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                                     ? ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                           // Foreground color
-                                          onPrimary:
-                                              const Color.fromARGB(255, 228, 170, 18),
+                                          onPrimary: const Color.fromARGB(
+                                              255, 228, 170, 18),
                                           // Background color
                                           primary: const Color.fromARGB(
                                               255, 255, 239, 199),
@@ -167,8 +167,8 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                                     : ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                           // Foreground color
-                                          onPrimary:
-                                              const Color.fromARGB(255, 85, 148, 75),
+                                          onPrimary: const Color.fromARGB(
+                                              255, 85, 148, 75),
                                           // Background color
                                           primary: const Color.fromARGB(
                                               255, 255, 255, 255),

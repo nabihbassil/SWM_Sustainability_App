@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:swm_app/Components/answer.dart';
-import 'package:swm_app/screens/awareness_main.dart';
+import 'package:swm_app/screens/challenge_main.dart';
 import 'package:swm_app/screens/quiz_finished.dart';
 import 'package:swm_app/services/quiz_services.dart';
 
@@ -97,7 +97,8 @@ class _QuizScreenState extends State<QuizScreen> {
         iconTheme: const IconThemeData(color: Colors.black),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => ChallengeMain(id: id, name: name))),
         ),
       ),
       body: Center(
