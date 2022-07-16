@@ -36,6 +36,18 @@ class _ChallengeMain extends State<ChallengeMain> {
           onPressed: () => Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => PageHolder())),
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.home_outlined,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const PageHolder()));
+            },
+          )
+        ],
       ),
       body: Center(
         child: Padding(
