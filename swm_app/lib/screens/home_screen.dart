@@ -43,27 +43,27 @@ class _HomeScreenState extends State<HomeScreen> {
         .collection('Levels')
         .orderBy('levelID', descending: false)
         .get();
-    List _levelsList = datas.docs
+    List _levelsLst = datas.docs
         .map((doc) => Level(
               description: doc.get("description"),
               levelID: doc.get("levelID"),
               lvlpoints: doc.get("lvlpoints"),
             ))
         .toList();
+
     int inpt = 0;
-    for (var i = 0; i < _levelsList.length;) {
-      debugPrint(_levelsList[i].lvlpoints);
-      if (points > _levelsList[i].lvlpoints) {
+    for (var i = 0; i < _levelsLst.length;) {
+      if (points > _levelsLst[i].lvlpoints) {
         i = i++;
         inpt = inpt + 1;
       }
     }
     debugPrint(inpt.toString());
-    int totalpts = _levelsList[inpt].lvlpoints!;
+    int totalpts = _levelsLst[inpt].lvlpoints!;
 
     setState(() {
       datas;
-      _levelsList;
+      _levelsList = _levelsLst;
       level = inpt;
       leveltotal = totalpts;
     });
