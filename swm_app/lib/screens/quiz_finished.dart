@@ -1,5 +1,8 @@
+// ignore_for_file: dead_code
+
 import 'package:flutter/material.dart';
 import 'package:swm_app/screens/challenge_main.dart';
+import 'package:swm_app/screens/success_module.dart';
 import 'package:swm_app/services/user_service.dart';
 
 class QuizFinish extends StatefulWidget {
@@ -32,7 +35,7 @@ class _QuizFinishState extends State<QuizFinish> {
   int totalScore = 0;
   int possibleScore = 0;
   int quizPoints = 0;
-
+  bool finished = false;
   _QuizFinishState(this.id, this.name, this.totalScore, this.possibleScore,
       this.quizRefID, this.quizPoints);
 
@@ -50,6 +53,7 @@ class _QuizFinishState extends State<QuizFinish> {
   UpdateQuizDone() async {
     int notDoneLength = -1;
     List LTasks = ['0'];
+
     wasQuizDoneBeforeUpdate = await UserService().IsQuizAlreadyDone(quizRefID);
 
     if (!wasQuizDoneBeforeUpdate) {
@@ -59,12 +63,32 @@ class _QuizFinishState extends State<QuizFinish> {
 
       notDoneLength = await UserService().GetSizeofToDoTasks(id, LTasks);
 
-      UserService().updateModuleLogic(id, true, notDoneLength);
+      print("in 2234");
+
+      bool finished =
+          await UserService().updateModuleLogic(id, true, notDoneLength);
+
+      print("finished is $finished");
+
+      if (finished == true) {
+        print("in fiiiinnniiisshhhheedddd");
+
+        var future = new Future.delayed(
+            const Duration(seconds: 6),
+            (() => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Success(id: id)))));
+      }
+
       UserService().UpdatePoints(quizPoints);
     }
+
+    print("in 111");
+
     setState(() {
       wasQuizDoneBeforeUpdate;
     });
+
+    print("in 82");
   }
 
   @override
