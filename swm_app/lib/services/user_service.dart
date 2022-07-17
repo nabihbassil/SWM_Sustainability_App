@@ -171,15 +171,18 @@ class UserService {
     });
   }
 
-  void updateModuleLogic(ID, isQuizDone, notDoneTasksLength) async {
+  Future<bool> updateModuleLogic(ID, isQuizDone, notDoneTasksLength) async {
     print("notDoneTasksLength $notDoneTasksLength");
     print("boolquiz $isQuizDone");
 
     if (isQuizDone && notDoneTasksLength == 0) {
       setModuleDone(ID);
       CompleteModuleBadges(ID);
+
+      return true;
     } else {
       setModuleInProgress(ID);
+      return false;
     }
   }
 

@@ -1,5 +1,8 @@
+// ignore_for_file: dead_code
+
 import 'package:flutter/material.dart';
 import 'package:swm_app/screens/challenge_main.dart';
+import 'package:swm_app/screens/success_module.dart';
 import 'package:swm_app/services/user_service.dart';
 
 class QuizFinish extends StatefulWidget {
@@ -50,6 +53,7 @@ class _QuizFinishState extends State<QuizFinish> {
   UpdateQuizDone() async {
     int notDoneLength = -1;
     List LTasks = ['0'];
+    bool finished = false;
     wasQuizDoneBeforeUpdate = await UserService().IsQuizAlreadyDone(quizRefID);
 
     if (!wasQuizDoneBeforeUpdate) {
@@ -59,12 +63,19 @@ class _QuizFinishState extends State<QuizFinish> {
 
       notDoneLength = await UserService().GetSizeofToDoTasks(id, LTasks);
 
-      UserService().updateModuleLogic(id, true, notDoneLength);
+      bool finished =
+          await UserService().updateModuleLogic(id, true, notDoneLength);
+
       UserService().UpdatePoints(quizPoints);
     }
     setState(() {
       wasQuizDoneBeforeUpdate;
     });
+
+    if (finished) {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => Success(id: id)));
+    }
   }
 
   @override
