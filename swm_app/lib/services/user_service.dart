@@ -99,6 +99,7 @@ class UserService {
     List<String>? _list;
     List? LQuizzes = ['0'];
     String quizID = '';
+    List lst = [''];
     await FirebaseFirestore.instance
         .collection("users")
         .doc(user?.uid)
@@ -114,7 +115,13 @@ class UserService {
         .where("parentmoduleid", isEqualTo: modID)
         .get();
 
-    qShot.docs.map((doc) async => {quizID = doc.id});
+    print(qShot.docs.length);
+
+    lst = qShot.docs.map((doc) => quizID = doc.id).toList();
+    quizID = lst[0];
+
+    print(LQuizzes);
+    print(quizID);
 
     bool isQuizDone = LQuizzes!.contains(quizID);
     return isQuizDone;

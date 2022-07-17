@@ -54,9 +54,13 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
     finished =
         await UserService().updateModuleLogic(modID, isQuizDone, notDoneLength);
 
-    if (finished) {
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => Success(id: modID)));
+    if (finished == true) {
+      print("in fiiiinnniiisshhhheedddd");
+
+      var future = new Future.delayed(
+          const Duration(seconds: 6),
+          (() => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => Success(id: modID)))));
     }
   }
 

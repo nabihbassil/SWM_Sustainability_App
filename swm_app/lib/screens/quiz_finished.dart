@@ -35,7 +35,7 @@ class _QuizFinishState extends State<QuizFinish> {
   int totalScore = 0;
   int possibleScore = 0;
   int quizPoints = 0;
-
+  bool finished = false;
   _QuizFinishState(this.id, this.name, this.totalScore, this.possibleScore,
       this.quizRefID, this.quizPoints);
 
@@ -53,7 +53,7 @@ class _QuizFinishState extends State<QuizFinish> {
   UpdateQuizDone() async {
     int notDoneLength = -1;
     List LTasks = ['0'];
-    bool finished = false;
+
     wasQuizDoneBeforeUpdate = await UserService().IsQuizAlreadyDone(quizRefID);
 
     if (!wasQuizDoneBeforeUpdate) {
@@ -63,19 +63,32 @@ class _QuizFinishState extends State<QuizFinish> {
 
       notDoneLength = await UserService().GetSizeofToDoTasks(id, LTasks);
 
+      print("in 2234");
+
       bool finished =
           await UserService().updateModuleLogic(id, true, notDoneLength);
 
+      print("finished is $finished");
+
+      if (finished == true) {
+        print("in fiiiinnniiisshhhheedddd");
+
+        var future = new Future.delayed(
+            const Duration(seconds: 6),
+            (() => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Success(id: id)))));
+      }
+
       UserService().UpdatePoints(quizPoints);
     }
+
+    print("in 111");
+
     setState(() {
       wasQuizDoneBeforeUpdate;
     });
 
-    if (finished) {
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => Success(id: id)));
-    }
+    print("in 82");
   }
 
   @override
