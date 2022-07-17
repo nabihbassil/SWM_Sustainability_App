@@ -138,91 +138,126 @@ class _HomeScreenState extends State<HomeScreen> {
                         if (!snapshot.hasData) {
                           return const Center(child: Text('Loading...'));
                         }
-                        return Expanded(
-                            child: ListView(
-                          shrinkWrap: false,
-                          scrollDirection: Axis.horizontal,
-                          children: snapshot.data!.docs.map((item) {
-                            return Row(children: [
-                              Column(
-                                children: [
-                                  Row(children: [
-                                    Align(
-                                      alignment: Alignment.topLeft,
-                                      child: SizedBox(
-                                        child: Text(
-                                          item['modName'],
-                                          style: const TextStyle(
-                                              fontSize: 15,
-                                              color: Color.fromARGB(
-                                                  255, 131, 131, 131),
-                                              fontWeight: FontWeight.bold),
-                                        ),
+                        print("p6 $LProgress");
+                        if (LProgress.length == 1)
+                          return Expanded(
+                              child: Container(
+                                  height: 100,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.9,
+                                  decoration: const BoxDecoration(
+                                      color: Color.fromARGB(255, 227, 227, 227),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10))),
+                                  child: Center(
+                                      child: Column(children: [
+                                    SizedBox(height: 10),
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.only(left: 35, right: 35),
+                                      child: Text(
+                                        'You have no challenges in progress.\n\nDiscover some new challenges and learn about how you can be more sustainable in your daily life!',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Color.fromARGB(
+                                                255, 142, 142, 142),
+                                            fontStyle: FontStyle.italic,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width -
-                                          150,
-                                    )
-                                  ]),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ChallengeMain(
-                                                    id: item['modID'],
-                                                    name: item['modName'],
-                                                  )));
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10),
-                                      height: 90,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.9,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
-                                        child: Stack(
-                                          children: [
-                                            Image.network(
-                                              item['modIMG'],
-                                              fit: BoxFit.cover,
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width -
-                                                  40,
-                                            ),
-                                            Positioned(
-                                              top: 10,
-                                              left: 10,
-                                              child: Text(
-                                                item['category']
-                                                    .replaceAll("\\n", "\n"),
-                                                style: const TextStyle(
-                                                    fontSize: 15,
-                                                    color: Color.fromARGB(
-                                                        255, 255, 255, 255),
-                                                    fontWeight: FontWeight.w500,
-                                                    fontStyle:
-                                                        FontStyle.italic),
-                                                textAlign: TextAlign.left,
+                                  ]))));
+                        else {
+                          return Expanded(
+                              child: ListView(
+                            shrinkWrap: false,
+                            scrollDirection: Axis.horizontal,
+                            children: snapshot.data!.docs.map((item) {
+                              return Row(children: [
+                                Column(
+                                  children: [
+                                    Row(children: [
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: SizedBox(
+                                          child: Text(
+                                            item['modName'],
+                                            style: const TextStyle(
+                                                fontSize: 15,
+                                                color: Color.fromARGB(
+                                                    255, 131, 131, 131),
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width -
+                                                150,
+                                      )
+                                    ]),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ChallengeMain(
+                                                      id: item['modID'],
+                                                      name: item['modName'],
+                                                    )));
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        height: 90,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.9,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          child: Stack(
+                                            children: [
+                                              Image.network(
+                                                item['modIMG'],
+                                                fit: BoxFit.cover,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width -
+                                                    40,
                                               ),
-                                            )
-                                          ],
+                                              Positioned(
+                                                top: 10,
+                                                left: 10,
+                                                child: Text(
+                                                  item['category']
+                                                      .replaceAll("\\n", "\n"),
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      color: Color.fromARGB(
+                                                          255, 255, 255, 255),
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontStyle:
+                                                          FontStyle.italic),
+                                                  textAlign: TextAlign.left,
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  )
-                                ],
-                              )
-                            ]);
-                          }).toList(),
-                        ));
+                                    )
+                                  ],
+                                )
+                              ]);
+                            }).toList(),
+                          ));
+                        }
                       })),
               const SizedBox(height: 7),
               Align(

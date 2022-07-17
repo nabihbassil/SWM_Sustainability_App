@@ -72,123 +72,141 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
             child: Padding(
                 padding: EdgeInsets.only(left: 15, right: 15),
                 child: ExpansionTile(
-                    initiallyExpanded: true,
-                    title: const Text('In Progress',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Color.fromARGB(255, 80, 80, 80),
-                            fontWeight: FontWeight.bold)),
-                    children: [
-                      // I'll name the data fr
-                      SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: 210,
-                          child: FutureBuilder(
-                              future: FirebaseFirestore.instance
-                                  .collection('modules')
-                                  .where("modID", whereIn: LProgress)
-                                  .get(),
-                              builder: (context,
-                                  AsyncSnapshot<QuerySnapshot> snapshot) {
-                                if (!snapshot.hasData) {
-                                  return const Center(
-                                      child: Text('Loading...'));
-                                }
+                  title: const Text('In Progress',
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Color.fromARGB(255, 80, 80, 80),
+                          fontWeight: FontWeight.bold)),
+                  children: [
+                    // I'll name the data fr
+                    SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 210,
+                        child: FutureBuilder(
+                            future: FirebaseFirestore.instance
+                                .collection('modules')
+                                .where("modID", whereIn: LProgress)
+                                .get(),
+                            builder: (context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (!snapshot.hasData) {
+                                return const Center(child: Text('Loading...'));
+                              }
+                              if (LProgress.length == 1)
                                 return Expanded(
-                                    child: ListView(
-                                  shrinkWrap: false,
-                                  scrollDirection: Axis.horizontal,
-                                  children: snapshot.data!.docs.map((item) {
-                                    return Center(
-                                      child: Row(children: [
-                                        Column(
-                                          children: [
-                                            SizedBox(
-                                              width: 155,
-                                              child: Text(
-                                                item['modName'],
-                                                style: const TextStyle(
-                                                    fontSize: 16,
-                                                    color: Color.fromARGB(
-                                                        255, 131, 131, 131),
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textAlign: TextAlign.left,
-                                              ),
+                                    child: Center(
+                                        child: Column(children: [
+                                  SizedBox(height: 20),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 25, right: 25),
+                                    child: Text(
+                                      'You have no challenges in progress.\n\nDiscover some new challenges and learn about how you can be more sustainable in your daily life!',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: Color.fromARGB(
+                                              255, 142, 142, 142),
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ])));
+
+                              return Expanded(
+                                  child: ListView(
+                                shrinkWrap: false,
+                                scrollDirection: Axis.horizontal,
+                                children: snapshot.data!.docs.map((item) {
+                                  return Center(
+                                    child: Row(children: [
+                                      Column(
+                                        children: [
+                                          SizedBox(
+                                            width: 155,
+                                            child: Text(
+                                              item['modName'],
+                                              style: const TextStyle(
+                                                  fontSize: 16,
+                                                  color: Color.fromARGB(
+                                                      255, 131, 131, 131),
+                                                  fontWeight: FontWeight.bold),
+                                              textAlign: TextAlign.left,
                                             ),
-                                            const SizedBox(
-                                              height: 4,
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ChallengeMain(
-                                                              id: item['modID'],
-                                                              name: item[
-                                                                  'modName'],
-                                                            )));
-                                              },
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 20),
-                                                height: 150,
-                                                width: 200,
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  child: Stack(
-                                                    children: [
-                                                      Image.network(
-                                                        item['modIMG'],
-                                                        fit: BoxFit.cover,
-                                                        width: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
+                                          ),
+                                          const SizedBox(
+                                            height: 4,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ChallengeMain(
+                                                            id: item['modID'],
+                                                            name:
+                                                                item['modName'],
+                                                          )));
+                                            },
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20),
+                                              height: 150,
+                                              width: 200,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                child: Stack(
+                                                  children: [
+                                                    Image.network(
+                                                      item['modIMG'],
+                                                      fit: BoxFit.cover,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                    ),
+                                                    Container(height: 10),
+                                                    Positioned(
+                                                      top: 10,
+                                                      left: 10,
+                                                      child: Text(
+                                                        item['category']
+                                                            .replaceAll(
+                                                                "\\n", "\n"),
+                                                        style: const TextStyle(
+                                                            fontSize: 16,
+                                                            color: Color
+                                                                .fromARGB(
+                                                                    255,
+                                                                    255,
+                                                                    255,
+                                                                    255),
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontStyle: FontStyle
+                                                                .italic),
+                                                        textAlign:
+                                                            TextAlign.left,
                                                       ),
-                                                      Container(height: 10),
-                                                      Positioned(
-                                                        top: 10,
-                                                        left: 10,
-                                                        child: Text(
-                                                          item['category']
-                                                              .replaceAll(
-                                                                  "\\n", "\n"),
-                                                          style: const TextStyle(
-                                                              fontSize: 16,
-                                                              color: Color
-                                                                  .fromARGB(
-                                                                      255,
-                                                                      255,
-                                                                      255,
-                                                                      255),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontStyle:
-                                                                  FontStyle
-                                                                      .italic),
-                                                          textAlign:
-                                                              TextAlign.left,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                            )
-                                          ],
-                                        )
-                                      ]),
-                                    );
-                                  }).toList(),
-                                ));
-                              })),
-                    ]))),
+                                            ),
+                                          )
+                                        ],
+                                      )
+                                    ]),
+                                  );
+                                }).toList(),
+                              ));
+                            })),
+                  ],
+                  initiallyExpanded: true,
+                ))),
         Container(
             width: MediaQuery.of(context).size.width,
             color: const Color.fromARGB(255, 238, 247, 249),
