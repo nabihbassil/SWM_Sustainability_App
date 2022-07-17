@@ -39,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future getLevelList() async {
+    await fetchUserData();
     print("p1");
 
     var datas = await FirebaseFirestore.instance
@@ -56,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
         .toList();
 
     print("p3 $_levelsLst");
+    print("user points $points");
 
     int counter = 0;
     for (var i = 0; i < _levelsLst.length; i++) {
