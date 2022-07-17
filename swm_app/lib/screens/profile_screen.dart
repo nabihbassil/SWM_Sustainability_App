@@ -33,6 +33,7 @@ class ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future getLevelList() async {
+    await fetchUserData();
     print("p1");
 
     var datas = await FirebaseFirestore.instance

@@ -30,6 +30,7 @@ class _LevelsState extends State<Levels> {
   }
 
   Future getLevelList() async {
+    await fetchUserData();
     print("p1");
 
     var datas = await FirebaseFirestore.instance
