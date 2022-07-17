@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:swm_app/page_holder.dart';
+import 'package:swm_app/screens/success_module.dart';
 import 'package:swm_app/services/user_service.dart';
 
 class SingleActionScreen extends StatefulWidget {
@@ -43,13 +44,24 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
     List LTasks = ['0'];
     bool isQuizDone = false;
     int notDoneLength = -1;
+    bool finished = false;
 
     UserService().UpdateActionDone(ID);
     LTasks =
         await UserService().GetAllActionDone().then((value) => LTasks = value);
     isQuizDone = await UserService().GetIfQuizDone(modID);
     notDoneLength = await UserService().GetSizeofToDoTasks(modID, LTasks);
-    UserService().updateModuleLogic(modID, isQuizDone, notDoneLength);
+    finished =
+        await UserService().updateModuleLogic(modID, isQuizDone, notDoneLength);
+
+    if (finished == true) {
+      print("in fiiiinnniiisshhhheedddd");
+
+      var future = new Future.delayed(
+          const Duration(seconds: 6),
+          (() => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => Success(id: modID)))));
+    }
   }
 
   CheckActionDone(ID) async {
