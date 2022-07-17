@@ -13,10 +13,11 @@ class Levels extends StatefulWidget {
 }
 
 class _LevelsState extends State<Levels> {
-  int points = 0;
-  int leveltotal = 10000;
-  int level = 0;
   List _levelsList = [];
+
+  int points = 0;
+  int level = 0;
+  int leveltotal = 10000;
   UserModel userData = UserModel();
 
   fetchUserData() async {
@@ -74,6 +75,7 @@ class _LevelsState extends State<Levels> {
   void initState() {
     super.initState();
     fetchUserData();
+    getLevelList();
   }
 
   @override
@@ -228,8 +230,8 @@ class _LevelsState extends State<Levels> {
                                       color: Color.fromARGB(255, 95, 135, 89),
                                       fontWeight: FontWeight.bold),
                                 ),
-                                const Text(
-                                  "/1000",
+                                Text(
+                                  "/" + leveltotal.toString(),
                                   style: TextStyle(
                                       fontSize: 12,
                                       color: Color.fromARGB(255, 168, 168, 168),
