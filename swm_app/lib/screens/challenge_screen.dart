@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:swm_app/screens/challenge_main.dart';
 import 'package:swm_app/services/user_service.dart';
@@ -253,7 +254,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                             child: Container(
                                               padding:
                                                   const EdgeInsets.symmetric(
-                                                      horizontal: 24),
+                                                      horizontal: 20),
                                               height: 150,
                                               width: 200,
                                               child: ClipRRect(
