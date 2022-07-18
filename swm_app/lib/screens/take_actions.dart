@@ -88,44 +88,29 @@ class _TakeActionState extends State<TakeAction> {
                       fit: BoxFit.contain,
                     )),
                 const SizedBox(height: 25),
-                const Padding(
-                    padding: EdgeInsets.only(right: 250),
-                    child: Text("Tasks",
-                        textAlign: TextAlign.left,
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 38.0),
+                  width: double.infinity,
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(
+                          height: 34,
+                          width: 34,
+                          child: Image.asset(
+                            'assets/tasktimer.png',
+                            fit: BoxFit.contain,
+                          )),
+                      const Text(
+                        'Actions To Do',
                         style: TextStyle(
-                            fontSize: 30,
-                            color: Color.fromARGB(255, 23, 69, 95),
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold))),
-                const SizedBox(height: 30),
-                // need to make text.rich a const?
-                Padding(
-                  padding: const EdgeInsets.only(right: 220),
-                  child: Text.rich(
-                    TextSpan(
-                      style: const TextStyle(
-                          fontSize: 25,
-                          color: Color.fromARGB(255, 200, 136, 11),
-                          fontWeight: FontWeight.bold),
-                      children: [
-                        WidgetSpan(
-                          child: SizedBox(
-                              height: 34,
-                              width: 34,
-                              child: Image.asset(
-                                'assets/tasktimer.png',
-                                fit: BoxFit.contain,
-                              )),
-                        ),
-                        const TextSpan(
-                          text: ' To Do',
-                        )
-                      ],
-                    ),
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
                 ),
+
                 // spacing btw to do title and tasks
-                const SizedBox(height: 10),
+                const SizedBox(height: 1),
                 FutureBuilder(
                     future: FirebaseFirestore.instance
                         .collection('takeactions')
@@ -140,15 +125,17 @@ class _TakeActionState extends State<TakeAction> {
                           child: ListView(
                         shrinkWrap: false,
                         children: snapshot.data!.docs.map((item) {
-                          return Center(
+                          return SingleChildScrollView(
+                              child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 38.0),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 60, vertical: 10),
+                                      padding: const EdgeInsets.all(5.0),
                                       // Foreground color
                                       onPrimary: Colors.amber,
                                       // Background color
@@ -163,49 +150,80 @@ class _TakeActionState extends State<TakeAction> {
                                                   modID: id,
                                                 )));
                                   },
-                                  child: Text(
-                                    item['actiontitle'],
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      color: Color.fromARGB(255, 228, 169, 18),
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FontStyle.italic,
-                                    ),
+                                  child: Column(
+                                    children: [
+                                      ListTile(
+                                        leading: ConstrainedBox(
+                                          constraints: const BoxConstraints(
+                                            minWidth: 30,
+                                            minHeight: 10,
+                                            maxWidth: 60,
+                                            maxHeight: 50,
+                                          ),
+                                          child:
+                                              Image.asset(item['actionicon']),
+                                        ),
+                                        title: Text(item['actiontitle'],
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Color.fromARGB(
+                                                    255, 228, 169, 18),
+                                                fontWeight: FontWeight.bold)),
+                                        subtitle: Text(
+                                            (item['actioncontent'])
+                                                    .substring(0, 60) +
+                                                '...',
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Color.fromARGB(
+                                                    255, 48, 48, 48),
+                                                fontStyle: FontStyle.italic)),
+                                        isThreeLine: false,
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Container(
+                                          child: Text(
+                                            '+' + item['actionpts'] + ' pts',
+                                            textAlign: TextAlign.right,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Color.fromARGB(
+                                                    255, 43, 43, 43)),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                )
+                                ),
+                                const SizedBox(height: 10),
                               ],
                             ),
-                          );
+                          ));
                         }).toList(),
                       ));
                     }),
-                const SizedBox(height: 2),
-                Padding(
-                  padding: const EdgeInsets.only(right: 220),
-                  child: Text.rich(
-                    TextSpan(
-                      style: const TextStyle(
-                          fontSize: 25,
-                          color: Color.fromARGB(255, 85, 148, 75),
-                          fontWeight: FontWeight.bold),
-                      children: [
-                        WidgetSpan(
-                          child: SizedBox(
-                              height: 32,
-                              width: 32,
-                              child: Image.asset(
-                                'assets/taskcheck.png',
-                                fit: BoxFit.contain,
-                              )),
-                        ),
-                        const TextSpan(
-                          text: ' Done',
-                        )
-                      ],
-                    ),
+                const SizedBox(height: 20),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 38.0),
+                  width: double.infinity,
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(
+                          height: 34,
+                          width: 34,
+                          child: Image.asset(
+                            'assets/taskcheck.png',
+                            fit: BoxFit.contain,
+                          )),
+                      const Text(
+                        'Actions Completed',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
                 ),
-                // space btw completed title and tasks
                 const SizedBox(height: 10),
                 FutureBuilder(
                     future: FirebaseFirestore.instance
@@ -222,15 +240,18 @@ class _TakeActionState extends State<TakeAction> {
                           child: ListView(
                         shrinkWrap: true,
                         children: snapshot1.data!.docs.map((item1) {
-                          return Center(
+                          return SingleChildScrollView(
+                              child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 38.0),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 60, vertical: 10),
+                                          horizontal: 80, vertical: 10),
                                       // Foreground color
                                       onPrimary: Colors.lightGreen,
                                       // Background color
@@ -251,13 +272,12 @@ class _TakeActionState extends State<TakeAction> {
                                       fontSize: 18,
                                       color: Color.fromARGB(255, 85, 148, 75),
                                       fontWeight: FontWeight.bold,
-                                      fontStyle: FontStyle.italic,
                                     ),
                                   ),
                                 )
                               ],
                             ),
-                          );
+                          ));
                         }).toList(),
                       ));
                     }),
