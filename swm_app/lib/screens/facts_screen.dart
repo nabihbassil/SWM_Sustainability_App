@@ -175,9 +175,10 @@ class _FactsScreenState extends State<FactsScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
-                    child: Image.network(
+                    child: Image.asset(
                       userProfilesList[_factIndex].awaimg,
-                      width: double.infinity,
+                      height: 100,
+                      width: 100,
                     ),
                   )),
               Container(height: 40),
