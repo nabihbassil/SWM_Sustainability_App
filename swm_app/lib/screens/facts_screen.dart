@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:swm_app/page_holder.dart';
 
-import 'package:swm_app/screens/awareness_main.dart';
+import 'package:swm_app/screens/challenge_main.dart';
 
 import 'package:swm_app/services/fact_service.dart';
 import 'package:swm_app/screens/quiz_screen.dart';
@@ -108,7 +108,7 @@ class _FactsScreenState extends State<FactsScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => AwarenessMain(id: id, name: name))),
+              builder: (context) => ChallengeMain(id: id, name: name))),
         ),
         actions: <Widget>[
           IconButton(
@@ -177,8 +177,7 @@ class _FactsScreenState extends State<FactsScreen> {
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.asset(
                       userProfilesList[_factIndex].awaimg,
-                      height: 100,
-                      width: 100,
+                      width: double.infinity,
                     ),
                   )),
               Container(height: 40),

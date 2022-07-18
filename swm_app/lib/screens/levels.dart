@@ -180,7 +180,7 @@ class _LevelsState extends State<Levels> {
                                       color: Color.fromARGB(255, 2, 2, 2),
                                       fontWeight: FontWeight.bold)),
                               subtitle: const Text(
-                                  'SWM will plant 5 trees in partnership with Bäume fürs Leben on your behalf',
+                                  'SWM will plant a tree in partnership with PLANT-MY-TREE on your behalf.',
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Color.fromARGB(255, 69, 109, 62),
@@ -277,7 +277,7 @@ class _LevelsState extends State<Levels> {
                                       color: Color.fromARGB(255, 54, 52, 52),
                                       fontWeight: FontWeight.bold)),
                               subtitle: const Text(
-                                  'SWM will provide this reward',
+                                  'In partnership with "Bio-Bortbox", a meal is donated to a school child.',
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Color.fromARGB(255, 123, 123, 123),
@@ -321,7 +321,8 @@ class _LevelsState extends State<Levels> {
                                       fontSize: 16,
                                       color: Color.fromARGB(255, 54, 52, 52),
                                       fontWeight: FontWeight.bold)),
-                              subtitle: const Text('SWM will provide',
+                              subtitle: const Text(
+                                  'SWM donates 10€ to LBV for the preservation of endangered nature.',
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Color.fromARGB(255, 123, 123, 123),
