@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:swm_app/page_holder.dart';
 import 'package:swm_app/screens/single_action.dart';
 import 'package:swm_app/services/user_service.dart';
@@ -169,15 +170,15 @@ class _TakeActionState extends State<TakeAction> {
                                                 color: Color.fromARGB(
                                                     255, 228, 169, 18),
                                                 fontWeight: FontWeight.bold)),
-                                        subtitle: Text(
-                                            (item['actioncontent'])
-                                                    .substring(0, 60) +
-                                                '...',
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: Color.fromARGB(
-                                                    255, 48, 48, 48),
-                                                fontStyle: FontStyle.italic)),
+                                        subtitle: Html(
+                                            data: item['actioncontent']
+                                                .substring(0, 60),
+                                            style: {
+                                              "p": Style(
+                                                  color: Color.fromARGB(
+                                                      255, 48, 48, 48),
+                                                  fontStyle: FontStyle.italic)
+                                            }),
                                         isThreeLine: false,
                                       ),
                                       Align(

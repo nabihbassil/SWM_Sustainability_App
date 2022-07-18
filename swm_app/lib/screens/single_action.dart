@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:swm_app/page_holder.dart';
 import 'package:swm_app/screens/success_module.dart';
 import 'package:swm_app/services/user_service.dart';
@@ -138,24 +139,15 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                               )),
                           Container(height: 20),
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.network(
-                              'https://images.pexels.com/photos/4997810/pexels-photo-4997810.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-                              width: double.infinity,
-                            ),
-                          ),
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                item['actionimg'],
+                                width: double.infinity,
+                              )),
                           Container(height: 20),
                           SizedBox(
-                            width: double.infinity,
-                            child: Text(
-                              item['actioncontent'].replaceAll("\\n", "\n"),
-                              style: const TextStyle(
-                                  fontSize: 18,
-                                  color: Color.fromARGB(255, 0, 0, 0),
-                                  fontWeight: FontWeight.normal),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
+                              width: double.infinity,
+                              child: Html(data: item['actioncontent'])),
                           Container(height: 20),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.center,
