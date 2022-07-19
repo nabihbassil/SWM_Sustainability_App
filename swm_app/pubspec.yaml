@@ -109,6 +109,9 @@ flutter:
     - assets/level1icon.png
     - assets/level2icon.png
     - assets/level3icon.png
+    - assets/level1iconshadow.png
+    - assets/level2iconshadow.png
+    - assets/level3iconshadow.png
     - assets/actionicons/ActionIcon11.png
     - assets/actionicons/ActionIcon12.png
     - assets/actionicons/ActionIcon13.png
