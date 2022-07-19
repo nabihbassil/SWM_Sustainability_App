@@ -157,12 +157,11 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                               width: 200,
                                               child: ClipRRect(
                                                 borderRadius:
-                                                    BorderRadius.circular(8),
+                                                    BorderRadius.circular(10),
                                                 child: Stack(
                                                   children: [
-                                                    Image.network(
+                                                    Image.asset(
                                                       item['modIMG'],
-                                                      fit: BoxFit.cover,
                                                       width:
                                                           MediaQuery.of(context)
                                                               .size
@@ -280,13 +279,8 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                     BorderRadius.circular(8),
                                                 child: Stack(
                                                   children: [
-                                                    Image.network(
+                                                    Image.asset(
                                                       item['modIMG'],
-                                                      fit: BoxFit.cover,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                              .size
-                                                              .width,
                                                     ),
                                                     Positioned(
                                                       top: 10,
@@ -400,7 +394,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                       BorderRadius.circular(8),
                                                   child: Stack(
                                                     children: [
-                                                      Image.network(
+                                                      Image.asset(
                                                         item['modIMG'],
                                                         fit: BoxFit.cover,
                                                         width: MediaQuery.of(

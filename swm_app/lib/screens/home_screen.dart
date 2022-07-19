@@ -224,9 +224,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               BorderRadius.circular(8),
                                           child: Stack(
                                             children: [
-                                              Image.network(
+                                              Image.asset(
                                                 item['modIMG'],
-                                                fit: BoxFit.cover,
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width -
