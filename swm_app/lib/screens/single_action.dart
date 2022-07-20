@@ -151,15 +151,19 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                           SizedBox(
                               width: double.infinity,
                               child: Html(
-                                data: item['actioncontent'],
-                                onLinkTap: (url, _, __, ___) async {
-                                  if (await canLaunch(url!)) {
-                                    await launch(
-                                      url,
-                                    );
-                                  }
-                                },
-                              )),
+                                  data: item['actioncontent'],
+                                  onLinkTap: (url, _, __, ___) async {
+                                    if (await canLaunch(url!)) {
+                                      await launch(
+                                        url,
+                                      );
+                                    }
+                                  },
+                                  style: {
+                                    "p": Style(
+                                        color: Color.fromARGB(255, 48, 48, 48),
+                                        fontSize: FontSize(16))
+                                  })),
                           Container(height: 20),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.center,
