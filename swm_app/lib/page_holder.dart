@@ -72,7 +72,7 @@ class _PageHolderState extends State<PageHolder> {
               Icons.newspaper,
               color: Colors.grey,
             ),
-            label: 'News',
+            label: 'Articles',
             activeIcon: Icon(
               Icons.newspaper,
               color: Colors.lightBlue[600],
