@@ -81,14 +81,7 @@ class _TakeActionState extends State<TakeAction> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 const SizedBox(height: 20),
-                SizedBox(
-                    height: 17,
-                    width: 500,
-                    child: Image.asset(
-                      'assets/progressbardummy.png',
-                      fit: BoxFit.contain,
-                    )),
-                const SizedBox(height: 25),
+
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 38.0),
                   width: double.infinity,
@@ -172,7 +165,8 @@ class _TakeActionState extends State<TakeAction> {
                                                 fontWeight: FontWeight.bold)),
                                         subtitle: Html(
                                             data: item['actioncontent']
-                                                .substring(0, 60),
+                                                    .substring(0, 60) +
+                                                '...',
                                             style: {
                                               "p": Style(
                                                   color: Color.fromARGB(

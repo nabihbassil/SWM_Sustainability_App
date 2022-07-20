@@ -91,8 +91,8 @@ class _PageHolderState extends State<PageHolder> {
           ),
         ],
         selectedItemColor: Colors.lightBlue[600],
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
         currentIndex: _selectedIndex, //New
         onTap: _onItemTapped,
       ),
