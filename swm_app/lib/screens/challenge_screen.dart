@@ -162,6 +162,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                   children: [
                                                     Image.asset(
                                                       item['modIMG'],
+                                                      fit: BoxFit.fitWidth,
                                                       width:
                                                           MediaQuery.of(context)
                                                               .size
@@ -281,6 +282,11 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                   children: [
                                                     Image.asset(
                                                       item['modIMG'],
+                                                      fit: BoxFit.fitWidth,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
                                                     ),
                                                     Positioned(
                                                       top: 10,
@@ -396,7 +402,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                     children: [
                                                       Image.asset(
                                                         item['modIMG'],
-                                                        fit: BoxFit.cover,
+                                                        fit: BoxFit.fitWidth,
                                                         width: MediaQuery.of(
                                                                 context)
                                                             .size

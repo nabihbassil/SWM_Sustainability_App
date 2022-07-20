@@ -226,6 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             children: [
                                               Image.asset(
                                                 item['modIMG'],
+                                                fit: BoxFit.fitWidth,
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width -
