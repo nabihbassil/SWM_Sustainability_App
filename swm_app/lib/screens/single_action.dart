@@ -59,7 +59,7 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
       print("in fiiiinnniiisshhhheedddd");
 
       var future = new Future.delayed(
-          const Duration(seconds: 6),
+          const Duration(seconds: 1),
           (() => Navigator.push(context,
               MaterialPageRoute(builder: (context) => Success(id: modID)))));
     }
