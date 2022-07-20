@@ -122,11 +122,7 @@ class _SuccessState extends State<Success> {
                 padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
                 minWidth: 200,
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const PageHolder(),
-                    ),
-                  );
+                  Navigator.of(context).pop();
                 },
                 child: const Text(
                   "Ok",
