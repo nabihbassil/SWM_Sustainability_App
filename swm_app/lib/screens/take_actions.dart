@@ -73,210 +73,334 @@ class _TakeActionState extends State<TakeAction> {
           )
         ],
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(1),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: SingleChildScrollView(
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const SizedBox(height: 20),
-
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 38.0),
-                  width: double.infinity,
-                  child: Row(
-                    children: <Widget>[
-                      SizedBox(
-                          height: 34,
-                          width: 34,
-                          child: Image.asset(
-                            'assets/tasktimer.png',
-                            fit: BoxFit.contain,
-                          )),
-                      const Text(
-                        'Actions To Do',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
-
-                // spacing btw to do title and tasks
-                const SizedBox(height: 1),
-                FutureBuilder(
-                    future: FirebaseFirestore.instance
-                        .collection('takeactions')
-                        .where("parentmoduleid", isEqualTo: id)
-                        .where(FieldPath.documentId, whereNotIn: L1)
-                        .get(),
-                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (!snapshot.hasData) {
-                        return const Center(child: Text('Loading...'));
-                      }
-                      return Expanded(
-                          child: ListView(
-                        shrinkWrap: false,
-                        children: snapshot.data!.docs.map((item) {
-                          return SingleChildScrollView(
-                              child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 38.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      padding: const EdgeInsets.all(5.0),
-                                      // Foreground color
-                                      onPrimary: Colors.amber,
-                                      // Background color
-                                      primary: const Color.fromARGB(
-                                          255, 255, 239, 199)),
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SingleActionScreen(
-                                                  id: item.reference.id,
-                                                  modID: id,
-                                                )));
-                                  },
-                                  child: Column(
-                                    children: [
-                                      ListTile(
-                                        leading: ConstrainedBox(
-                                          constraints: const BoxConstraints(
-                                            minWidth: 30,
-                                            minHeight: 10,
-                                            maxWidth: 60,
-                                            maxHeight: 50,
-                                          ),
-                                          child:
-                                              Image.asset(item['actionicon']),
-                                        ),
-                                        title: Text(item['actiontitle'],
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: Color.fromARGB(
-                                                    255, 228, 169, 18),
-                                                fontWeight: FontWeight.bold)),
-                                        subtitle: Html(
-                                            data: item['actioncontent']
-                                                    .substring(0, 60) +
-                                                '...',
-                                            style: {
-                                              "p": Style(
-                                                  color: Color.fromARGB(
-                                                      255, 0, 0, 0),
-                                                  fontStyle: FontStyle.italic)
-                                            }),
-                                        isThreeLine: false,
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Container(
-                                          child: Text(
-                                            '+' + item['actionpts'] + ' pts',
-                                            textAlign: TextAlign.right,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Color.fromARGB(
-                                                    255, 43, 43, 43)),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                    width: MediaQuery.of(context).size.width,
+                    color: Color.fromARGB(255, 255, 249, 237),
+                    child: Padding(
+                        padding: EdgeInsets.only(left: 15, right: 15),
+                        child: ExpansionTile(
+                          title: Container(
+                              height: 80,
+                              child: Row(
+                                children: <Widget>[
+                                  SizedBox(
+                                      height: 34,
+                                      width: 34,
+                                      child: Image.asset(
+                                        'assets/tasktimer.png',
+                                        fit: BoxFit.contain,
+                                      )),
+                                  const Text(
+                                    'Actions To Do',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Color.fromARGB(255, 80, 80, 80),
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                ),
-                                const SizedBox(height: 10),
-                              ],
-                            ),
-                          ));
-                        }).toList(),
-                      ));
-                    }),
-                const SizedBox(height: 20),
+                                ],
+                              )),
+                          children: [
+                            // I'll name the data fr
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height: 280,
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 240,
+                                  padding: const EdgeInsets.only(bottom: 20),
+                                  child: (FutureBuilder(
+                                      future: FirebaseFirestore.instance
+                                          .collection('takeactions')
+                                          .where("parentmoduleid",
+                                              isEqualTo: id)
+                                          .where(FieldPath.documentId,
+                                              whereNotIn: L1)
+                                          .get(),
+                                      builder: (context,
+                                          AsyncSnapshot<QuerySnapshot>
+                                              snapshot) {
+                                        if (!snapshot.hasData) {
+                                          return const Center(
+                                              child: Text('Loading...'));
+                                        }
+                                        return ListView(
+                                          shrinkWrap: false,
+                                          children:
+                                              snapshot.data!.docs.map((item) {
+                                            return SingleChildScrollView(
+                                                child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: <Widget>[
+                                                  ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                            shape: RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10)),
+                                                            minimumSize: Size(
+                                                                MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width -
+                                                                    40,
+                                                                40),
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: 15,
+                                                                    right: 10,
+                                                                    top: 10,
+                                                                    bottom: 10),
+                                                            // Foreground color
+                                                            onPrimary:
+                                                                Colors.amber,
+                                                            // Background color
+                                                            primary: const Color
+                                                                    .fromARGB(
+                                                                255,
+                                                                255,
+                                                                239,
+                                                                199)),
+                                                    onPressed: () {
+                                                      Navigator.of(context).push(
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  SingleActionScreen(
+                                                                    id: item
+                                                                        .reference
+                                                                        .id,
+                                                                    modID: id,
+                                                                  )));
+                                                    },
+                                                    child: Column(
+                                                      children: [
+                                                        Row(
+                                                          children: <Widget>[
+                                                            SizedBox(
+                                                                height: 50,
+                                                                width: 50,
+                                                                child:
+                                                                    Image.asset(
+                                                                  item[
+                                                                      'actionicon'],
+                                                                  fit: BoxFit
+                                                                      .contain,
+                                                                )),
+                                                            Expanded(
+                                                              child: ListTile(
+                                                                title: Text(item['actiontitle'],
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            15,
+                                                                        color: Color.fromARGB(
+                                                                            255,
+                                                                            228,
+                                                                            169,
+                                                                            18),
+                                                                        fontWeight:
+                                                                            FontWeight.bold)),
+                                                                subtitle: Html(
+                                                                    data: item['actioncontent'].substring(
+                                                                            0,
+                                                                            60) +
+                                                                        '...',
+                                                                    style: {
+                                                                      "p": Style(
+                                                                          color: Color.fromARGB(
+                                                                              255,
+                                                                              0,
+                                                                              0,
+                                                                              0),
+                                                                          fontStyle:
+                                                                              FontStyle.italic)
+                                                                    }),
+                                                                isThreeLine:
+                                                                    false,
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .centerRight,
+                                                          child: Container(
+                                                            child: Text(
+                                                              '+' +
+                                                                  item[
+                                                                      'actionpts'] +
+                                                                  ' pts',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .right,
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          228,
+                                                                          169,
+                                                                          18)),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 10),
+                                                ],
+                                              ),
+                                            ));
+                                          }).toList(),
+                                        );
+                                      })),
+                                )),
+                          ],
+                          initiallyExpanded: true,
+                        ))),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 38.0),
-                  width: double.infinity,
-                  child: Row(
-                    children: <Widget>[
-                      SizedBox(
-                          height: 34,
-                          width: 34,
-                          child: Image.asset(
-                            'assets/taskcheck.png',
-                            fit: BoxFit.contain,
-                          )),
-                      const Text(
-                        'Actions Completed',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                FutureBuilder(
-                    future: FirebaseFirestore.instance
-                        .collection('takeactions')
-                        .where("parentmoduleid", isEqualTo: id)
-                        .where(FieldPath.documentId, whereIn: L2)
-                        .get(),
-                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot1) {
-                      if (!snapshot1.hasData) {
-                        print("snaps");
-                        return const Center(child: Text('Loading...'));
-                      }
-                      return Expanded(
-                          child: ListView(
-                        shrinkWrap: true,
-                        children: snapshot1.data!.docs.map((item1) {
-                          return SingleChildScrollView(
-                              child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 38.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 80, vertical: 10),
-                                      // Foreground color
-                                      onPrimary: Colors.lightGreen,
-                                      // Background color
-                                      primary: const Color.fromARGB(
-                                          255, 215, 240, 206)),
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SingleActionScreen(
-                                                  id: item1.reference.id,
-                                                  modID: id,
-                                                )));
-                                  },
-                                  child: Text(
-                                    item1['actiontitle'],
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      color: Color.fromARGB(255, 85, 148, 75),
-                                      fontWeight: FontWeight.bold,
+                    width: MediaQuery.of(context).size.width,
+                    color: Color.fromARGB(255, 243, 255, 241),
+                    child: Padding(
+                        padding: EdgeInsets.only(left: 15, right: 15),
+                        child: ExpansionTile(
+                            title: Container(
+                                height: 80,
+                                child: Row(
+                                  children: <Widget>[
+                                    SizedBox(
+                                        height: 32,
+                                        width: 32,
+                                        child: Image.asset(
+                                          'assets/taskcheck.png',
+                                          fit: BoxFit.contain,
+                                        )),
+                                    const Text(
+                                      'Actions Completed',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color:
+                                              Color.fromARGB(255, 80, 80, 80),
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ));
-                        }).toList(),
-                      ));
-                    }),
-                const SizedBox(height: 8),
+                                  ],
+                                )),
+                            children: [
+                              // I'll name the data fr
+                              SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 350,
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 300,
+                                    padding: const EdgeInsets.only(bottom: 20),
+                                    child: (FutureBuilder(
+                                        future: FirebaseFirestore.instance
+                                            .collection('takeactions')
+                                            .where("parentmoduleid",
+                                                isEqualTo: id)
+                                            .where(FieldPath.documentId,
+                                                whereIn: L2)
+                                            .get(),
+                                        builder: (context,
+                                            AsyncSnapshot<QuerySnapshot>
+                                                snapshot1) {
+                                          if (!snapshot1.hasData) {
+                                            print("snaps");
+                                            return const Center(
+                                                child: Text('Loading...'));
+                                          }
+                                          return ListView(
+                                            shrinkWrap: true,
+                                            children: snapshot1.data!.docs
+                                                .map((item1) {
+                                              return SingleChildScrollView(
+                                                  child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    ElevatedButton(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10.0)),
+                                                              minimumSize: Size(
+                                                                  MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width -
+                                                                      40,
+                                                                  60),
+
+                                                              // Foreground color
+                                                              onPrimary: Colors
+                                                                  .lightGreen,
+                                                              // Background color
+                                                              primary: const Color
+                                                                      .fromARGB(
+                                                                  255,
+                                                                  215,
+                                                                  240,
+                                                                  206)),
+                                                      onPressed: () {
+                                                        Navigator.of(context).push(
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        SingleActionScreen(
+                                                                          id: item1
+                                                                              .reference
+                                                                              .id,
+                                                                          modID:
+                                                                              id,
+                                                                        )));
+                                                      },
+                                                      child: Text(
+                                                        item1['actiontitle'],
+                                                        style: const TextStyle(
+                                                          fontSize: 15,
+                                                          color: Color.fromARGB(
+                                                              255, 85, 148, 75),
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 10),
+                                                  ],
+                                                ),
+                                              ));
+                                            }).toList(),
+                                          );
+                                        })),
+                                  ))
+                            ]))),
               ]),
         ),
       ),
