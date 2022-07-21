@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import 'package:swm_app/page_holder.dart';
 
@@ -7,6 +8,7 @@ import 'package:swm_app/screens/challenge_main.dart';
 import 'package:swm_app/services/fact_service.dart';
 import 'package:swm_app/screens/quiz_screen.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FactsScreen extends StatefulWidget {
   int index;
@@ -158,18 +160,22 @@ class _FactsScreenState extends State<FactsScreen> {
                   )),
               Container(height: 30),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                width: double.infinity,
-                child: Text(
-                  (userProfilesList[_factIndex].awatext)
-                      .replaceAll("\\n", "\n"),
-                  style: const TextStyle(
-                      fontSize: 18,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                      fontWeight: FontWeight.normal),
-                  textAlign: TextAlign.left,
-                ),
-              ),
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  width: double.infinity,
+                  child: Html(
+                      data: (userProfilesList[_factIndex].awatext),
+                      onLinkTap: (url, _, __, ___) async {
+                        if (await canLaunch(url!)) {
+                          await launch(
+                            url,
+                          );
+                        }
+                      },
+                      style: {
+                        "p": Style(
+                            color: Color.fromARGB(255, 0, 0, 0),
+                            fontSize: FontSize(16))
+                      })),
               Container(height: 20),
               Container(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -185,9 +191,7 @@ class _FactsScreenState extends State<FactsScreen> {
                 //contentPadding: EdgeInsets.all(<some value here>),//change for side padding
                 title: Row(children: <Widget>[
                   Expanded(
-                      child: Row(
-                    children: [
-                      GestureDetector(
+                      child: GestureDetector(
                           onTap: () {
                             if (_factIndex > 0) {
                               print("iiiiiiiffffffff");
@@ -214,54 +218,55 @@ class _FactsScreenState extends State<FactsScreen> {
                                             fontWeight: FontWeight.normal),
                                         textAlign: TextAlign.left,
                                       )))
-                              : FittedBox(fit: BoxFit.fitHeight))
-                    ],
-                  )),
-                  GestureDetector(
-                    onTap: () {
-                      if (_factIndex < size - 1) {
-                        print("iiiiiiiffffffff");
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => FactsScreen(
-                                  index: _factIndex,
-                                  id: id,
-                                  name: name,
-                                )));
-                        _nextFact();
-                      } else {
-                        print("eeeellllssseeeee");
-                        _resetFacts();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => QuizScreen(
-                                  id: id,
-                                  name: name,
-                                )));
-                        //  _nextFact();
-                      }
-                    },
-                    child: FittedBox(
-                        fit: BoxFit.fitHeight,
-                        child: SizedBox(
-                            width: 160,
-                            child: _factIndex < size - 1
-                                ? const Text(
-                                    "Next >",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color:
-                                            Color.fromARGB(255, 131, 131, 131),
-                                        fontWeight: FontWeight.normal),
-                                    textAlign: TextAlign.right,
-                                  )
-                                : const Text(
-                                    "Continue to Quiz➜",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: Color.fromARGB(255, 33, 36, 119),
-                                        fontWeight: FontWeight.normal),
-                                    textAlign: TextAlign.right,
-                                  ))),
-                  )
+                              : FittedBox(fit: BoxFit.fitHeight))),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        if (_factIndex < size - 1) {
+                          print("iiiiiiiffffffff");
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => FactsScreen(
+                                    index: _factIndex,
+                                    id: id,
+                                    name: name,
+                                  )));
+                          _nextFact();
+                        } else {
+                          print("eeeellllssseeeee");
+                          _resetFacts();
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => QuizScreen(
+                                    id: id,
+                                    name: name,
+                                  )));
+                          //  _nextFact();
+                        }
+                      },
+                      child: FittedBox(
+                          fit: BoxFit.fitHeight,
+                          child: SizedBox(
+                              width: 160,
+                              child: _factIndex < size - 1
+                                  ? const Text(
+                                      "Next >",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: Color.fromARGB(
+                                              255, 131, 131, 131),
+                                          fontWeight: FontWeight.normal),
+                                      textAlign: TextAlign.right,
+                                    )
+                                  : const Text(
+                                      "Continue to Quiz➜",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color:
+                                              Color.fromARGB(255, 33, 36, 119),
+                                          fontWeight: FontWeight.normal),
+                                      textAlign: TextAlign.right,
+                                    ))),
+                    ),
+                  ),
                 ]),
               ),
             ],

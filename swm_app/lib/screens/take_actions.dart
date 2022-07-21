@@ -170,7 +170,7 @@ class _TakeActionState extends State<TakeAction> {
                                             style: {
                                               "p": Style(
                                                   color: Color.fromARGB(
-                                                      255, 48, 48, 48),
+                                                      255, 0, 0, 0),
                                                   fontStyle: FontStyle.italic)
                                             }),
                                         isThreeLine: false,
