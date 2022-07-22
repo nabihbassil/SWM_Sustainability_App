@@ -161,7 +161,7 @@ class UserService {
   Future<List<Badges>> GetRelatedBadges(ID) async {
     QuerySnapshot qShot = await FirebaseFirestore.instance
         .collection('badges')
-        .where("parentmoduleid", isEqualTo: ID)
+        .where("relateModID", isEqualTo: ID)
         .get();
 
     return qShot.docs
