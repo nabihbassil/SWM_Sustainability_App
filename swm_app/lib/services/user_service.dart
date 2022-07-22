@@ -159,13 +159,11 @@ class UserService {
   }
 
   Future<String> GetRelatedBadges(ID) async {
-    print("p123");
     String docID = "";
     QuerySnapshot qShot = await FirebaseFirestore.instance
         .collection('badges')
         .where("relateModID", isEqualTo: ID)
         .get();
-    print("p234");
 
     List<String> allData1 = qShot.docs.map((doc) => docID = doc.id).toList();
 
