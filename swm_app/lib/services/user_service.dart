@@ -142,6 +142,21 @@ class UserService {
     return notDoneTasksLength;
   }
 
+  Future<int> GetSizeofDoneTasks(modID, LTasks) async {
+    int DoneTasksLength = -1;
+    print("modID $modID");
+    await FirebaseFirestore.instance
+        .collection('takeactions')
+        .where("parentmoduleid", isEqualTo: modID)
+        .where(FieldPath.documentId, whereIn: LTasks)
+        .get()
+        .then((value) => DoneTasksLength = value.size);
+
+    print("DoneTasksLength $DoneTasksLength");
+
+    return DoneTasksLength;
+  }
+
   void setModuleInProgress(ID) async {
     FirebaseFirestore.instance.collection("users").doc(user?.uid).update({
       "ModulesInProgress": FieldValue.arrayUnion([ID])

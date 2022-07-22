@@ -44,11 +44,12 @@ class AwarenessMain extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              const SizedBox(height: 30),
               Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: Container(
                       child: Text(
                     "Awareness",
@@ -57,7 +58,7 @@ class AwarenessMain extends StatelessWidget {
                         color: Color.fromARGB(255, 70, 70, 70),
                         fontWeight: FontWeight.bold),
                   ))),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
