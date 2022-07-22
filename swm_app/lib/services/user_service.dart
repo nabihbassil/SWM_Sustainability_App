@@ -173,23 +173,23 @@ class UserService {
     });
   }
 
-  Future<List<Badges>> GetRelatedBadges(ID) async {
+  Future<String> GetRelatedBadges(ID) async {
+    String docID = "";
     QuerySnapshot qShot = await FirebaseFirestore.instance
         .collection('badges')
-        .where("parentmoduleid", isEqualTo: ID)
+        .where("relateModID", isEqualTo: ID)
         .get();
 
-    return qShot.docs
-        .map((doc) => Badges(
-              relateModID: doc.get("relateModID"),
-            ))
-        .toList();
+    List<String> allData1 = qShot.docs.map((doc) => docID = doc.id).toList();
+
+    return docID;
   }
 
   void CompleteModuleBadges(ID) async {
-    List userProfilesList = await GetRelatedBadges(ID);
+    String badgeID = await GetRelatedBadges(ID);
+    print("warum $badgeID");
     FirebaseFirestore.instance.collection("users").doc(user?.uid).update({
-      "BadgesDone": FieldValue.arrayUnion([userProfilesList])
+      "BadgesDone": FieldValue.arrayUnion([badgeID])
     });
   }
 
