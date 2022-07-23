@@ -142,6 +142,21 @@ class UserService {
     return notDoneTasksLength;
   }
 
+  Future<int> GetSizeofDoneTasks(modID, LTasks) async {
+    int DoneTasksLength = -1;
+    print("modID $modID");
+    await FirebaseFirestore.instance
+        .collection('takeactions')
+        .where("parentmoduleid", isEqualTo: modID)
+        .where(FieldPath.documentId, whereIn: LTasks)
+        .get()
+        .then((value) => DoneTasksLength = value.size);
+
+    print("DoneTasksLength $DoneTasksLength");
+
+    return DoneTasksLength;
+  }
+
   void setModuleInProgress(ID) async {
     FirebaseFirestore.instance.collection("users").doc(user?.uid).update({
       "ModulesInProgress": FieldValue.arrayUnion([ID])
@@ -158,23 +173,23 @@ class UserService {
     });
   }
 
-  Future<List<Badges>> GetRelatedBadges(ID) async {
+  Future<String> GetRelatedBadges(ID) async {
+    String docID = "";
     QuerySnapshot qShot = await FirebaseFirestore.instance
         .collection('badges')
         .where("relateModID", isEqualTo: ID)
         .get();
 
-    return qShot.docs
-        .map((doc) => Badges(
-              relateModID: doc.get("relateModID"),
-            ))
-        .toList();
+    List<String> allData1 = qShot.docs.map((doc) => docID = doc.id).toList();
+
+    return docID;
   }
 
   void CompleteModuleBadges(ID) async {
-    List userProfilesList = await GetRelatedBadges(ID);
+    String badgeID = await GetRelatedBadges(ID);
+    print("warum $badgeID");
     FirebaseFirestore.instance.collection("users").doc(user?.uid).update({
-      "BadgesDone": FieldValue.arrayUnion([userProfilesList])
+      "BadgesDone": FieldValue.arrayUnion([badgeID])
     });
   }
 

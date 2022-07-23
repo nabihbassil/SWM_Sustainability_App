@@ -242,7 +242,7 @@ class ProfileScreenState extends State<ProfileScreen> {
               const Padding(
                   padding: EdgeInsets.only(left: 35, right: 35),
                   child: Text(
-                    "  Keep up the good work! Try some new tasks for a bonus reward when you reach the next level!",
+                    "Keep up the good work! Try some new tasks for a bonus reward when you reach the next level!",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         fontSize: 14,

@@ -53,11 +53,12 @@ class _ChallengeMain extends State<ChallengeMain> {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              const SizedBox(height: 30),
               Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: Container(
                       child: Text(
                     "$name Challenge",
@@ -66,7 +67,7 @@ class _ChallengeMain extends State<ChallengeMain> {
                         color: Color.fromARGB(255, 70, 70, 70),
                         fontWeight: FontWeight.bold),
                   ))),
-              const SizedBox(height: 30),
+              const SizedBox(height: 40),
               GestureDetector(
                   onTap: () {
                     Navigator.push(

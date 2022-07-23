@@ -130,145 +130,135 @@ class _TakeActionState extends State<TakeAction> {
                                           return const Center(
                                               child: Text('Loading...'));
                                         }
-                                        return ListView(
-                                          shrinkWrap: false,
-                                          children:
-                                              snapshot.data!.docs.map((item) {
-                                            return SingleChildScrollView(
-                                                child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 10),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: <Widget>[
-                                                  ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                            shape: RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10)),
-                                                            minimumSize: Size(
-                                                                MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width -
-                                                                    40,
-                                                                40),
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 15,
-                                                                    right: 10,
-                                                                    top: 10,
-                                                                    bottom: 10),
-                                                            // Foreground color
-                                                            onPrimary:
-                                                                Colors.amber,
-                                                            // Background color
-                                                            primary: const Color
-                                                                    .fromARGB(
-                                                                255,
-                                                                255,
-                                                                239,
-                                                                199)),
-                                                    onPressed: () {
-                                                      Navigator.of(context).push(
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  SingleActionScreen(
-                                                                    id: item
-                                                                        .reference
-                                                                        .id,
-                                                                    modID: id,
-                                                                  )));
-                                                    },
-                                                    child: Column(
-                                                      children: [
-                                                        Row(
+                                        // If there is no data then return the line "Good job on completing all the actions for this challenge! \n Review the actions in the Actions Completed section below or check out some other challenges!"
+                                        // Or collapse expansion tile if no data setState(() {expansionTile.currentState.collapse();}
+                                        return Column(children: [
+                                          Expanded(
+                                              child: ListView(
+                                            shrinkWrap: false,
+                                            children:
+                                                snapshot.data!.docs.map((item) {
+                                              return SingleChildScrollView(
+                                                  child: Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 10),
+                                                      child: Column(children: [
+                                                        Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
                                                           children: <Widget>[
-                                                            SizedBox(
-                                                                height: 50,
-                                                                width: 50,
-                                                                child:
-                                                                    Image.asset(
-                                                                  item[
-                                                                      'actionicon'],
-                                                                  fit: BoxFit
-                                                                      .contain,
-                                                                )),
-                                                            Expanded(
-                                                              child: ListTile(
-                                                                title: Text(item['actiontitle'],
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            15,
-                                                                        color: Color.fromARGB(
-                                                                            255,
-                                                                            228,
-                                                                            169,
-                                                                            18),
-                                                                        fontWeight:
-                                                                            FontWeight.bold)),
-                                                                subtitle: Html(
-                                                                    data: item['actioncontent'].substring(
-                                                                            0,
-                                                                            60) +
-                                                                        '...',
-                                                                    style: {
-                                                                      "p": Style(
-                                                                          color: Color.fromARGB(
-                                                                              255,
-                                                                              0,
-                                                                              0,
-                                                                              0),
-                                                                          fontStyle:
-                                                                              FontStyle.italic)
-                                                                    }),
-                                                                isThreeLine:
-                                                                    false,
+                                                            ElevatedButton(
+                                                              style: ElevatedButton
+                                                                  .styleFrom(
+                                                                      shape: RoundedRectangleBorder(
+                                                                          borderRadius: BorderRadius.circular(
+                                                                              10)),
+                                                                      minimumSize: Size(
+                                                                          MediaQuery.of(context).size.width -
+                                                                              40,
+                                                                          40),
+                                                                      padding: EdgeInsets.only(
+                                                                          left:
+                                                                              15,
+                                                                          right:
+                                                                              10,
+                                                                          top:
+                                                                              10,
+                                                                          bottom:
+                                                                              10),
+                                                                      // Foreground color
+                                                                      onPrimary:
+                                                                          Colors
+                                                                              .amber,
+                                                                      // Background color
+                                                                      primary: const Color
+                                                                              .fromARGB(
+                                                                          255,
+                                                                          255,
+                                                                          239,
+                                                                          199)),
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .push(MaterialPageRoute(
+                                                                        builder: (context) => SingleActionScreen(
+                                                                              id: item.reference.id,
+                                                                              modID: id,
+                                                                            )));
+                                                              },
+                                                              child: Column(
+                                                                children: [
+                                                                  Row(
+                                                                    children: <
+                                                                        Widget>[
+                                                                      SizedBox(
+                                                                          height:
+                                                                              50,
+                                                                          width:
+                                                                              50,
+                                                                          child:
+                                                                              Image.asset(
+                                                                            item['actionicon'],
+                                                                            fit:
+                                                                                BoxFit.contain,
+                                                                          )),
+                                                                      Expanded(
+                                                                        child:
+                                                                            ListTile(
+                                                                          title: Text(
+                                                                              item['actiontitle'],
+                                                                              style: TextStyle(fontSize: 15, color: Color.fromARGB(255, 228, 169, 18), fontWeight: FontWeight.bold)),
+                                                                          subtitle: Html(
+                                                                              data: item['actioncontent'].substring(0, 60) + '...',
+                                                                              style: {
+                                                                                "p": Style(color: Color.fromARGB(255, 0, 0, 0), fontStyle: FontStyle.italic)
+                                                                              }),
+                                                                          isThreeLine:
+                                                                              false,
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                  Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .centerRight,
+                                                                    child:
+                                                                        Container(
+                                                                      child:
+                                                                          Text(
+                                                                        '+' +
+                                                                            item['actionpts'] +
+                                                                            ' pts',
+                                                                        textAlign:
+                                                                            TextAlign.right,
+                                                                        style: TextStyle(
+                                                                            fontWeight: FontWeight
+                                                                                .bold,
+                                                                            color: Color.fromARGB(
+                                                                                255,
+                                                                                228,
+                                                                                169,
+                                                                                18)),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
                                                               ),
-                                                            )
+                                                            ),
+                                                            const SizedBox(
+                                                                height: 10),
                                                           ],
                                                         ),
-                                                        Align(
-                                                          alignment: Alignment
-                                                              .centerRight,
-                                                          child: Container(
-                                                            child: Text(
-                                                              '+' +
-                                                                  item[
-                                                                      'actionpts'] +
-                                                                  ' pts',
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .right,
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          228,
-                                                                          169,
-                                                                          18)),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  const SizedBox(height: 10),
-                                                ],
-                                              ),
-                                            ));
-                                          }).toList(),
-                                        );
+                                                      ])));
+                                            }).toList(),
+                                          )),
+                                        ]);
                                       })),
                                 )),
                           ],
@@ -323,6 +313,7 @@ class _TakeActionState extends State<TakeAction> {
                                                 snapshot1) {
                                           if (!snapshot1.hasData) {
                                             print("snaps");
+
                                             return const Center(
                                                 child: Text('Loading...'));
                                           }

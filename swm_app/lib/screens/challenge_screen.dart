@@ -233,6 +233,26 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                               if (!snapshot.hasData) {
                                 return const Center(child: Text('Loading...'));
                               }
+                              if (LNew.length == 1)
+                                return Expanded(
+                                    child: Center(
+                                        child: Column(children: [
+                                  SizedBox(height: 20),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 25, right: 25),
+                                    child: Text(
+                                      'Nothing more to see here.\n\nNew challenges will be added soon!',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: Color.fromARGB(
+                                              255, 142, 142, 142),
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ])));
                               return Expanded(
                                   child: ListView(
                                 shrinkWrap: false,
@@ -352,6 +372,26 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                   return const Center(
                                       child: Text('Loading...'));
                                 }
+                                if (LDone.length == 1)
+                                  return Expanded(
+                                      child: Center(
+                                          child: Column(children: [
+                                    SizedBox(height: 20),
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.only(left: 25, right: 25),
+                                      child: Text(
+                                        'Such empty :o\n\nYour completed challenges will show up here.',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Color.fromARGB(
+                                                255, 142, 142, 142),
+                                            fontStyle: FontStyle.italic,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ])));
                                 return Expanded(
                                     child: ListView(
                                   shrinkWrap: false,
