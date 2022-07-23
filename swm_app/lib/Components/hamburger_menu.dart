@@ -47,24 +47,7 @@ class _HamburgerMenu extends State<HamburgerMenu> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const SizedBox(height: 40),
-          SizedBox(
-            width: 20.0,
-            height: 70.0,
-            child: CircleAvatar(
-              backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-              child: ClipOval(
-                child: Image.network(
-                  userData.imgURL ??
-                      "https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg",
-                  width: 60,
-                  height: 60,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 5),
+          const SizedBox(height: 25),
           SizedBox(
             height: 90.0,
             width: 90,
