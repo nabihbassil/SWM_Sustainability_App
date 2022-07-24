@@ -160,7 +160,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     QuizData[questionIndex].question,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                      fontSize: 20.0,
+                      fontSize: 18.0,
                       color: Color.fromARGB(255, 255, 255, 255),
                       fontWeight: FontWeight.bold,
                     ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 import 'package:swm_app/page_holder.dart';
+import 'package:swm_app/screens/awareness_main.dart';
 
 import 'package:swm_app/screens/challenge_main.dart';
 
@@ -111,7 +112,7 @@ class _FactsScreenState extends State<FactsScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => ChallengeMain(id: id, name: name))),
+              builder: (context) => AwarenessMain(id: id, name: name))),
         ),
         actions: <Widget>[
           IconButton(

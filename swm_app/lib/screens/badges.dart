@@ -256,9 +256,7 @@ void badgespecifics(context, badgenum, badgename, badgedescription) {
             Padding(
               padding: const EdgeInsets.only(left: 35, right: 35),
               child: Text(
-                "   " +
-                    badgedescription +
-                    "\n\nCongratulations on earning the badge!",
+                badgedescription + "\n\nCongratulations on earning the badge!",
                 textAlign: TextAlign.left,
                 style: const TextStyle(
                     fontSize: 19,
