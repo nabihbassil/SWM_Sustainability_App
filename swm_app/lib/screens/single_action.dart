@@ -7,6 +7,7 @@ import 'package:swm_app/page_holder.dart';
 import 'package:swm_app/screens/success_module.dart';
 import 'package:swm_app/services/user_service.dart';
 import "package:url_launcher/url_launcher.dart";
+import 'package:url_launcher/url_launcher_string.dart';
 
 class SingleActionScreen extends StatefulWidget {
   String id;
@@ -153,10 +154,9 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                               child: Html(
                                   data: item['actioncontent'],
                                   onLinkTap: (url, _, __, ___) async {
-                                    if (await canLaunch(url!)) {
-                                      await launch(
-                                        url,
-                                      );
+                                    if (await canLaunchUrlString(url!)) {
+                                      await launchUrlString(url,
+                                          mode: LaunchMode.inAppWebView);
                                     }
                                   },
                                   style: {

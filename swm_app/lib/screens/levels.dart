@@ -281,7 +281,7 @@ class _LevelsState extends State<Levels> {
                                         color: Color.fromARGB(255, 54, 52, 52),
                                         fontWeight: FontWeight.bold)),
                                 subtitle: const Text(
-                                    'In partnership with "Bio-Bortbox", a meal is donated to a school child.',
+                                    'In partnership with "Bio-Brotbox", a meal is donated to a school child.',
                                     style: TextStyle(
                                         fontSize: 14,
                                         color:

@@ -115,7 +115,7 @@ class _ChallengeMain extends State<ChallengeMain> {
               Padding(
                   padding: const EdgeInsets.only(left: 40, right: 40),
                   child: Text(
-                    "Explore ways you can reduce $name in your daily life",
+                    "Explore ways you can reduce the negative impacts of $name in your daily life",
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                         fontSize: 16,

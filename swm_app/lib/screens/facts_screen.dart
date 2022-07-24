@@ -9,6 +9,7 @@ import 'package:swm_app/services/fact_service.dart';
 import 'package:swm_app/screens/quiz_screen.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class FactsScreen extends StatefulWidget {
   int index;
@@ -165,9 +166,10 @@ class _FactsScreenState extends State<FactsScreen> {
                   child: Html(
                       data: (userProfilesList[_factIndex].awatext),
                       onLinkTap: (url, _, __, ___) async {
-                        if (await canLaunch(url!)) {
-                          await launch(
+                        if (await canLaunchUrlString(url!)) {
+                          await launchUrlString(
                             url,
+                            mode: LaunchMode.inAppWebView,
                           );
                         }
                       },
