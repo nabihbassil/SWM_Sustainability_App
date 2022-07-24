@@ -75,13 +75,16 @@ class _FactsScreenState extends State<FactsScreen> {
 
   Future fetchDatabaseList(id) async {
     dynamic resultant = await FactService().getUserTaskList(id);
-
-    setState(() {
-      userProfilesList =
-          resultant; //  <-----------  this contains all the data of facts use this with _factindex to load data *important*
-      size = userProfilesList
-          .length; //  <-----------  this contains size of the data use it to compare stuff related to size *important*
-    });
+    if (resultant == null) {
+      print('Unable to retrieve for some reason');
+    } else {
+      setState(() {
+        userProfilesList =
+            resultant; //  <-----------  this contains all the data of facts use this with _factindex to load data *important*
+        size = userProfilesList
+            .length; //  <-----------  this contains size of the data use it to compare stuff related to size *important*
+      });
+    }
     //print("size is $size  _factIndex is $_factIndex");
   }
 
