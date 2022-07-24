@@ -191,6 +191,10 @@ class UserService {
     FirebaseFirestore.instance.collection("users").doc(user?.uid).update({
       "BadgesDone": FieldValue.arrayUnion([badgeID])
     });
+    FirebaseFirestore.instance
+        .collection("badges")
+        .doc(badgeID)
+        .update({"earned": true});
   }
 
   Future<bool> updateModuleLogic(ID, isQuizDone, notDoneTasksLength) async {
