@@ -28,7 +28,7 @@ class FactService {
         .where("parentmoduleid", isEqualTo: id)
         .get();
 
-    print("qshot is ${qShot.docs.length}  id is $id");
+    //print("qshot is ${qShot.docs.length}  id is $id");
 
     return qShot.docs
         .map((doc) => Facts(
