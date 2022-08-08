@@ -17,9 +17,6 @@ class QuizService {
     List<String> allData1 = qShot.docs.map((doc) => docID = doc.id).toList();
     points = allData.elementAt(0)["ptsReward"];
 
-    print("docID $docID");
-    print("docID1 ${allData1.elementAt(0)}");
-
     return await FirebaseFirestore.instance
         .collection("quiz")
         .doc(docID)

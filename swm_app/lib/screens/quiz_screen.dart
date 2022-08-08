@@ -3,6 +3,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:swm_app/Components/answer.dart';
 
 import 'package:swm_app/page_holder.dart';
+import 'package:swm_app/screens/awareness_main.dart';
 
 import 'package:swm_app/screens/challenge_main.dart';
 
@@ -28,7 +29,9 @@ class _QuizScreenState extends State<QuizScreen> {
   bool endOfQuiz = false; //helps to define what happens at the end of the quiz
   String QuizRefID = "";
   List QuizData = []; //list where data from Firestore is stored
+  int size = 1;
   int quizPoints = 0;
+  dynamic resultant;
   int id;
   String name;
   _QuizScreenState(this.id, this.name);
@@ -51,10 +54,7 @@ class _QuizScreenState extends State<QuizScreen> {
     setState(() {
       questionIndex++;
     });
-    // calls function to define what happens at the end of the quiz
-    //if (_questionIndex >= QuizData.length) {
-    //_resetQuiz();
-    //}
+    print("index $questionIndex");
   }
 
   // function that describes what happens at the end of the quiz
@@ -74,14 +74,14 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   Future loadQuizData(id) async {
-    dynamic resultant = await QuizService().getQuizList(id);
+    resultant = await QuizService().getQuizList(id);
     if (resultant == null) {
       print('Unable to retrieve for some reason');
     } else {
       setState(() {
         QuizData = resultant;
+        size = QuizData.length;
       });
-      print("QuizData $QuizData ");
       QuizRefID = QuizData[0].parentID;
       quizPoints = QuizData[0].points;
     }
@@ -102,7 +102,7 @@ class _QuizScreenState extends State<QuizScreen> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ChallengeMain(id: id, name: name))),
+                builder: (context) => AwarenessMain(id: id, name: name))),
           ),
           actions: <Widget>[
             IconButton(
@@ -120,6 +120,7 @@ class _QuizScreenState extends State<QuizScreen> {
         body: Center(
           child: FutureBuilder(
               future: loadQuizData(id),
+              initialData: QuizData,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return const Center(child: Text('Loading...'));
@@ -136,7 +137,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         animationDuration: 5000,
                         barRadius: const Radius.circular(16),
                         lineHeight: 20,
-                        percent: ((questionIndex + 1) / QuizData.length) * 1.00,
+                        percent: (questionIndex + 1) / size,
                         backgroundColor:
                             const Color.fromARGB(255, 224, 223, 223),
                         progressColor: const Color.fromARGB(255, 11, 88, 151),
@@ -260,7 +261,12 @@ class _QuizScreenState extends State<QuizScreen> {
                                                       const EdgeInsets.all(20),
                                                   child: ElevatedButton.icon(
                                                     onPressed: () {
-                                                      _nextQuestions();
+                                                      print(
+                                                          'print1--- size $size   factindex  ${questionIndex + 1}');
+                                                      if (questionIndex <
+                                                          size) {
+                                                        _nextQuestions();
+                                                      }
                                                       Navigator.pop(context);
                                                     },
                                                     icon: const Icon(Icons
@@ -310,7 +316,13 @@ class _QuizScreenState extends State<QuizScreen> {
                                                                 quizPoints:
                                                                     quizPoints),
                                                       ));
-                                                      _nextQuestions();
+                                                      print(
+                                                          'print2--- size $size   factindex  ${questionIndex + 1}');
+                                                      if (questionIndex <
+                                                          size) {
+                                                        questionIndex--;
+                                                        _nextQuestions();
+                                                      }
                                                     },
                                                     icon: const Icon(
                                                         Icons.flag_outlined),

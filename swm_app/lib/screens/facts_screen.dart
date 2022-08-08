@@ -29,13 +29,14 @@ class _FactsScreenState extends State<FactsScreen> {
   int _factIndex = 0;
   _FactsScreenState(this._factIndex, this.id, this.name);
   List userProfilesList = [];
-  int size = 0;
+  int size = 1;
   int id;
   String name;
 
   @override
   void initState() {
     super.initState();
+    print('print1 $size');
     fetchDatabaseList(id);
   }
 
@@ -57,47 +58,32 @@ class _FactsScreenState extends State<FactsScreen> {
     });
   }
 
-  // function that describes what happens at the end of the facts
   void _resetFacts() {
     setState(() {
       _factIndex = 0;
     });
   }
 
-  //Future<int> fetchDataSize() async {
-  //var respectsQuery = FirebaseFirestore.instance
-  //  .collection('awafacts')
-  //  .where("parentmoduleid", isEqualTo: id);
-  //var querySnapshot = await respectsQuery.get();
-  //var totalEquals = querySnapshot.docs.length;
-  //return totalEquals;
-  //}
-
   Future fetchDatabaseList(id) async {
+    print('print3 $size   factindex  ${_factIndex + 1}');
     dynamic resultant = await FactService().getUserTaskList(id);
     if (resultant == null) {
       print('Unable to retrieve for some reason');
     } else {
       setState(() {
+        resultant;
         userProfilesList =
             resultant; //  <-----------  this contains all the data of facts use this with _factindex to load data *important*
         size = userProfilesList
             .length; //  <-----------  this contains size of the data use it to compare stuff related to size *important*
+
+        print('print4 $size   factindex  ${_factIndex + 1}');
       });
     }
-    //print("size is $size  _factIndex is $_factIndex");
   }
 
   @override
   Widget build(BuildContext context) {
-    //print("fact nummer $_factIndex");
-    //final Query _collectionRef = FirebaseFirestore.instance
-    //.collection('awafacts')
-    //.where("awaID", isEqualTo: _factIndex)
-    //.where("parentmoduleid",
-    //  isEqualTo:
-    //    id); //  <-----------  remove this line dont load data from here *important*
-
     return Scaffold(
         appBar: AppBar(
           title: Image.asset(
@@ -110,7 +96,7 @@ class _FactsScreenState extends State<FactsScreen> {
           iconTheme: const IconThemeData(color: Colors.black),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => () => Navigator.of(context).push(MaterialPageRoute(
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => AwarenessMain(id: id, name: name))),
           ),
           actions: <Widget>[
@@ -129,6 +115,7 @@ class _FactsScreenState extends State<FactsScreen> {
         body: SingleChildScrollView(
           child: FutureBuilder(
               future: fetchDatabaseList(id),
+              initialData: userProfilesList,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return const Center(child: Text('Loading...'));
