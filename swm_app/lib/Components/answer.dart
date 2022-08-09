@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-// button of each answer
+/* 
+  This component is used in screens/quiz_screen.dart. It's used to display each answer entry.
+
+  Inputs:
+  * answerText: contains the text of each answer.
+  * answerTap: contains answer logic.
+
+  Outputs:
+  * Answer object containg the logic and box shape of the answer.
+  
+*/
 class Answer extends StatelessWidget {
   final String answerText;
   final VoidCallback answerTap;

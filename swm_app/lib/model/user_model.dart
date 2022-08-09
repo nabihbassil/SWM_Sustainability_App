@@ -1,17 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
-  String? uid;
-  String? email;
-  String? firstName;
-  String? lastName;
-  int? points;
-  String? imgURL;
-  List? actionsDone;
-  List? ModulesDone;
-  List? ModulesInProgress;
-  List? BadgesDone;
-  List? QuizDone;
+/* 
+
+The UserModel data model is used to display retrieve user data. 
+Other than the basic user data we also get the lists[actionsDone], [ModulesDone],
+[ModulesInProgress], [BadgesDone], [QuizDone] used to track  user progress in
+different parts.
+screens/home_screen.dart (home screen), screens/levels.dart (levels page), 
+screens/profile_screen.dart (profile page), screens/hamburger_menu.dart 
+(burger menu component).
+This model is also used in the user services.
+
+*/
+  String? uid; // User ID
+  String? email; // User email
+  String? firstName; // User first name
+  String? lastName; // User last name
+  int? points; // User points
+  String? imgURL; // Path to user image in Firebase Firestorage
+  List? actionsDone; // IDs of module actions done by user
+  List? ModulesDone; // IDs of modules done by user
+  List? ModulesInProgress; // IDs of modules in progress by user
+  List? BadgesDone; // Badges won by user
+  List? QuizDone; // IDs of Quizzes done by user
 
   UserModel(
       {this.uid,

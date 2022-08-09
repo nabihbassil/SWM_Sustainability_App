@@ -1,12 +1,18 @@
 class ModuleModel {
-  String? category;
-  String? modID;
-  String? modIMG;
-  String? modName;
+/* 
+**NOT USED.**
+The ModuleModel data model is used to display info about each module.
+We ended up not using this as we altered the logic of modules.
+The logic can be found on screens/challenge_screen.dart
+*/
+  String? category; // Module category (consumption, energy)
+  String? modID; // Module ID
+  String? modIMG; // Path to module image
+  String? modName; // Module title
 
   ModuleModel({this.category, this.modID, this.modIMG, this.modName});
 
-  // receiving data from server
+//This function retrieves data from the Firebase database.
   factory ModuleModel.fromMap(map) {
     return ModuleModel(
         category: map['category'],

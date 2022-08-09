@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:swm_app/model/news_model.dart';
 import 'package:intl/intl.dart';
-import 'package:swm_app/screens/single_news.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+/* 
+  This component is used in screens/home_screen.dart and screens/news_screen.dart.
+  This Class displays a news instance displayed in the UI.
+
+  Inputs:
+  * Article data model containing data such as title, article link, description.
+
+  Outputs:
+  * Card shape containg Article model data designed nicely.
+  
+*/
 
 class ArticleCard extends StatelessWidget {
   final Article _article;
