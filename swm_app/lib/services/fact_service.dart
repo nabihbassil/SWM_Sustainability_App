@@ -2,31 +2,32 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:swm_app/model/facts_model.dart';
 
 class FactService {
-  final CollectionReference profileList =
-      FirebaseFirestore.instance.collection('awafacts');
+/* 
 
-  int counter = 0;
+The Facts Service page contains functions that link the facts page to the 
+Firebase database.
 
-  Future getFactsList(id) async {
-    List itemsList = [];
-    try {
-      await profileList.get().then((querySnapshot) {
-        for (var element in querySnapshot.docs) {
-          itemsList.add(element.data);
-        }
-      });
-      return itemsList;
-    } catch (e) {
-      print("error ${e.toString()}");
-      return null;
-    }
-  }
+*/
 
-  Future<List<Facts>> getUserTaskList(id) async {
+/* 
+  This function gets the facts related data from firebase and then adds them
+  to a list. Each index of this list contains a Facts data model containing
+  the required data.
+
+  Inputs:
+  * ID: this is the ID of the parent module (challenge) under which these facts
+      fall under
+
+  Outputs:
+  * List containing Facts objects. each index is displayed on a page controlled
+    by next and previous buttons to iterate between indexes.
+  
+*/
+  Future<List<Facts>> getUserTaskList(ID) async {
     QuerySnapshot qShot = await FirebaseFirestore.instance
         .collection('awafacts')
-        .where("parentmoduleid", isEqualTo: id)
-        .get();
+        .where("parentmoduleid", isEqualTo: ID)
+        .get(); // Firebase call to the  facts table
 
     //print("qshot is ${qShot.docs.length}  id is $id");
 
