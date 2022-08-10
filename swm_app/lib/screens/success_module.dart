@@ -1,12 +1,14 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:swm_app/model/badges_model.dart';
-import 'package:swm_app/page_holder.dart';
 
+/*
+In this page, users are congratulated for finishing a module and see their new badge
+for the first time
+ */
 class Success extends StatefulWidget {
-  int id;
+  int id; //module ID
   Success({Key? key, required this.id}) : super(key: key);
 
   @override
@@ -14,21 +16,35 @@ class Success extends StatefulWidget {
 }
 
 class _SuccessState extends State<Success> {
-  int id;
-  String modN = "";
-  String badgeN = "";
-  String badgeP = "1";
-  List modName = [''];
-  List badgeAttr = [''];
+  int id; //module ID
+  String modNane = ""; //module name
+  String badgeName = ""; //badge title
+  String badgeID = "1"; //badge ID
+  List modNameList = ['']; //List of module names
+  List badgeAttr = ['']; //List of badge category
   _SuccessState(this.id);
 
-  Future GetData() async {
+/* 
+  This method retrieves info about the new badge won
+
+  Inputs:
+  * NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * data about badge is added to the state
+  
+*/
+  Future GetSuccessData() async {
+    //get name of finished module
     QuerySnapshot qShot = await FirebaseFirestore.instance
         .collection('modules')
         .where("modID", isEqualTo: id)
         .get();
-    modName = qShot.docs.map((doc) => modN = doc.get("modName")).toList();
+    modNameList =
+        qShot.docs.map((doc) => modNane = doc.get("modNameList")).toList();
 
+    //get badge name and badge icon
     QuerySnapshot qShot1 = await FirebaseFirestore.instance
         .collection('badges')
         .where("relateModID", isEqualTo: id)
@@ -37,24 +53,25 @@ class _SuccessState extends State<Success> {
         .map((doc) => Badges(module: doc.get("name"), icon: doc.get("icon")))
         .toList();
 
-    modN = modName[0];
-    badgeN = badgeAttr[0].module;
-    badgeP = badgeAttr[0].icon;
+    modNane = modNameList[0]; //set value of module name
+    badgeName = badgeAttr[0].module; //set value of badge name
+    badgeID = badgeAttr[0].icon; //set value of module name
 
     setState(() {
-      modName;
+      modNameList;
       badgeAttr;
-      modN;
-      badgeN;
-      badgeP;
+      modNane;
+      badgeName;
+      badgeID;
     });
   }
 
+// on init, load the data related to the badge won
   @override
   void initState() {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
-    GetData();
+    GetSuccessData();
   }
 
   @override
@@ -86,12 +103,12 @@ class _SuccessState extends State<Success> {
                         const TextSpan(
                             text: 'You have successfully finished the module '),
                         TextSpan(
-                            text: "$modN.",
+                            text: "$modNane.",
                             style:
                                 const TextStyle(fontWeight: FontWeight.bold)),
                         const TextSpan(text: ' You win the badge '),
                         TextSpan(
-                            text: "$badgeN.",
+                            text: "$badgeName.",
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             )),
@@ -100,7 +117,7 @@ class _SuccessState extends State<Success> {
                   ),
                 ),
                 Image(
-                  image: AssetImage("assets/badges/badge$badgeP.png"),
+                  image: AssetImage("assets/badges/badge$badgeID.png"),
                   height: 70,
                   width: 70,
                 ),

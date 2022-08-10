@@ -8,6 +8,9 @@ import 'package:swm_app/page_holder.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+/*
+On this screen users create new accounts
+ */
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
 
@@ -29,20 +32,33 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final emailEditingController = TextEditingController();
   final passwordEditingController = TextEditingController();
   final confirmPasswordEditingController = TextEditingController();
-  File _pickedImage = File("assets/emptyprofile.png");
-  String url = '';
+  File _pickedImage =
+      File("assets/emptyprofile.png"); //image user picks as his profile photo
+  String url = ''; //url of the saved picture in firebase firestorage
 
   @override
   void dispose() {
     super.dispose();
   }
 
+//on init, the image is set as a default image in case user does not choose one
   @override
   void initState() {
     super.initState();
     _pickedImage = File("assets/emptyprofile.png");
   }
 
+  /* 
+  This method lets user use his camera to get a profile picture
+
+  Inputs:
+  NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  *picked picture is saved as a file in the state
+  
+*/
   void _pickImageCamera() async {
     final picker = ImagePicker();
     final pickedImage =
@@ -53,6 +69,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     });
   }
 
+  /* 
+  This method lets user browse his gallery and choose a picture
+
+  Inputs:
+  NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  *picked picture is saved as a file in the state
+  
+*/
   void _pickImageGallery() async {
     final picker = ImagePicker();
     final pickedImage = await picker.getImage(source: ImageSource.gallery);
@@ -62,6 +89,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     });
   }
 
+  /* 
+  This method lets user remove a chosen picture
+
+  Inputs:
+  NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  *picked picture is set back to default one
+  
+*/
   void _remove() {
     setState(() {
       _pickedImage = File("assets/emptyprofile.png");
@@ -391,6 +429,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
+/* 
+  This function checks if user is valid as he inputed all required info
+
+  Inputs:
+  * email: user input email
+  * password: user input password
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * if info is valid => move to saving data in firebase
+  
+*/
   void signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
@@ -429,14 +479,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
   }
 
+/* 
+  This function uploads user entered details to database and create a data entry
+  for him
+
+  Inputs:
+  NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * account is created in firebase
+  
+*/
   postDetailsToFirestore() async {
     // calling our firestore
-    // calling our user model
-    // sedning these values
-
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
-
+    // creating an instance of the user data model
     UserModel userModel = UserModel();
     // writing all the values
     userModel.email = user!.email;
@@ -445,24 +504,27 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     userModel.lastName = secondNameEditingController.text;
     userModel.points = 0;
 
+    //checking if picture was chosen
     if (!_pickedImage.path.contains("emptyprofile")) {
       final ref = FirebaseStorage.instance
           .ref()
           .child('usersImages')
           .child("${userModel.firstName}_${userModel.lastName}_.jpg");
-      await ref.putFile(_pickedImage);
+      await ref.putFile(_pickedImage); //saving image in firestorage
 
-      url = await ref.getDownloadURL();
+      url = await ref.getDownloadURL(); //getting link to save in Firebase
     }
 
     userModel.imgURL = url;
 
+    // sedning these values to DB
     await firebaseFirestore
         .collection("users")
         .doc(user.uid)
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account Created Successfully");
 
+//routing to home page
     Navigator.pushAndRemoveUntil(
         (context),
         MaterialPageRoute(builder: (context) => const PageHolder()),

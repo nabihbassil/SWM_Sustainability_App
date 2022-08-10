@@ -6,6 +6,11 @@ import 'package:swm_app/screens/home_screen.dart';
 import 'package:swm_app/screens/news_screen.dart';
 import 'package:swm_app/screens/profile_screen.dart';
 
+/*
+This is the main after log in screen where you can access the 4 main pages:
+home page, challenges page, articles page and profile page.
+This page is in a shape of a bottom bar menu for easy navigation
+*/
 class PageHolder extends StatefulWidget {
   const PageHolder({Key? key}) : super(key: key);
 
@@ -14,7 +19,7 @@ class PageHolder extends StatefulWidget {
 }
 
 class _PageHolderState extends State<PageHolder> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 0; //index to which page we are in currently
   @override
   void initState() {
     super.initState();
@@ -23,10 +28,10 @@ class _PageHolderState extends State<PageHolder> {
   @override
   Widget build(BuildContext context) {
     const List<Widget> _pages = <Widget>[
-      HomeScreen(),
-      ChallengeScreen(),
-      NewsScreen(),
-      ProfileScreen()
+      HomeScreen(), //home page
+      ChallengeScreen(), //modules page
+      NewsScreen(), //articles page
+      ProfileScreen() //profile page
     ];
 
     return Scaffold(
@@ -40,7 +45,8 @@ class _PageHolderState extends State<PageHolder> {
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.black),
       ),
-      drawer: const HamburgerMenu(),
+      drawer: const HamburgerMenu(), //top left hamburger menu
+      //display page of selected index based on bottom menu
       body: _pages.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
@@ -99,6 +105,7 @@ class _PageHolderState extends State<PageHolder> {
     );
   }
 
+//on click update index to clicked icon
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;

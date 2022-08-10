@@ -8,6 +8,11 @@ import 'package:swm_app/screens/levels.dart';
 import 'package:swm_app/services/user_service.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
+/*
+
+On this page, users can see their personal information, along with info such
+as badges won and info about levels with their current level
+*/
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
@@ -16,31 +21,57 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class ProfileScreenState extends State<ProfileScreen> {
+  //query of the badges page to load a sample of badges
   final Query _badgesearned = FirebaseFirestore.instance.collection('badges');
-  int points = 0;
-  int level = 0;
-  int leveltotal = 10000;
-  List _levelsList = [];
-  UserModel userData = UserModel();
+  int points = 0; //user points
+  int level = 0; //user level
+  int leveltotal = 10000; //total points of a certain level
+  List _levelsList = []; //List of available levels
+  UserModel userData = UserModel(); //instance of user data model
 
+/* 
+  This method retrieves from user services data about the logged in user
+
+  Inputs:
+  * NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * data is added to the instance of user data model added to the state
+  
+*/
   fetchUserData() async {
+    //call to retrieve data
     userData = await UserService().getUserData();
 
     setState(() {
-      userData;
-      points = userData.points!;
+      userData; //retrieved user data
+      points = userData.points!; //current user points
     });
   }
 
-  Future getLevelList() async {
-    await fetchUserData();
+/* 
+  This method retrieves the levels and their corresponding info
 
+  Inputs:
+  * NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * Set the current level of the user and display it on the interface
+  
+*/
+  Future getLevelList() async {
+    //await fetchUserData();
+
+    //database call
     var datas = await FirebaseFirestore.instance
         .collection('Levels')
         .orderBy('levelID', descending: false)
         .get();
 
-    List _levelsLst = datas.docs
+    //filling results in list
+    List _levelTempList = datas.docs
         .map((doc) => Level(
               description: doc.get("description"),
               levelID: doc.get("levelID"),
@@ -48,9 +79,10 @@ class ProfileScreenState extends State<ProfileScreen> {
             ))
         .toList();
 
+    //if user has more points than the level max points then he is next level
     int counter = 0;
-    for (var i = 0; i < _levelsLst.length; i++) {
-      if (points > _levelsLst[i].lvlpoints) {
+    for (var i = 0; i < _levelTempList.length; i++) {
+      if (points > _levelTempList[i].lvlpoints) {
         counter = counter + 1;
       } else {
         break;
@@ -58,21 +90,24 @@ class ProfileScreenState extends State<ProfileScreen> {
     }
 
     debugPrint(counter.toString());
-    int totalpts = _levelsLst[counter].lvlpoints!;
+    //set the total points of the current level
+    int totalpts = _levelTempList[counter].lvlpoints!;
 
     setState(() {
-      datas;
-      _levelsList = _levelsLst;
+      _levelsList = _levelTempList;
       level = counter + 1;
       leveltotal = totalpts;
     });
   }
 
+/*
+on init user data is fetched and then used to get levels and see which level is the user on
+*/
   @override
   void initState() {
     super.initState();
-    fetchUserData();
-    getLevelList();
+    fetchUserData(); //user data retrieval
+    getLevelList(); //get available levels
   }
 
   @override
@@ -90,6 +125,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                 height: 130.0,
                 child: CircleAvatar(
                   backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                  //if img does not exist, load a default image from the internet
                   backgroundImage: NetworkImage(userData.imgURL ??
                       "https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg"),
                 ),
@@ -115,11 +151,11 @@ class ProfileScreenState extends State<ProfileScreen> {
                   ))),
               const SizedBox(height: 15),
               GestureDetector(
+                  // on click, go to the levels page
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const Levels()));
                   },
-                  // change to navigation to awareness screen
                   child: SizedBox(
                       height: 120,
                       width: MediaQuery.of(context).size.width * 0.9,
@@ -256,6 +292,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                   ))),
               const SizedBox(height: 10),
               GestureDetector(
+                  //on click, go to the badges page.
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const Badges()));
@@ -271,6 +308,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                           child: Row(children: <Widget>[
                         const SizedBox(width: 10),
                         StreamBuilder(
+                            //load a couple of badges user has earned to encourage him to check all of them
                             stream: _badgesearned.snapshots(),
                             builder: (context,
                                 AsyncSnapshot<QuerySnapshot> snapshot) {

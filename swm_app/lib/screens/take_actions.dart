@@ -5,6 +5,10 @@ import 'package:swm_app/page_holder.dart';
 import 'package:swm_app/screens/single_action.dart';
 import 'package:swm_app/services/user_service.dart';
 
+/*
+On this screen, users can see what actions they can do to be more sustainable
+ */
+
 class TakeAction extends StatefulWidget {
   int id;
   TakeAction({Key? key, required this.id}) : super(key: key);
@@ -14,17 +18,41 @@ class TakeAction extends StatefulWidget {
 }
 
 class _TakeActionState extends State<TakeAction> {
-  int id;
+  int id; //module id
   _TakeActionState(this.id);
-  var ActDone;
-  List L1 = ['0'];
-  List L2 = ['0'];
+  List listActionsToDo = ['0']; //list of IDs of actions not done
+  List listActionsDone = ['0']; //list of IDs of actions  done
 
   @override
   void dispose() {
     super.dispose();
   }
 
+/* 
+  This function returns a List of all completed actions IDs from the user
+
+  Inputs:
+  *id: module id
+
+  Outputs:
+  * List of of action IDs completed and not completed saved in the state
+  
+*/
+  GetActionDone(id) async {
+    //call the user services to retrieve data
+    await UserService()
+        .GetAllActionDone()
+        .then((value) => listActionsToDo = value);
+    listActionsDone = listActionsToDo;
+    if (mounted) {
+      setState(() {
+        listActionsToDo;
+        listActionsDone;
+      });
+    }
+  }
+
+//on init we get all actions done to make the two lists
   @override
   void initState() {
     super.initState();
@@ -32,20 +60,9 @@ class _TakeActionState extends State<TakeAction> {
     GetActionDone(id);
   }
 
-  GetActionDone(id) async {
-    await UserService().GetAllActionDone().then((value) => L1 = value);
-    L2 = L1;
-    if (mounted) {
-      setState(() {
-        L1;
-        L2;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    GetActionDone(id);
+    GetActionDone(id); //not necessary anymore
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
@@ -59,7 +76,7 @@ class _TakeActionState extends State<TakeAction> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
-        ),
+        ), //navigate to previous screen
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -69,7 +86,7 @@ class _TakeActionState extends State<TakeAction> {
             onPressed: () {
               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => const PageHolder()));
-            },
+            }, //navigate to home screen
           )
         ],
       ),
@@ -116,12 +133,13 @@ class _TakeActionState extends State<TakeAction> {
                                   height: 240,
                                   padding: const EdgeInsets.only(bottom: 20),
                                   child: (FutureBuilder(
+                                      //load all actions that are not in the list of IDs of actions done
                                       future: FirebaseFirestore.instance
                                           .collection('takeactions')
                                           .where("parentmoduleid",
                                               isEqualTo: id)
                                           .where(FieldPath.documentId,
-                                              whereNotIn: L1)
+                                              whereNotIn: listActionsToDo)
                                           .get(),
                                       builder: (context,
                                           AsyncSnapshot<QuerySnapshot>
@@ -130,8 +148,7 @@ class _TakeActionState extends State<TakeAction> {
                                           return const Center(
                                               child: Text('Loading...'));
                                         }
-                                        // If there is no data then return the line "Good job on completing all the actions for this challenge! \n Review the actions in the Actions Completed section below or check out some other challenges!"
-                                        // Or collapse expansion tile if no data setState(() {expansionTile.currentState.collapse();}
+                                        // If there is no data then return the line "Good job on completing all the actions for this challenge!
                                         return Column(children: [
                                           Expanded(
                                               child: ListView(
@@ -190,7 +207,7 @@ class _TakeActionState extends State<TakeAction> {
                                                                               id: item.reference.id,
                                                                               modID: id,
                                                                             )));
-                                                              },
+                                                              }, //navigate to see more info about the action
                                                               child: Column(
                                                                 children: [
                                                                   Row(
@@ -301,12 +318,13 @@ class _TakeActionState extends State<TakeAction> {
                                     height: 300,
                                     padding: const EdgeInsets.only(bottom: 20),
                                     child: (FutureBuilder(
+                                        //load all actions that are in the list of IDs of actions done
                                         future: FirebaseFirestore.instance
                                             .collection('takeactions')
                                             .where("parentmoduleid",
                                                 isEqualTo: id)
                                             .where(FieldPath.documentId,
-                                                whereIn: L2)
+                                                whereIn: listActionsDone)
                                             .get(),
                                         builder: (context,
                                             AsyncSnapshot<QuerySnapshot>
@@ -369,7 +387,7 @@ class _TakeActionState extends State<TakeAction> {
                                                                           modID:
                                                                               id,
                                                                         )));
-                                                      },
+                                                      }, //navigate to see more info about the action
                                                       child: Text(
                                                         item1['actiontitle'],
                                                         style: const TextStyle(

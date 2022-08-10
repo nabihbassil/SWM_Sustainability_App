@@ -5,6 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:swm_app/services/user_service.dart';
 import 'package:swm_app/model/user_model.dart';
 
+/* 
+  This screen is the levels page of the app where users can see what users can win
+  in donations from each level completed
+  
+*/
 class Levels extends StatefulWidget {
   const Levels({Key? key}) : super(key: key);
 
@@ -13,30 +18,55 @@ class Levels extends StatefulWidget {
 }
 
 class _LevelsState extends State<Levels> {
-  List _levelsList = [];
+  List _levelsList = []; //list of levels available
 
-  int points = 0;
-  int level = 0;
-  int leveltotal = 10000;
-  UserModel userData = UserModel();
+  int points = 0; //user points
+  int level = 0; //user level
+  int leveltotal = 10000; //total points of a certain level
+  UserModel userData = UserModel(); //instance of user data model
 
+/* 
+  This method retrieves from user services data about the logged in user
+
+  Inputs:
+  * NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * data is added to the instance of user data model added to the state
+  
+*/
   fetchUserData() async {
+    //call to retrieve data
     userData = await UserService().getUserData();
 
     setState(() {
-      userData;
-      points = userData.points!;
+      userData; //retrieved user data
+      points = userData.points!; //current user points
     });
   }
 
-  Future getLevelList() async {
-    await fetchUserData();
+/* 
+  This method retrieves the levels and their corresponding info
 
+  Inputs:
+  * NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * Set the current level of the user and display it on the interface
+  
+*/
+  Future getLevelList() async {
+    // await fetchUserData();
+
+    //database call
     var datas = await FirebaseFirestore.instance
         .collection('Levels')
         .orderBy('levelID', descending: false)
         .get();
 
+    //filling results in list
     List _levelsLst = datas.docs
         .map((doc) => Level(
               description: doc.get("description"),
@@ -45,6 +75,7 @@ class _LevelsState extends State<Levels> {
             ))
         .toList();
 
+    //if user has more points than the level max points then he is next level
     int counter = 0;
     for (var i = 0; i < _levelsLst.length; i++) {
       if (points > _levelsLst[i].lvlpoints) {
@@ -55,6 +86,7 @@ class _LevelsState extends State<Levels> {
     }
 
     debugPrint(counter.toString());
+    //set the total points of the current level
     int totalpts = _levelsLst[counter].lvlpoints!;
 
     setState(() {
@@ -65,11 +97,14 @@ class _LevelsState extends State<Levels> {
     });
   }
 
+/*
+On init, we fetch user data and then based on that load the levels and deduce the user's current level
+*/
   @override
   void initState() {
     super.initState();
-    fetchUserData();
-    getLevelList();
+    fetchUserData(); //get user data
+    getLevelList(); //get levels
   }
 
   @override
@@ -97,6 +132,7 @@ class _LevelsState extends State<Levels> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                //if user is on level 1
                 if (points <= 1000) ...[
                   const Text(
                     "Levels Overview",
@@ -122,6 +158,7 @@ class _LevelsState extends State<Levels> {
                   Container(
                       width: 350,
                       color: const Color.fromARGB(255, 255, 255, 255),
+                      //info about level 1
                       child: const Text(
                         'Our points reflects the knowledge you have gained for a better understanding of sustainability as well as your individual actions towards a more sustainable lifestyle.\n\n Your points are accumulated and help you to reach certain levels. For each you level you receive an award. Scroll down to see what each level might offer.       ',
                         style: TextStyle(
@@ -337,6 +374,7 @@ class _LevelsState extends State<Levels> {
                     ),
                   ),
                 ] else ...[
+                  //level 2 description
                   if (points <= 2500) ...[
                     const Text(
                       "Levels Overview",
@@ -362,6 +400,7 @@ class _LevelsState extends State<Levels> {
                     Container(
                         width: 350,
                         color: const Color.fromARGB(255, 255, 255, 255),
+                        //description of level 2
                         child: const Text(
                           'Our points reflects the knowledge you have gained for a better understanding of sustainability as well as your individual actions towards a more sustainable lifestyle.\n\n Your points are accumulated and help you to reach certain levels. For each you level you receive an award. Scroll down to see what each level might offer.       ',
                           style: TextStyle(
@@ -581,6 +620,7 @@ class _LevelsState extends State<Levels> {
                       ),
                     ),
                   ] else ...[
+                    //level 3
                     const Text(
                       "Levels Overview",
                       style: TextStyle(
@@ -605,6 +645,7 @@ class _LevelsState extends State<Levels> {
                     Container(
                         width: 350,
                         color: const Color.fromARGB(255, 255, 255, 255),
+                        //info about level 3
                         child: const Text(
                           'Our points reflects the knowledge you have gained for a better understanding of sustainability as well as your individual actions towards a more sustainable lifestyle.\n\n Your points are accumulated and help you to reach certain levels. For each you level you receive an award. Scroll down to see what each level might offer.       ',
                           style: TextStyle(

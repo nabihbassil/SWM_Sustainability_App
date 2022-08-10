@@ -4,6 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+/*
+Here the user logs in to his account
+*/
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -19,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  // firebase
+  // firebase authentication
   final _auth = FirebaseAuth.instance;
 
   // string for displaying the error Message
@@ -160,7 +163,18 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // login function
+/* 
+  This function checks if user is valid and if so re-routes them to the main page
+
+  Inputs:
+  * email: user input email
+  * password: user input password
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * if account exists => logged, does not exist => not logged in
+  
+*/
   void signIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {

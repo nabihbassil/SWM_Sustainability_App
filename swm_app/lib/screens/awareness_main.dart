@@ -5,7 +5,7 @@ import 'package:swm_app/screens/facts_screen.dart';
 import 'package:swm_app/screens/quiz_screen.dart';
 
 class AwarenessMain extends StatelessWidget {
-  /* 
+/* 
   This screen is the transfer page where you choose to either read facts about
   a module or do the quiz
   

@@ -9,9 +9,12 @@ import 'package:swm_app/services/user_service.dart';
 import "package:url_launcher/url_launcher.dart";
 import 'package:url_launcher/url_launcher_string.dart';
 
+/* 
+On this screen, users can see how to complete the action and complete it
+*/
 class SingleActionScreen extends StatefulWidget {
-  String id;
-  int modID;
+  String id; //reference ID of the actino
+  int modID; //module ID
   SingleActionScreen({Key? key, required this.id, required this.modID})
       : super(key: key);
 
@@ -21,45 +24,80 @@ class SingleActionScreen extends StatefulWidget {
 }
 
 class _SingleActionScreenState extends State<SingleActionScreen> {
-  String id;
-  int modID;
+  String id; //reference ID of the actino
+  int modID; //module ID
   _SingleActionScreenState(this.id, this.modID);
-  late bool _isButtonDisabled;
-  var _isActionDone = false;
+  late bool _isButtonDisabled; //disable complete button if already completed
+  var _isActionDone = false; //check if action was already done before
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsFlutterBinding.ensureInitialized();
-    _isButtonDisabled = false;
-    CheckActionDone(id);
-  }
+/* 
+  This method disables the complete button
 
+  Inputs:
+  * NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * boolean to disable button is saved in the state
+  
+*/
   void _DisableButton() {
     setState(() {
       _isButtonDisabled = true;
     });
   }
 
+/* 
+  This method updates user point after completing action
+
+  Inputs:
+  * points: amount of points won
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * user point tally is updated
+  
+*/
   UpdateUserPoints(points) {
+    //call user services to update database
     UserService().UpdatePoints(points);
   }
 
-  UpdateActionDone(ID, modID) async {
-    List LTasks = ['0'];
-    bool isQuizDone = false;
-    int notDoneLength = -1;
-    bool finished = false;
+/* 
+  This method add the action ID to the user's actions done list
 
-    UserService().UpdateActionDone(ID);
-    LTasks =
-        await UserService().GetAllActionDone().then((value) => LTasks = value);
+  Inputs:
+  * ID: reference ID of the action
+  * modID: module ID
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * action added is done list of user
+  * check if whole module is done and award badge to user
+  
+*/
+  UpdateActionDone(ID, modID) async {
+    List DoneTasks = ['0']; //list of action IDs done by user
+    bool isQuizDone = false; //is the module quiz done
+    int notDoneLength = -1; //length of list of action IDs not done
+    bool finished = false; //is module done
+
+    UserService().UpdateActionDone(ID); //update user list of action IDs done
+
+    //gets the list of actions done to see if the whole module is done
+    DoneTasks = await UserService()
+        .GetAllActionDone()
+        .then((value) => DoneTasks = value);
+    //check if the module quiz is done
     isQuizDone = await UserService().GetIfQuizDone(modID);
-    notDoneLength = await UserService().GetSizeofToDoTasks(modID, LTasks);
+    //gets number of actions not done. 0 = all actions have been done
+    notDoneLength = await UserService().GetSizeofToDoTasks(modID, DoneTasks);
+    //check if the whole module has been finished (complete quiz and all actions)
     finished =
         await UserService().updateModuleLogic(modID, isQuizDone, notDoneLength);
 
     if (finished == true) {
+      //module is finished, wait one second and navigate to congrats page
       var future = new Future.delayed(
           const Duration(seconds: 1),
           (() => Navigator.push(context,
@@ -67,7 +105,19 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
     }
   }
 
+/* 
+  This method checks if action ID already exists for user then it has been done before
+
+  Inputs:
+  * ID: reference ID of the action
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * boolean if action was done before is saved in the state
+  
+*/
   CheckActionDone(ID) async {
+    //call user services to retrieve data
     await UserService()
         .CheckActionDone(ID)
         .then((value) => _isActionDone = value);
@@ -79,9 +129,21 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
     }
   }
 
+/*on init we check if we should disable the button on page load so the user can't win
+duplicate points anymore */
+  @override
+  void initState() {
+    super.initState();
+    WidgetsFlutterBinding.ensureInitialized();
+    _isButtonDisabled = false;
+    CheckActionDone(id);
+  }
+
   @override
   Widget build(BuildContext context) {
-    CheckActionDone(id);
+    CheckActionDone(id); //not necessary anymore
+
+    //get data about action
     final Query _collectionRef = FirebaseFirestore.instance
         .collection('takeactions')
         .where(FieldPath.documentId, isEqualTo: id);
@@ -120,6 +182,7 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
               if (!snapshot.hasData) {
                 return const Center(child: Text('Loading...'));
               }
+              //display action data
               return ListView(
                 children: snapshot.data!.docs.map((item) {
                   return SingleChildScrollView(
@@ -150,13 +213,16 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                           SizedBox(
                               width: double.infinity,
                               child: Html(
+                                  //display HTML data to customize text (bold, links, etc...)
                                   data: item['actioncontent'],
                                   onLinkTap: (url, _, __, ___) async {
+                                    //make links clickable and open browser
                                     if (await canLaunchUrlString(url!)) {
                                       await launchUrlString(url,
                                           mode: LaunchMode.inAppWebView);
                                     }
                                   },
+                                  //CSS like styling for tags
                                   style: {
                                     "p": Style(
                                         color: Color.fromARGB(255, 48, 48, 48),
@@ -166,6 +232,7 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
                           Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+                                //should the button be disabled or not
                                 !_isActionDone
                                     ? ElevatedButton(
                                         style: ElevatedButton.styleFrom(

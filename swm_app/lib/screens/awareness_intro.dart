@@ -5,9 +5,9 @@ import 'package:swm_app/screens/challenge_main.dart';
 
 class AwarenessIntro extends StatelessWidget {
 /* 
-  This screen is the introduction screen that shows a quick interesting fact
-  about the module which hopefully intrigues the user to dive deeper in the 
-  subject
+  This screen is the introduction screen to the awareness section
+  that shows a quick interesting fact about the module which hopefully 
+  intrigues the user to dive deeper in the subject
   
   id and name params are passed through this page to other pages down the line
   to skip having to call the database just to retrieve the name of a module
@@ -54,7 +54,7 @@ class AwarenessIntro extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => AwarenessMain(id: id, name: name)));
-                }, //takes you to next page
+                }, //takes you to main awareness page
                 child: Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(

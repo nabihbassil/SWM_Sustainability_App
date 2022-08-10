@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:swm_app/screens/login_screen.dart';
 
+/*
+This is the first screen the user encounters when he launcehs the app. Here
+he can see the SWM logo and a nice message. 
+*/
+
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
 
@@ -9,16 +14,27 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-  @override
-  void initState() {
-    super.initState();
-    _navigatetologin();
-  }
+  /* 
+  This method re-routes user to login page after a short delay to display animation
 
+  Inputs:
+  * NO INPUT
+
+  Outputs:
+  * NO OUTPUT
+  
+*/
   _navigatetologin() async {
     await Future.delayed(const Duration(milliseconds: 2000), () {});
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: ((context) => const LoginScreen())));
+  }
+
+/*On init, function to re-route is called */
+  @override
+  void initState() {
+    super.initState();
+    _navigatetologin();
   }
 
   @override
@@ -43,6 +59,7 @@ class _SplashState extends State<Splash> {
                                 )),
                             SizedBox(
                                 height: 170,
+                                //animated gif
                                 child: Image.asset(
                                   'assets/earth.gif',
                                   fit: BoxFit.contain,

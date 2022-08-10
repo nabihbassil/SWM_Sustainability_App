@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:swm_app/Components/answer.dart';
-
 import 'package:swm_app/page_holder.dart';
 import 'package:swm_app/screens/awareness_main.dart';
-
-import 'package:swm_app/screens/challenge_main.dart';
-
 import 'package:swm_app/screens/quiz_finished.dart';
 import 'package:swm_app/services/quiz_services.dart';
 
+/* 
+  This screen is where the users conduct the quiz about a module
+  
+*/
 class QuizScreen extends StatefulWidget {
-  int id;
-  String name;
+  int id; //module id
+  String name; //module name
   QuizScreen({Key? key, required this.id, required this.name})
       : super(key: key);
 
@@ -27,19 +27,30 @@ class _QuizScreenState extends State<QuizScreen> {
   bool answerScore = false; //defines wether selected answer is right or wrong
   int totalScore = 0; // tracks the score
   bool endOfQuiz = false; //helps to define what happens at the end of the quiz
-  String QuizRefID = "";
+  String QuizRefID = ""; //reference ID of the quiz
   List QuizData = []; //list where data from Firestore is stored
-  int size = 1;
-  int quizPoints = 0;
-  dynamic resultant;
-  int id;
-  String name;
+  int size = 1; //size of list of quiz data
+  int quizPoints = 0; //number of points achieved if pass
+  int id; //module id
+  String name; //module name
   _QuizScreenState(this.id, this.name);
 
-  // function that defines what happens when answer was selected
-  void _questionAnswered(bool answerscore) {
+/* 
+  This method defines what happens when answer was selected
+
+  Inputs:
+  * answerResult: was the answer correct or not
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * if correct add 1 point. 
+  *if this is the end of the quiz turn end flag to true
+  
+*/
+
+  void _questionAnswered(bool answerResult) {
     setState(() {
-      if (answerScore) {
+      if (answerResult) {
         totalScore++;
       }
       // when the quiz ends
@@ -49,41 +60,73 @@ class _QuizScreenState extends State<QuizScreen> {
     });
   }
 
-  // function that describes what happens when you click on next question button
+  /* 
+  This method describes what happens when you click on next question button
+
+  Inputs:
+  NO INPUT
+
+  Outputs:
+  * increment index checking array indices by 1
+  
+*/
   void _nextQuestions() {
     setState(() {
       questionIndex++;
     });
   }
 
-  // function that describes what happens at the end of the quiz
+  /* 
+  This method describes what happens at the end of the quiz
+
+  Inputs:
+  NO INPUT
+
+  Outputs:
+  * increment index checking array indices by 1
+  
+*/
   void _resetQuiz() {
     setState(() {
-      questionIndex = 0;
-      totalScore = 0;
-      endOfQuiz = false;
+      questionIndex = 0; //index checking indices is back to 0
+      totalScore = 0; //score is back to 0
+      endOfQuiz = false; //end flag is false again
     });
   }
 
-  // getting data from firebase
-  @override
-  void initState() {
-    super.initState();
-    loadQuizData(id);
-  }
+  /* 
+  This method loads the quiz data of a certain module
 
+  Inputs:
+  *id: quiz id
+
+  Outputs:
+  * NO RETURN OUTPUT
+  *quiz data is saved in a list which is saved in the state
+  *size of that list is also saved in the state
+  
+*/
   Future loadQuizData(id) async {
-    resultant = await QuizService().getQuizList(id);
+    //retrieve data from quiz services
+    dynamic resultant = await QuizService().getQuizList(id);
     if (resultant == null) {
       print('Unable to retrieve for some reason');
     } else {
       setState(() {
-        QuizData = resultant;
-        size = QuizData.length;
+        QuizData = resultant; // List of quiz data
+        size = QuizData.length; //size of the list
       });
-      QuizRefID = QuizData[0].parentID;
-      quizPoints = QuizData[0].points;
+      QuizRefID =
+          QuizData[0].parentID; //reference id of the quiz entry in firebase
+      quizPoints = QuizData[0].points; //points gained if passed
     }
+  }
+
+  // on init, data is retrieved from firebase
+  @override
+  void initState() {
+    super.initState();
+    loadQuizData(id);
   }
 
   @override

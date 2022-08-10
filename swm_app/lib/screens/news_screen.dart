@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:flutter/material.dart';
 import 'package:swm_app/Components/singlearticle.dart';
 import 'package:swm_app/model/news_model.dart';
 
+/*
+On this page, users see a list of all available articles to read. On click, the
+user's browser is open where they can read the article from it's source.
+*/
 class NewsScreen extends StatefulWidget {
   const NewsScreen({Key? key}) : super(key: key);
 
@@ -19,6 +22,28 @@ class _NewsScreenState extends State<NewsScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     getNewsList();
+  }
+
+/* 
+  This method retrieves the articles from the database
+
+  Inputs:
+  * NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * Set the news list in the state
+  
+*/
+  Future getNewsList() async {
+    var data = await FirebaseFirestore.instance
+        .collection('news')
+        .orderBy('date', descending: true)
+        .get();
+
+    setState(() {
+      _newsList = List.from(data.docs.map((doc) => Article.fromSnapshot(doc)));
+    });
   }
 
   @override
@@ -56,16 +81,5 @@ class _NewsScreenState extends State<NewsScreen> {
         ),
       ),
     );
-  }
-
-  Future getNewsList() async {
-    var data = await FirebaseFirestore.instance
-        .collection('news')
-        .orderBy('date', descending: true)
-        .get();
-
-    setState(() {
-      _newsList = List.from(data.docs.map((doc) => Article.fromSnapshot(doc)));
-    });
   }
 }

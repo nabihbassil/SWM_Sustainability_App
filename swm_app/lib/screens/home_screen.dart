@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:flutter/material.dart';
 import 'package:swm_app/Components/singlearticle.dart';
 import 'package:swm_app/model/levels_model.dart';
@@ -11,6 +10,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:swm_app/services/user_service.dart';
 
+/* 
+  This screen is the Home page of the app where users see the most important info
+  such as their current challenges, current level and newest articles posted
+  
+*/
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -19,34 +24,59 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Object> _newsList = [];
-  List _levelsList = [];
+  List<Object> _newsList = []; //List of newest articles
+  List _levelsList = []; //List of levels and their description
 
-  int points = 0;
-  int level = 0;
-  int leveltotal = 10000;
+  int points = 0; //user points
+  int level = 0; //user current level
+  int leveltotal = 10000; //total number of points of a certain level
 
-  List LProgress = ['0'];
-  UserModel userData = UserModel();
+  List currentModules = ['0']; //list of modules in progress IDs
+  UserModel userData = UserModel(); //instance of user data model
 
+/* 
+  This method retrieves from user services data about the logged in user
+
+  Inputs:
+  * NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * data is added to the instance of user data model added to the state
+  
+*/
   fetchUserData() async {
+    //call to retrieve data
     userData = await UserService().getUserData();
 
     setState(() {
-      userData;
-      points = userData.points!;
+      userData; //retrieved user data
+      points = userData.points!; //current user points
     });
   }
 
-  Future getLevelList() async {
-    await fetchUserData();
+/* 
+  This method retrieves the levels and their corresponding info
 
+  Inputs:
+  * NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * Set the current level of the user and display it on the interface
+  
+*/
+  Future getLevelList() async {
+    //await fetchUserData();
+
+    //database call
     var datas = await FirebaseFirestore.instance
         .collection('Levels')
         .orderBy('levelID', descending: false)
         .get();
 
-    List _levelsLst = datas.docs
+    //filling results in list
+    List _levelTempList = datas.docs
         .map((doc) => Level(
               description: doc.get("description"),
               levelID: doc.get("levelID"),
@@ -54,9 +84,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ))
         .toList();
 
+    //if user has more points than the level max points then he is next level
     int counter = 0;
-    for (var i = 0; i < _levelsLst.length; i++) {
-      if (points > _levelsLst[i].lvlpoints) {
+    for (var i = 0; i < _levelTempList.length; i++) {
+      if (points > _levelTempList[i].lvlpoints) {
         counter = counter + 1;
       } else {
         break;
@@ -64,36 +95,74 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     debugPrint(counter.toString());
-    int totalpts = _levelsLst[counter].lvlpoints!;
+    //set the total points of the current level
+    int totalpts = _levelTempList[counter].lvlpoints!;
 
     setState(() {
-      datas;
-      _levelsList = _levelsLst;
+      _levelsList = _levelTempList;
       level = counter + 1;
       leveltotal = totalpts;
     });
   }
 
+/* 
+  This method retrieves the modules that are in progress
+
+  Inputs:
+  * NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * Set the current modules list of the user in the state
+  
+*/
   GetAllModulesInProgress() async {
+    //connect with the user service to retrieve data
     await UserService()
         .GetAllModulesInProgress()
-        .then((value) => LProgress = value);
+        .then((value) => currentModules = value);
 
     if (mounted) {
       setState(() {
-        LProgress;
+        currentModules;
       });
     }
   }
 
+/* 
+  This method retrieves the articles from the database
+
+  Inputs:
+  * NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * Set the news list in the state
+  
+*/
+  Future getNewsList() async {
+    var data = await FirebaseFirestore.instance
+        .collection('news')
+        .orderBy('date', descending: true)
+        .get();
+
+    setState(() {
+      _newsList = List.from(data.docs.map((doc) => Article.fromSnapshot(doc)));
+    });
+  }
+
+/*
+On init all the different components are loaded like info about new articles,
+current level, in progress modules and getting the user data to be able to perform
+all previously mentioned tasks
+ */
   @override
   void initState() {
     super.initState();
-
-    getNewsList();
-    fetchUserData();
-    GetAllModulesInProgress();
-    getLevelList();
+    fetchUserData(); //retrieve user data
+    getNewsList(); //retrieve recent articles
+    GetAllModulesInProgress(); //retrieve in progress modules IDs
+    getLevelList(); //retrieve current level and info
     WidgetsFlutterBinding.ensureInitialized();
   }
 
@@ -123,17 +192,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: MediaQuery.of(context).size.width,
                   height: 120,
                   child: FutureBuilder(
+                      //load module data based of IDs of modules in progress from the user
                       future: FirebaseFirestore.instance
                           .collection('modules')
-                          .where("modID", whereIn: LProgress)
+                          .where("modID", whereIn: currentModules)
                           .get(),
                       builder:
                           (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                         if (!snapshot.hasData) {
                           return const Center(child: Text('Loading...'));
                         }
-
-                        if (LProgress.length == 1) {
+                        /*
+                              to avoid 0 and null and errors 1 is the new
+                               empty meaning when length == 1 then its empty
+                               display nice message
+                               */
+                        if (currentModules.length == 1) {
                           return Expanded(
                               child: Container(
                                   height: 100,
@@ -162,6 +236,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ]))));
                         } else {
+                          //else populate modules with the interface
                           return Expanded(
                               child: ListView(
                             shrinkWrap: false,
@@ -271,6 +346,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 200,
                   child: Expanded(
                       child: ListView.builder(
+                    //display new articles
                     shrinkWrap: false,
                     scrollDirection: Axis.horizontal,
                     itemCount: _newsList.length,
@@ -291,12 +367,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   )),
               const SizedBox(height: 15),
+              //display current level and on click take you to the levels page
               GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const Levels()));
                   },
-                  // change to navigation to awareness screen
                   child: SizedBox(
                       height: 120,
                       width: MediaQuery.of(context).size.width * 0.9,
@@ -414,16 +490,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }
-
-  Future getNewsList() async {
-    var data = await FirebaseFirestore.instance
-        .collection('news')
-        .orderBy('date', descending: true)
-        .get();
-
-    setState(() {
-      _newsList = List.from(data.docs.map((doc) => Article.fromSnapshot(doc)));
-    });
   }
 }
