@@ -312,8 +312,6 @@ class _TakeActionState extends State<TakeAction> {
                                             AsyncSnapshot<QuerySnapshot>
                                                 snapshot1) {
                                           if (!snapshot1.hasData) {
-                                            print("snaps");
-
                                             return const Center(
                                                 child: Text('Loading...'));
                                           }

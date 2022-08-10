@@ -23,15 +23,11 @@ class _SuccessState extends State<Success> {
   _SuccessState(this.id);
 
   Future GetData() async {
-    print("id $id");
-
     QuerySnapshot qShot = await FirebaseFirestore.instance
         .collection('modules')
         .where("modID", isEqualTo: id)
         .get();
     modName = qShot.docs.map((doc) => modN = doc.get("modName")).toList();
-
-    print("module ${modName[0]}");
 
     QuerySnapshot qShot1 = await FirebaseFirestore.instance
         .collection('badges')

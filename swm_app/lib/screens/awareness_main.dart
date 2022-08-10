@@ -5,8 +5,15 @@ import 'package:swm_app/screens/facts_screen.dart';
 import 'package:swm_app/screens/quiz_screen.dart';
 
 class AwarenessMain extends StatelessWidget {
-  String name;
-  int id;
+  /* 
+  This screen is the transfer page where you choose to either read facts about
+  a module or do the quiz
+  
+  id and name params are passed through this page to other pages down the line
+  to skip having to call the database just to retrieve the name of a module
+*/
+  String name; //module name
+  int id; //module ID
   AwarenessMain({Key? key, required this.id, required this.name})
       : super(key: key);
 
@@ -26,7 +33,7 @@ class AwarenessMain extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => AwarenessIntro(id: id, name: name))),
-        ),
+        ), //takes you back to previous page
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -36,7 +43,7 @@ class AwarenessMain extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => const PageHolder()));
-            },
+            }, //takes you back to home page
           )
         ],
       ),
@@ -65,7 +72,7 @@ class AwarenessMain extends StatelessWidget {
                         builder: (context) =>
                             FactsScreen(index: 0, id: id, name: name)));
                   },
-                  // change to navigation to awareness screen
+                  // change to navigation to facts screen
                   child: SizedBox(
                       height: 150,
                       child: Image.asset(
@@ -90,7 +97,7 @@ class AwarenessMain extends StatelessWidget {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => QuizScreen(id: id, name: name)));
                   },
-                  // change to navigation to tasks screen
+                  // change to navigation to quiz screen
                   child: SizedBox(
                       height: 150,
                       child: Image.asset(

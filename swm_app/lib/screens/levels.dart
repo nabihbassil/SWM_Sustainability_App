@@ -31,14 +31,12 @@ class _LevelsState extends State<Levels> {
 
   Future getLevelList() async {
     await fetchUserData();
-    print("p1");
 
     var datas = await FirebaseFirestore.instance
         .collection('Levels')
         .orderBy('levelID', descending: false)
         .get();
 
-    print("p2");
     List _levelsLst = datas.docs
         .map((doc) => Level(
               description: doc.get("description"),
@@ -46,8 +44,6 @@ class _LevelsState extends State<Levels> {
               lvlpoints: doc.get("lvlpoints"),
             ))
         .toList();
-
-    print("p3 $_levelsLst");
 
     int counter = 0;
     for (var i = 0; i < _levelsLst.length; i++) {
@@ -57,12 +53,9 @@ class _LevelsState extends State<Levels> {
         break;
       }
     }
-    print("p4 $counter");
 
     debugPrint(counter.toString());
     int totalpts = _levelsLst[counter].lvlpoints!;
-
-    print("p5 $totalpts");
 
     setState(() {
       datas;

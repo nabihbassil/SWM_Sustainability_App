@@ -54,7 +54,6 @@ class _QuizScreenState extends State<QuizScreen> {
     setState(() {
       questionIndex++;
     });
-    print("index $questionIndex");
   }
 
   // function that describes what happens at the end of the quiz
@@ -261,8 +260,6 @@ class _QuizScreenState extends State<QuizScreen> {
                                                       const EdgeInsets.all(20),
                                                   child: ElevatedButton.icon(
                                                     onPressed: () {
-                                                      print(
-                                                          'print1--- size $size   factindex  ${questionIndex + 1}');
                                                       if (questionIndex <
                                                           size) {
                                                         _nextQuestions();
@@ -316,8 +313,6 @@ class _QuizScreenState extends State<QuizScreen> {
                                                                 quizPoints:
                                                                     quizPoints),
                                                       ));
-                                                      print(
-                                                          'print2--- size $size   factindex  ${questionIndex + 1}');
                                                       if (questionIndex <
                                                           size) {
                                                         questionIndex--;

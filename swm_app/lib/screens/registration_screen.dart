@@ -159,11 +159,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         validator: (value) {
           RegExp regex = RegExp(r'^.{6,}$');
           if (value!.isEmpty) {
-            print("wazdis");
             return ("Password is required for login");
           }
           if (!regex.hasMatch(value)) {
-            print("wazdis222");
             return ("Enter Valid Password(Min. 6 Character)");
           }
           return null;
@@ -297,8 +295,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                                   children: const [
                                                     Padding(
                                                       padding:
-                                                          EdgeInsets.all(
-                                                              8.0),
+                                                          EdgeInsets.all(8.0),
                                                       child: Icon(
                                                         Icons.camera,
                                                         color: Colors.green,
@@ -322,8 +319,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                                   children: const [
                                                     Padding(
                                                       padding:
-                                                          EdgeInsets.all(
-                                                              8.0),
+                                                          EdgeInsets.all(8.0),
                                                       child: Icon(
                                                         Icons.image,
                                                         color: Colors.green,
@@ -347,8 +343,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                                   children: const [
                                                     Padding(
                                                       padding:
-                                                          EdgeInsets.all(
-                                                              8.0),
+                                                          EdgeInsets.all(8.0),
                                                       child: Icon(
                                                         Icons.remove_circle,
                                                         color: Colors.red,
@@ -450,10 +445,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     userModel.lastName = secondNameEditingController.text;
     userModel.points = 0;
 
-    print("p1");
-
-    print("_pickedImage is ${_pickedImage.path}");
-
     if (!_pickedImage.path.contains("emptyprofile")) {
       final ref = FirebaseStorage.instance
           .ref()
@@ -461,14 +452,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           .child("${userModel.firstName}_${userModel.lastName}_.jpg");
       await ref.putFile(_pickedImage);
 
-      print("ref is $ref");
-
       url = await ref.getDownloadURL();
     }
-//   gs://swm-app-de721.appspot.com/usersImages/emptyprofile.png
-//   https://firebasestorage.googleapis.com/v0/b/swm-app-de721.appspot.com/o/usersImages%2Fqqwe_qweqeqw_.jpg?alt=media&token=6ec6dccf-2086-44ed-856b-2efbeacfbdeb
-
-    print(url);
 
     userModel.imgURL = url;
 

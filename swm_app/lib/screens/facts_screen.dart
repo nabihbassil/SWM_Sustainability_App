@@ -1,56 +1,81 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-
 import 'package:swm_app/page_holder.dart';
 import 'package:swm_app/screens/awareness_main.dart';
-
-import 'package:swm_app/screens/challenge_main.dart';
-
 import 'package:swm_app/services/fact_service.dart';
 import 'package:swm_app/screens/quiz_screen.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+/* 
+  This screen is the Facts page where users can learn digestible information
+  about the chosen topic
+
+*/
 class FactsScreen extends StatefulWidget {
-  int index;
-  int id;
-  String name;
+  int index; //which Fact in the array is the user seeing (initially it's 0) when moving from the awareness main page
+  int id; // module ID
+  String name; //module name
   FactsScreen(
       {Key? key, required this.index, required this.id, required this.name})
       : super(key: key);
 
   @override
-  // ignore: no_logic_in_create_state
   State<FactsScreen> createState() => _FactsScreenState(index, id, name);
 }
 
 class _FactsScreenState extends State<FactsScreen> {
-  int _factIndex = 0;
+  int _factIndex = 0; //Fact index moved through the previous iteration
   _FactsScreenState(this._factIndex, this.id, this.name);
-  List userProfilesList = [];
-  int size = 1;
-  int id;
-  String name;
+  List factsList = []; //List of facts related to module
+  int size = 1; //Size of facts list
+  int id; //module ID
+  String name; //module name
 
+/* 
+On init, we fetch all the facts from the facts services page
+*/
   @override
   void initState() {
     super.initState();
-    print('print1 $size');
-    fetchDatabaseList(id);
+    fetchDatabaseList(id); //function that retrieves all module facts
   }
 
-//add PreviousFact to go back too *important*
+/* 
+  This method moves the user to the next fact
+
+  Inputs:
+  * NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * index is increased by 1 and saved in the state causing the page to reload with new data from new index
+  * if we get to the end the index is reset pending on what action does the user do
+  
+*/
 
   void _nextFact() {
     setState(() {
       _factIndex++;
     });
-    // what happens at the end of the facts
     if (_factIndex > size) {
       _resetFacts();
     }
   }
+
+/* 
+  This method moves the user to the previous fact
+
+  Inputs:
+  * NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * index is decrease by 1 causing the page to reload with new data from new index
+  * if we get to the first index this function cannot be called anymore
+  
+*/
 
   void _prevFact() {
     setState(() {
@@ -58,26 +83,45 @@ class _FactsScreenState extends State<FactsScreen> {
     });
   }
 
+/* 
+  This method resets the fact index to the start
+
+  Inputs:
+  * NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * index is set back to 0 and saved in the state
+  
+*/
+
   void _resetFacts() {
     setState(() {
       _factIndex = 0;
     });
   }
 
+/* 
+  This method calls the facts services page to retrieve facts related to this
+  module
+
+  Inputs:
+  * id: module ID
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * List of facts is saved in the state
+  * Size of list is saved in the state
+  
+*/
   Future fetchDatabaseList(id) async {
-    print('print3 $size   factindex  ${_factIndex + 1}');
-    dynamic resultant = await FactService().getUserTaskList(id);
+    dynamic resultant = await FactService().getUserTaskList(id); //retrieve data
     if (resultant == null) {
-      print('Unable to retrieve for some reason');
     } else {
       setState(() {
-        resultant;
-        userProfilesList =
-            resultant; //  <-----------  this contains all the data of facts use this with _factindex to load data *important*
-        size = userProfilesList
-            .length; //  <-----------  this contains size of the data use it to compare stuff related to size *important*
-
-        print('print4 $size   factindex  ${_factIndex + 1}');
+        resultant; //save the dynamic variable to state
+        factsList = resultant; //save the list of facts to state
+        size = factsList.length; //save the size of lists to state
       });
     }
   }
@@ -98,24 +142,26 @@ class _FactsScreenState extends State<FactsScreen> {
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => AwarenessMain(id: id, name: name))),
-          ),
+          ), //navigates user to previous page
           actions: <Widget>[
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.home_outlined,
                 color: Colors.black,
               ),
               onPressed: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const PageHolder()));
+                    builder: (context) =>
+                        const PageHolder())); //navigates user to home page
               },
             )
           ],
         ),
         body: SingleChildScrollView(
           child: FutureBuilder(
+              /*Retrieves facts from database */
               future: fetchDatabaseList(id),
-              initialData: userProfilesList,
+              initialData: factsList,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return const Center(child: Text('Loading...'));
@@ -135,6 +181,7 @@ class _FactsScreenState extends State<FactsScreen> {
                         animationDuration: 5000,
                         barRadius: const Radius.circular(16.0),
                         lineHeight: 20,
+                        //percent is based on which index are we in relation to the whole size of the list
                         percent: (_factIndex + 1) / size,
                         backgroundColor:
                             const Color.fromARGB(255, 224, 223, 223),
@@ -147,7 +194,7 @@ class _FactsScreenState extends State<FactsScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 15.0),
                           width: double.infinity,
                           child: Text(
-                            userProfilesList[_factIndex].awatitle,
+                            factsList[_factIndex].awatitle,
                             style: const TextStyle(
                                 fontSize: 24,
                                 color: Color.fromARGB(255, 70, 70, 70),
@@ -159,8 +206,10 @@ class _FactsScreenState extends State<FactsScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 15.0),
                           width: double.infinity,
                           child: Html(
-                              data: (userProfilesList[_factIndex].awatext),
+                              //This widget is used to load data in HTML format to enable custom bolding of words creating links
+                              data: (factsList[_factIndex].awatext),
                               onLinkTap: (url, _, __, ___) async {
+                                //enables browser to open once link is clicked
                                 if (await canLaunchUrlString(url!)) {
                                   await launchUrlString(
                                     url,
@@ -168,6 +217,7 @@ class _FactsScreenState extends State<FactsScreen> {
                                   );
                                 }
                               },
+                              //CSS like styling to tags
                               style: {
                                 "p": Style(
                                     color: Color.fromARGB(255, 0, 0, 0),
@@ -179,19 +229,19 @@ class _FactsScreenState extends State<FactsScreen> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8.0),
                             child: Image.asset(
-                              userProfilesList[_factIndex].awaimg,
+                              factsList[_factIndex].awaimg,
                               width: double.infinity,
                             ),
                           )),
                       Container(height: 40),
                       ListTile(
-                        //contentPadding: EdgeInsets.all(<some value here>),//change for side padding
                         title: Row(children: <Widget>[
                           Expanded(
                               child: GestureDetector(
+                                  //if we are not on first index, show previous button
+                                  //on click navigate to previous fact by doing index--
                                   onTap: () {
                                     if (_factIndex > 0) {
-                                      print("iiiiiiiffffffff");
                                       Navigator.of(context)
                                           .push(MaterialPageRoute(
                                               builder: (context) => FactsScreen(
@@ -203,7 +253,7 @@ class _FactsScreenState extends State<FactsScreen> {
                                     }
                                   },
                                   child: _factIndex > 0
-                                      ? FittedBox(
+                                      ? const FittedBox(
                                           fit: BoxFit.fitHeight,
                                           child: SizedBox(
                                               width: 160,
@@ -217,12 +267,14 @@ class _FactsScreenState extends State<FactsScreen> {
                                                         FontWeight.normal),
                                                 textAlign: TextAlign.left,
                                               )))
-                                      : FittedBox(fit: BoxFit.fitHeight))),
+                                      : const FittedBox(
+                                          fit: BoxFit.fitHeight))),
                           Expanded(
                             child: GestureDetector(
+                              //if we are not on last index, show next button
+                              //on click navigate to previous fact by doing index++
                               onTap: () {
                                 if (_factIndex < size - 1) {
-                                  print("iiiiiiiffffffff");
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => FactsScreen(
                                             index: _factIndex,
@@ -231,14 +283,14 @@ class _FactsScreenState extends State<FactsScreen> {
                                           )));
                                   _nextFact();
                                 } else {
-                                  print("eeeellllssseeeee");
+                                  //else show go to quiz button
+                                  //reset index and navigate to quiz page
                                   _resetFacts();
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => QuizScreen(
                                             id: id,
                                             name: name,
                                           )));
-                                  //  _nextFact();
                                 }
                               },
                               child: FittedBox(

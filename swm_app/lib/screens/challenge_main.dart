@@ -3,10 +3,17 @@ import 'package:swm_app/page_holder.dart';
 import 'package:swm_app/screens/awareness_intro.dart';
 import 'package:swm_app/screens/take_action_intro.dart';
 
-// ignore: must_be_immutable
+/* 
+  This screen is the transfer page where you choose between learning theoretical
+  information about a subject or practical actions you can do in your daily life
+  to be sustainable in a certain topic.
+  
+  id and name params are passed through this page to other pages down the line
+  to skip having to call the database just to retrieve the name of a module
+*/
 class ChallengeMain extends StatefulWidget {
-  int id;
-  String name;
+  int id; //module ID
+  String name; //module name
   ChallengeMain({Key? key, required this.id, required this.name})
       : super(key: key);
 
@@ -76,6 +83,7 @@ class _ChallengeMain extends State<ChallengeMain> {
                             builder: (context) =>
                                 AwarenessIntro(id: id, name: name)));
                   },
+                  /* Navigates user to the awareness (theoretical) section */
                   // change to navigation to awareness screen
                   child: SizedBox(
                       height: 140,
@@ -104,6 +112,7 @@ class _ChallengeMain extends State<ChallengeMain> {
                             builder: (context) =>
                                 ActionIntro(id: id, name: name)));
                   },
+                  /* Navigates user to the action (practical) section */
                   // change to navigation to tasks screen
                   child: SizedBox(
                       height: 140,

@@ -29,8 +29,6 @@ Firebase database.
         .where("parentmoduleid", isEqualTo: ID)
         .get(); // Firebase call to the  facts table
 
-    //print("qshot is ${qShot.docs.length}  id is $id");
-
     return qShot.docs
         .map((doc) => Facts(
             awatext: doc.get("awatext"),

@@ -40,14 +40,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future getLevelList() async {
     await fetchUserData();
-    print("p1");
 
     var datas = await FirebaseFirestore.instance
         .collection('Levels')
         .orderBy('levelID', descending: false)
         .get();
 
-    print("p2");
     List _levelsLst = datas.docs
         .map((doc) => Level(
               description: doc.get("description"),
@@ -55,9 +53,6 @@ class _HomeScreenState extends State<HomeScreen> {
               lvlpoints: doc.get("lvlpoints"),
             ))
         .toList();
-
-    print("p3 $_levelsLst");
-    print("user points $points");
 
     int counter = 0;
     for (var i = 0; i < _levelsLst.length; i++) {
@@ -67,12 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
         break;
       }
     }
-    print("p4 $counter");
 
     debugPrint(counter.toString());
     int totalpts = _levelsLst[counter].lvlpoints!;
-
-    print("p5 $totalpts");
 
     setState(() {
       datas;
@@ -86,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await UserService()
         .GetAllModulesInProgress()
         .then((value) => LProgress = value);
-    print("print progreesss $LProgress");
+
     if (mounted) {
       setState(() {
         LProgress;
@@ -140,8 +132,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         if (!snapshot.hasData) {
                           return const Center(child: Text('Loading...'));
                         }
-                        print("p6 $LProgress");
-                        if (LProgress.length == 1)
+
+                        if (LProgress.length == 1) {
                           return Expanded(
                               child: Container(
                                   height: 100,
@@ -152,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10))),
                                   child: Center(
-                                      child: Column(children: [
+                                      child: Column(children: const [
                                     SizedBox(height: 10),
                                     Padding(
                                       padding:
@@ -169,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ),
                                   ]))));
-                        else {
+                        } else {
                           return Expanded(
                               child: ListView(
                             shrinkWrap: false,

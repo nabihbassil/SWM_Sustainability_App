@@ -60,8 +60,6 @@ class _SingleActionScreenState extends State<SingleActionScreen> {
         await UserService().updateModuleLogic(modID, isQuizDone, notDoneLength);
 
     if (finished == true) {
-      print("in fiiiinnniiisshhhheedddd");
-
       var future = new Future.delayed(
           const Duration(seconds: 1),
           (() => Navigator.push(context,

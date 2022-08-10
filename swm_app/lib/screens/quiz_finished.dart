@@ -63,16 +63,10 @@ class _QuizFinishState extends State<QuizFinish> {
 
       notDoneLength = await UserService().GetSizeofToDoTasks(id, LTasks);
 
-      print("in 2234");
-
       bool finished =
           await UserService().updateModuleLogic(id, true, notDoneLength);
 
-      print("finished is $finished");
-
       if (finished == true) {
-        print("in fiiiinnniiisshhhheedddd");
-
         var future = new Future.delayed(
             const Duration(seconds: 1),
             (() => Navigator.push(context,
@@ -82,13 +76,9 @@ class _QuizFinishState extends State<QuizFinish> {
       UserService().UpdatePoints(quizPoints);
     }
 
-    print("in 111");
-
     setState(() {
       wasQuizDoneBeforeUpdate;
     });
-
-    print("in 82");
   }
 
   @override

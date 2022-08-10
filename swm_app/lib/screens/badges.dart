@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:flutter/material.dart';
 
+/* 
+  This screen is the badges page where users should be able to see the pages
+  that they have won splitted by categories.
+  Users can also read about each badge won by clicking on it.
+*/
 class Badges extends StatefulWidget {
   const Badges({Key? key}) : super(key: key);
 
@@ -10,14 +14,17 @@ class Badges extends StatefulWidget {
 }
 
 class _BadgesState extends State<Badges> {
+  //query to get badges in the general category
   final Query _collectionRef = FirebaseFirestore.instance
       .collection('badges')
       .where("module", isEqualTo: "general");
 
+//query to get badges in the general consumption
   final Query _collectionRef1 = FirebaseFirestore.instance
       .collection('badges')
       .where("module", isEqualTo: "consumption");
 
+//query to get badges in the general energy
   final Query _collectionRef2 = FirebaseFirestore.instance
       .collection('badges')
       .where("module", isEqualTo: "energy");
@@ -42,7 +49,7 @@ class _BadgesState extends State<Badges> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
-        ),
+        ), //Go back to previous page
       ),
       backgroundColor: const Color.fromARGB(255, 246, 246, 246),
       body: Center(
@@ -80,6 +87,7 @@ class _BadgesState extends State<Badges> {
                     // grid view
 
                     StreamBuilder(
+                        /****Display badges in the General category****/
                         stream: _collectionRef.snapshots(),
                         builder:
                             (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -96,6 +104,7 @@ class _BadgesState extends State<Badges> {
                             children: snapshot.data!.docs.map((item) {
                               return Container(child: LayoutBuilder(
                                   builder: (context, constraints) {
+                                //if badge is earned it's displayed and can be clicked on
                                 if (item['earned'] == true) {
                                   return GestureDetector(
                                       onTap: () {
@@ -122,7 +131,7 @@ class _BadgesState extends State<Badges> {
                     Align(
                         alignment: Alignment.centerLeft,
                         child: Container(
-                            child: Text(
+                            child: const Text(
                           "Consumption",
                           style: TextStyle(
                               fontSize: 18,
@@ -131,6 +140,7 @@ class _BadgesState extends State<Badges> {
                         ))),
                     const SizedBox(height: 15),
                     StreamBuilder(
+                        /****Display badges in the Consumption category****/
                         stream: _collectionRef1.snapshots(),
                         builder:
                             (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -147,6 +157,7 @@ class _BadgesState extends State<Badges> {
                             children: snapshot.data!.docs.map((item) {
                               return Container(child: LayoutBuilder(
                                   builder: (context, constraints) {
+                                //if badge is earned it's displayed and can be clicked on
                                 if (item['earned'] == true) {
                                   return GestureDetector(
                                       onTap: () {
@@ -180,6 +191,7 @@ class _BadgesState extends State<Badges> {
                         ))),
                     const SizedBox(height: 15),
                     StreamBuilder(
+                        /****Display badges in the Energy category****/
                         stream: _collectionRef2.snapshots(),
                         builder:
                             (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -196,6 +208,7 @@ class _BadgesState extends State<Badges> {
                             children: snapshot.data!.docs.map((item) {
                               return Container(child: LayoutBuilder(
                                   builder: (context, constraints) {
+                                //if badge is earned it's displayed and can be clicked on
                                 if (item['earned'] == true) {
                                   return GestureDetector(
                                       onTap: () {
@@ -225,6 +238,18 @@ class _BadgesState extends State<Badges> {
   }
 }
 
+/* 
+  This method adds the widget and animation of opening the content of a badge
+
+  Inputs:
+  * badgenum: ID of the badge to get it's picture using the path
+  * badgename: Title of the badge.
+  * badgedescription: Description of the badge
+
+  Outputs:
+  * Widget shown in the bottom of the screen
+  
+*/
 void badgespecifics(context, badgenum, badgename, badgedescription) {
   showModalBottomSheet(
       context: context,

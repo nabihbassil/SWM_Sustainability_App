@@ -4,47 +4,84 @@ import 'package:flutter/material.dart';
 import 'package:swm_app/screens/challenge_main.dart';
 import 'package:swm_app/services/user_service.dart';
 
+/* 
+  This screen is the main modules page where users can see all challenges split
+  into modules done, in progress and new.
+  Users see the title of the module, category (which are of sustainability) and
+  a picture detailing the type of module this is
+*/
+
 class ChallengeScreen extends StatefulWidget {
   const ChallengeScreen({Key? key}) : super(key: key);
 
   @override
-  // ignore: no_logic_in_create_state
   _ChallengeScreenState createState() => _ChallengeScreenState();
 }
 
 class _ChallengeScreenState extends State<ChallengeScreen> {
-  List LProgress = ['0'];
-  List LDone = ['0'];
-  List LNew = ['0'];
+  List LProgress = ['0']; // List of module IDs that are in progress by the user
+  List LDone = ['0']; // List of module IDs that are done by the user
+  List LNew = ['0']; // List of module IDs that were not started yet by the user
 
+/* 
+  This method retrieves all modules done IDs for the logged in user
+
+  Inputs:
+  * NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * data is added to the List of done module IDs and added to the state
+  
+*/
   GetAllModulesDone() async {
+    //data is retrieved from the user services page and set value in list
     await UserService().GetAllModulesDone().then((value) => LDone = value);
     if (mounted) {
       setState(() {
-        LDone;
+        LDone; //added to state
+        /*List of new modules is a list of IDs of both done and in progress which
+          in the query is all IDs NOT IN THIS LIST */
         LNew = LDone + LProgress;
       });
     }
   }
 
+/* 
+  This method retrieves all modules in progress IDs for the logged in user
+
+  Inputs:
+  * NO INPUT
+
+  Outputs:
+  * NO RETURN OUTPUT
+  * data is added to the List of in progress module IDs and added to the state
+  
+*/
   GetAllModulesInProgress() async {
+    //data is retrieved from the user services page and set value in list
     await UserService()
         .GetAllModulesInProgress()
         .then((value) => LProgress = value);
-    print("print progreesss $LProgress");
     if (mounted) {
       setState(() {
-        LProgress;
+        LProgress; //added to state
+        /*List of new modules is a list of IDs of both done and in progress which
+          in the query is all IDs NOT IN THIS LIST */
         LNew = LDone + LProgress;
       });
     }
   }
 
+/* 
+On init load all module IDs that are done and in progress and through them
+we infer which modules have not been started yet by the user
+*/
   @override
   void initState() {
     super.initState();
-    GetAllModulesInProgress();
-    GetAllModulesDone();
+    GetAllModulesInProgress(); //function for in progress module IDs
+    GetAllModulesDone(); //function for done module IDs
     WidgetsFlutterBinding.ensureInitialized();
   }
 
@@ -57,7 +94,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
           child: Align(
               alignment: Alignment.center,
               child: Container(
-                child: Text(
+                child: const Text(
                   "Challenges Overview",
                   style: TextStyle(
                       fontSize: 20,
@@ -70,7 +107,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
             width: MediaQuery.of(context).size.width,
             color: const Color.fromARGB(255, 252, 248, 239),
             child: Padding(
-                padding: EdgeInsets.only(left: 15, right: 15),
+                padding: const EdgeInsets.only(left: 15, right: 15),
                 child: ExpansionTile(
                   title: const Text('In Progress',
                       style: TextStyle(
@@ -78,11 +115,12 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                           color: Color.fromARGB(255, 80, 80, 80),
                           fontWeight: FontWeight.bold)),
                   children: [
-                    // I'll name the data fr
                     SizedBox(
                         width: MediaQuery.of(context).size.width,
                         height: 210,
                         child: FutureBuilder(
+                            /* Get module data that user have in the in progress
+                            IDs array in user collection and then display it */
                             future: FirebaseFirestore.instance
                                 .collection('modules')
                                 .where("modID", whereIn: LProgress)
@@ -92,10 +130,15 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                               if (!snapshot.hasData) {
                                 return const Center(child: Text('Loading...'));
                               }
-                              if (LProgress.length == 1)
+                              /*
+                              to avoid 0 and null and errors 1 is the new
+                               empty meaning when length == 1 then its empty
+                               display nice message
+                               */
+                              if (LProgress.length == 1) {
                                 return Expanded(
                                     child: Center(
-                                        child: Column(children: [
+                                        child: Column(children: const [
                                   SizedBox(height: 20),
                                   Padding(
                                     padding:
@@ -112,7 +155,9 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                     ),
                                   ),
                                 ])));
+                              }
 
+                              //else return filled data
                               return Expanded(
                                   child: ListView(
                                 shrinkWrap: false,
@@ -138,6 +183,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                             height: 4,
                                           ),
                                           GestureDetector(
+                                            //navigates you to the start of the challenge
                                             onTap: () {
                                               Navigator.push(
                                                   context,
@@ -211,7 +257,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
             width: MediaQuery.of(context).size.width,
             color: const Color.fromARGB(255, 238, 247, 249),
             child: Padding(
-                padding: EdgeInsets.only(left: 15, right: 15),
+                padding: const EdgeInsets.only(left: 15, right: 15),
                 child: ExpansionTile(
                   title: const Text('Discover New',
                       style: TextStyle(
@@ -224,6 +270,11 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                         width: MediaQuery.of(context).size.width,
                         height: 210,
                         child: FutureBuilder(
+                            /* 
+                            Get module data from list containing done and
+                            in progress modules and look in firebase for ID's
+                            NOT ON THAT LIST
+                             */
                             future: FirebaseFirestore.instance
                                 .collection('modules')
                                 .where("modID", whereNotIn: LNew)
@@ -233,10 +284,15 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                               if (!snapshot.hasData) {
                                 return const Center(child: Text('Loading...'));
                               }
-                              if (LNew.length == 1)
+                              /*
+                              to avoid 0 and null and errors 1 is the new
+                               empty meaning when length == 1 then its empty
+                               display nice message
+                               */
+                              if (LNew.length == 1) {
                                 return Expanded(
                                     child: Center(
-                                        child: Column(children: [
+                                        child: Column(children: const [
                                   SizedBox(height: 20),
                                   Padding(
                                     padding:
@@ -253,6 +309,9 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                     ),
                                   ),
                                 ])));
+                              }
+
+                              //else fill interface with module data
                               return Expanded(
                                   child: ListView(
                                 shrinkWrap: false,
@@ -288,7 +347,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                             name:
                                                                 item['modName'],
                                                           )));
-                                            },
+                                            }, //navigate user to challenge
                                             child: Container(
                                               padding:
                                                   const EdgeInsets.symmetric(
@@ -349,7 +408,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
             width: MediaQuery.of(context).size.width,
             color: const Color.fromARGB(255, 245, 255, 243),
             child: Padding(
-                padding: EdgeInsets.only(left: 15, right: 15),
+                padding: const EdgeInsets.only(left: 15, right: 15),
                 child: ExpansionTile(
                     title: const Text('Completed',
                         style: TextStyle(
@@ -362,6 +421,8 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                           width: MediaQuery.of(context).size.width,
                           height: 210,
                           child: FutureBuilder(
+                              /* Get module data that user have in the ID in done
+                            array in user collection and then display it */
                               future: FirebaseFirestore.instance
                                   .collection('modules')
                                   .where("modID", whereIn: LDone)
@@ -372,10 +433,15 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                   return const Center(
                                       child: Text('Loading...'));
                                 }
-                                if (LDone.length == 1)
+                                /*
+                              to avoid 0 and null and errors 1 is the new
+                               empty meaning when length == 1 then its empty
+                               display nice message
+                               */
+                                if (LDone.length == 1) {
                                   return Expanded(
                                       child: Center(
-                                          child: Column(children: [
+                                          child: Column(children: const [
                                     SizedBox(height: 20),
                                     Padding(
                                       padding:
@@ -392,6 +458,9 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                       ),
                                     ),
                                   ])));
+                                }
+
+                                //else fill interface with data
                                 return Expanded(
                                     child: ListView(
                                   shrinkWrap: false,
@@ -428,7 +497,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                                                               name: item[
                                                                   'modName'],
                                                             )));
-                                              },
+                                              }, //navigate user to challenge
                                               child: Container(
                                                 padding:
                                                     const EdgeInsets.symmetric(
